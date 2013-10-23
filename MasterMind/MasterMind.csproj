@@ -233,9 +233,7 @@
     <Content Include="Images\carta_.jpg" />
     <Content Include="Images\cartoon.jpg" />
     <Content Include="Images\fundo.jpg" />
-    <Content Include="Images\geografia.gif" />
     <Content Include="Images\Gradiente_prata.png" />
-    <Content Include="Images\Gradiente_prata_topo.png" />
     <Content Include="Images\letras.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\tabuleiro.png" />
@@ -265,9 +263,7 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
     <Content Include="Images\orderedList0.png" />
     <Content Include="Images\orderedList1.png" />
     <Content Include="Images\orderedList2.png" />
