@@ -164,6 +164,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\BackOffice\TemasController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -241,6 +242,10 @@
     <Content Include="Images\tabuleiro.png" />
     <Content Include="Images\tiririca_divulga.jpg" />
     <Content Include="Images\usu.png" />
+    <Content Include="Scripts\BO\additional-methods.min-1.11.1.js" />
+    <Content Include="Scripts\BO\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\BO\jquery.validate.min-1.11.1.js" />
+    <Content Include="Scripts\BO\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -255,6 +260,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Styles\backoffice.css" />
     <Content Include="Views\Game\Partida.aspx" />
     <Content Include="Views\Game\Principal.aspx" />
     <Content Include="Web.config" />
@@ -294,12 +300,24 @@
     <Content Include="Views\Shared\_LoginPartial.aspx" />
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\_LayoutPadrao.cshtml" />
+    <Content Include="Views\Temas\List.cshtml" />
+    <Content Include="Views\Temas\Edit.cshtml" />
+    <Content Include="Views\Temas\Delete.cshtml" />
+    <Content Include="Views\Temas\Create.cshtml" />
+    <Content Include="Views\Temas\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infraestrutura\Infraestrutura.csproj">
+      <Project>{ff4253ca-ee6f-4f66-a255-9e7fb86ace9e}</Project>
+      <Name>Infraestrutura</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

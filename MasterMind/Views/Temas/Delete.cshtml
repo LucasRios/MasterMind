@@ -1,0 +1,37 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Temas
+
+@{
+    ViewBag.Title = "Temas - Excluir";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>EXCLUIR TEMA</h2>
+
+<h3 class="msg-atencao">Você realmente quer EXCLUIR este TEMA?</h3>
+<fieldset>
+    <legend>Temas</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Id_tema)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Id_tema)
+    </div>
+    <br />
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Desc_tema)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Desc_tema)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        @Html.HiddenFor(model => model.Id_tema)
+        @Html.HiddenFor(model => model.Desc_tema)
+
+        <input type="submit" value="Excluir" /> |
+        @Html.ActionLink("Voltar", "Index")
+    </p>
+}

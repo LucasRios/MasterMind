@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Infraestrutura.Repositorios.Entidades.Temas>
+@{
+    ViewBag.Title = "Temas - Lista";
+    //Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>TEMAS</h2>
+
+<p>
+    @Html.ActionLink("Incluir", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_tema)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Desc_tema)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_tema)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Desc_tema)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new {  Id=item.Id_tema  }) |
+            @Html.ActionLink("Detalhes", "Details", new { Id=item.Id_tema } ) |
+            @Html.ActionLink("Excluir", "Delete", new { Id=item.Id_tema   })
+        </td>
+    </tr>
+}
+
+</table>

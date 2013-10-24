@@ -1,0 +1,23 @@
+﻿fieldset
+{
+    background-color: #c1bdbd;
+}
+
+.display-label, .editor-label
+{
+    font-weight: bold;
+}
+
+.txtMedium
+{
+    width: 200px;
+}
+.txtLarge
+{
+    width: 400px;
+}
+
+.msg-atencao
+{
+    color: #f00;
+}

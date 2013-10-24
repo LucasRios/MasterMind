@@ -1,0 +1,30 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Temas
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>DETALHES TEMA</h2>
+
+<fieldset>
+    <legend>Temas</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Id_tema)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Id_tema)
+    </div>
+    <br />
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Desc_tema)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Desc_tema)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Voltar", "Index")
+</p>
