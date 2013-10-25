@@ -8,8 +8,6 @@
 <h2>DETALHES TEMA</h2>
 
 <fieldset>
-    <legend>Temas</legend>
-
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Id_tema)
     </div>
@@ -24,7 +22,8 @@
         @Html.DisplayFor(model => model.Desc_tema)
     </div>
 </fieldset>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { /* id=Model.PrimaryKey */ }) |
-    @Html.ActionLink("Voltar", "Index")
-</p>
+<br />
+<div>
+    <input class="btn btn-primary" type="button" value ="Editar" onclick="window.location.href='@Url.Action("Edit", "Temas", new { Id = Model.Id_tema })'"/>
+    <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Temas")'"/>
+</div>

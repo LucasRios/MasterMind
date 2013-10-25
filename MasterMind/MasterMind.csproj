@@ -258,6 +258,8 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Styles\backoffice.css" />
+    <Content Include="Styles\bootstrap-responsive.min.css" />
+    <Content Include="Styles\bootstrap.min.css" />
     <Content Include="Views\Game\Partida.aspx" />
     <Content Include="Views\Game\Principal.aspx" />
     <Content Include="Web.config" />

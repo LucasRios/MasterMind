@@ -13,8 +13,6 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Temas</legend>
-
         <div class="editor-field">
             @Html.HiddenFor(model => model.Id_tema)
             @Html.ValidationMessageFor(model => model.Id_tema)
@@ -28,12 +26,10 @@
             @Html.ValidationMessageFor(model => model.Desc_tema)
         </div>
 
-        <p>
-            <input type="submit" value="Incluir" />
-        </p>
     </fieldset>
+    <div>
+        <input class="btn btn-primary" type="submit" value="Incluir" />
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Temas")'"/>
+    </div>
 }
 
-<div>
-    @Html.ActionLink("Voltar", "Index")
-</div>

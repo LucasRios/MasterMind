@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Infraestrutura.Repositorios.Entidades.Temas>
 @{
     ViewBag.Title = "Temas - Lista";
-    //Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
 }
 
 <h2>TEMAS</h2>
 
 <p>
-    @Html.ActionLink("Incluir", "Create")
+    <input class="btn btn-primary" type="button" value ="Incluir" onclick="window.location.href='@Url.Action("Create", "Temas")'"/>
 </p>
 <table>
     <tr>
@@ -17,7 +17,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Desc_tema)
         </th>
-        <th></th>
+        <th>Ações</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -29,9 +29,9 @@
             @Html.DisplayFor(modelItem => item.Desc_tema)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new {  Id=item.Id_tema  }) |
-            @Html.ActionLink("Detalhes", "Details", new { Id=item.Id_tema } ) |
-            @Html.ActionLink("Excluir", "Delete", new { Id=item.Id_tema   })
+            <input class="btn btn-primary" type="button" value ="Editar" onclick="window.location.href='@Url.Action("Edit", "Temas", new { Id = item.Id_tema })'"/>
+            &nbsp;|&nbsp;<input class="btn btn-primary" type="button" value ="Detalhes" onclick="window.location.href='@Url.Action("Details", "Temas", new { Id = item.Id_tema })'"/>
+            &nbsp;|&nbsp;<input class="btn btn-primary" type="button" value ="Excluir" onclick="window.location.href='@Url.Action("Delete", "Temas", new { Id = item.Id_tema })'"/>
         </td>
     </tr>
 }

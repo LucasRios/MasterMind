@@ -9,8 +9,6 @@
 
 <h3 class="msg-atencao">Você realmente quer EXCLUIR este TEMA?</h3>
 <fieldset>
-    <legend>Temas</legend>
-
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Id_tema)
     </div>
@@ -30,8 +28,8 @@
     <p>
         @Html.HiddenFor(model => model.Id_tema)
         @Html.HiddenFor(model => model.Desc_tema)
-
-        <input type="submit" value="Excluir" /> |
-        @Html.ActionLink("Voltar", "Index")
+        <br />
+        <input class="btn btn-primary" type="submit" value="Excluir" /> |
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Temas")'"/>
     </p>
 }
