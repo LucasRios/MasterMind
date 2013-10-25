@@ -71,9 +71,9 @@ namespace Infraestrutura.Repositorios.Implementacao
             return entidade;
         }
 
-        public IList<T> ObterTodos()
+        public IEnumerable<T> ObterTodos()
         {
-            IList<T> lista = null;
+            IEnumerable<T> lista = null;
 
             using (var tran = _session.BeginTransaction())
             {

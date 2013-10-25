@@ -162,6 +162,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BackOffice\PerguntasController.cs" />
+    <Compile Include="Controllers\BackOffice\PersonagensController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BackOffice\TemasController.cs" />
@@ -303,6 +305,16 @@
     <Content Include="Views\Temas\Delete.cshtml" />
     <Content Include="Views\Temas\Create.cshtml" />
     <Content Include="Views\Temas\Details.cshtml" />
+    <Content Include="Views\Personagens\Create.cshtml" />
+    <Content Include="Views\Personagens\Delete.cshtml" />
+    <Content Include="Views\Personagens\Details.cshtml" />
+    <Content Include="Views\Personagens\Edit.cshtml" />
+    <Content Include="Views\Personagens\List.cshtml" />
+    <Content Include="Views\Perguntas\Create.cshtml" />
+    <Content Include="Views\Perguntas\Delete.cshtml" />
+    <Content Include="Views\Perguntas\Details.cshtml" />
+    <Content Include="Views\Perguntas\Edit.cshtml" />
+    <Content Include="Views\Perguntas\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

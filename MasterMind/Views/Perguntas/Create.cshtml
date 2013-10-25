@@ -1,0 +1,36 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Perguntas
+
+@{
+    ViewBag.Title = "Perguntas - Incluir";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+    Html.EnableClientValidation(true); 
+}
+
+<h2>INCLUIR PERGUNTA</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.Id_Perg)
+            @Html.ValidationMessageFor(model => model.Id_Perg)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Txt_Perg)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Txt_Perg, new  { @class="txtMedium" })
+            @Html.ValidationMessageFor(model => model.Txt_Perg)
+        </div>
+
+    </fieldset>
+    <br />
+    <div>
+        <input class="btn btn-primary" type="submit" value="Incluir" />
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas")'"/>
+    </div>
+}
+

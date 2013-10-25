@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Infraestrutura.Repositorios.Entidades.Perguntas>
+@{
+    ViewBag.Title = "Perguntas - Lista";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>PERGUNTAS</h2>
+
+<p>
+    <input class="btn btn-primary" type="button" value ="Incluir" onclick="window.location.href='@Url.Action("Create", "Perguntas")'"/>
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_Perg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Txt_Perg)
+        </th>
+        <th>Ações</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_Perg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Txt_Perg)
+        </td>
+        <td>
+            <input class="btn btn-primary" type="button" value ="Editar" onclick="window.location.href='@Url.Action("Edit", "Perguntas", new { Id = item.Id_Perg })'"/>
+            &nbsp;|&nbsp;<input class="btn btn-primary" type="button" value ="Detalhes" onclick="window.location.href='@Url.Action("Details", "Perguntas", new { Id = item.Id_Perg })'"/>
+            &nbsp;|&nbsp;<input class="btn btn-primary" type="button" value ="Excluir" onclick="window.location.href='@Url.Action("Delete", "Perguntas", new { Id = item.Id_Perg })'"/>
+        </td>
+    </tr>
+}
+
+</table>

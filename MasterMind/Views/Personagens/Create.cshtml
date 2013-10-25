@@ -1,0 +1,43 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Personagens
+
+@{
+    ViewBag.Title = "Personagens - Incluir";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+    Html.EnableClientValidation(true);
+}
+
+<h2>INCLUIR PERSONAGEM</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <div class="editor-label">
+            @Html.Label("Tema")
+            @Html.DropDownListFor(u => u.Id_tema, new SelectList(ViewBag.ListaTemas, "Id_tema", "Desc_tema"), new { @class = "dropdownlist" })
+            @Html.ValidationMessageFor(model => model.Id_tema)
+        </div>
+
+
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.Id_person)
+            @Html.ValidationMessageFor(model => model.Id_person)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Desc_person)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Desc_person, new  { @class="txtMedium" })
+            @Html.ValidationMessageFor(model => model.Desc_person)
+        </div>
+
+    </fieldset>
+    <br />
+    <div>
+        <input class="btn btn-primary" type="submit" value="Incluir" />
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Personagens")'"/>
+    </div>
+}
+

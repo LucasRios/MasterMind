@@ -1,0 +1,35 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Perguntas
+
+@{
+    ViewBag.Title = "Perguntas - Excluir";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>EXCLUIR PERGUNTA</h2>
+
+<h3 class="msg-atencao">Você realmente quer EXCLUIR esta PERGUNTA?</h3>
+<fieldset>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Id_Perg)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Id_Perg)
+    </div>
+    <br />
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Txt_Perg)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Txt_Perg)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        @Html.HiddenFor(model => model.Id_Perg)
+        @Html.HiddenFor(model => model.Txt_Perg)
+        <br />
+        <input class="btn btn-primary" type="submit" value="Excluir" /> |
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas")'"/>
+    </p>
+}

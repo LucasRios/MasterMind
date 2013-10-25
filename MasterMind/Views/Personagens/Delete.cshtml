@@ -1,0 +1,35 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Personagens
+
+@{
+    ViewBag.Title = "Personagens - Excluir";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>EXCLUIR PERSONAGEM</h2>
+
+<h3 class="msg-atencao">Você realmente quer EXCLUIR este PERSONAGEM?</h3>
+<fieldset>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Id_person)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Id_person)
+    </div>
+    <br />
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Desc_person)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Desc_person)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        @Html.HiddenFor(model => model.Id_person)
+        @Html.HiddenFor(model => model.Desc_person)
+        <br />
+        <input class="btn btn-primary" type="submit" value="Excluir" /> |
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Personagens")'"/>
+    </p>
+}

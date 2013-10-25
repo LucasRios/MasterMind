@@ -10,8 +10,6 @@ namespace MasterMind.Controllers.BackOffice
 {
     public class TemasController : Controller
     {
-        //
-        // GET: /Temas/
         public ActionResult Index()
         {
             return RedirectToAction("List");
@@ -44,7 +42,7 @@ namespace MasterMind.Controllers.BackOffice
         public ActionResult List()
         {
             GenericoRep<Temas> repositorio = new GenericoRep<Temas>();
-            IList<Temas> temas = repositorio.ObterTodos();
+            IEnumerable<Temas> temas = repositorio.ObterTodos();
             return View(temas);
         }
 

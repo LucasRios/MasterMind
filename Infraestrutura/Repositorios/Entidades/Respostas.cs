@@ -6,15 +6,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Infraestrutura.Repositorios.Entidades
 {
-    public class Temas
+    public class Respostas
     {
         [Display(Name="Id")]
-        public virtual Int32 Id_tema { get; set; }
-
-        [Display(Name = "Descrição")]
+        public virtual Int32 Id_resp { get; set; }
+        [Display(Name = "Resposta")]
         [Required(ErrorMessage="Campo Obrigatório.")]
-        public virtual String Desc_tema { get; set; }
-
-        public virtual IList<Personagens> personagens { get; protected set; }
+        public virtual String Resp_txt { get; set; }
+        [Display(Name = "Opção Correta")]
+        public virtual Boolean OpcaoCerta { get; set; }
     }
 }

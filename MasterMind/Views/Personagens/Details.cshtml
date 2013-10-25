@@ -1,0 +1,29 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Personagens
+
+@{
+    ViewBag.Title = "Personagens - Detalhes";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>DETALHES PERSONAGENS</h2>
+
+<fieldset>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Id_person)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Id_person)
+    </div>
+    <br />
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Desc_person)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Desc_person)
+    </div>
+</fieldset>
+<br />
+<div>
+    <input class="btn btn-primary" type="button" value ="Editar" onclick="window.location.href='@Url.Action("Edit", "Personagens", new { Id = Model.Id_person })'"/>
+    <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Personagens")'"/>
+</div>

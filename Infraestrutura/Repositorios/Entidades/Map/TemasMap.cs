@@ -11,8 +11,9 @@ namespace Infraestrutura.Repositorios.Entidades.Map
         public TemasMap()
         {
             Table("Temas");
-            Id(x => x.Id_tema, "Id_Tema").GeneratedBy.Identity();
+            Id(x => x.Id_tema, "Id_tema").GeneratedBy.Identity();
             Map(x => x.Desc_tema);
+            HasMany<Personagens>(x => x.personagens).KeyColumn("Id_tema").LazyLoad().Cascade.All();
         }
     }
 }
