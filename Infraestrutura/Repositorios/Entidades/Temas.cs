@@ -8,10 +8,10 @@ namespace Infraestrutura.Repositorios.Entidades
 {
     public class Temas
     {
-        [Display(Name="Id")]
+        [Display(Name="Id Tema")]
         public virtual Int32 Id_tema { get; set; }
 
-        [Display(Name = "Descrição")]
+        [Display(Name = "Descrição Tema")]
         [Required(ErrorMessage="Campo Obrigatório.")]
         public virtual String Desc_tema { get; set; }
 

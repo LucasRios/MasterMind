@@ -26,6 +26,8 @@ namespace MasterMind.Controllers.BackOffice
         [HttpGet]
         public ActionResult Edit(Int32 Id)
         {
+            ViewBag.ListaTemas = TemasDTO.Lista();
+
             GenericoRep<Personagens> repositorio = new GenericoRep<Personagens>();
             Personagens personagem = repositorio.ObterPorId(Id);
             return View(personagem);
@@ -64,25 +66,7 @@ namespace MasterMind.Controllers.BackOffice
         [HttpGet]
         public ActionResult Create()
         {
-            GenericoRep<Temas> repositorio = new GenericoRep<Temas>();
-            IEnumerable<Temas> listaTemas = new List<Temas>();
-            IList<Temas> lista = new List<Temas>();
-
-
-            listaTemas = repositorio.ObterTodos().OrderBy(x=>x.Desc_tema);
-            lista = listaTemas.ToList<Temas>();
-
-            lista.Insert(0, new Temas
-            {
-                Id_tema = 0,
-                Desc_tema = "Selecione um Tema"
-            });
-
-            ViewBag.ListaTemas = lista.Select(x=> new {
-                x.Id_tema,
-                x.Desc_tema
-            });
-
+            ViewBag.ListaTemas = TemasDTO.Lista();
             return View();
         }
 

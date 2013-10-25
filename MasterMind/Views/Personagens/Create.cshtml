@@ -15,10 +15,9 @@
     <fieldset>
         <div class="editor-label">
             @Html.Label("Tema")
-            @Html.DropDownListFor(u => u.Id_tema, new SelectList(ViewBag.ListaTemas, "Id_tema", "Desc_tema"), new { @class = "dropdownlist" })
-            @Html.ValidationMessageFor(model => model.Id_tema)
+            @Html.DropDownListFor(u => u.Tema.Id_tema, new SelectList(ViewBag.ListaTemas, "Id_tema", "Desc_tema"), new { @class = "dropdownlist" })
+            @Html.ValidationMessageFor(model => model.Tema.Id_tema)
         </div>
-
 
         <div class="editor-field">
             @Html.HiddenFor(model => model.Id_person)
