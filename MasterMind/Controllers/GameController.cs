@@ -13,7 +13,7 @@ namespace MasterMind.Controllers
 
         public ActionResult Principal()
         {
-            return RedirectToAction("Partida", "Game");
+            return RedirectToAction("Manage", "Account");
             return View();
         }
 

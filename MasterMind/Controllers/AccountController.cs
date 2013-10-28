@@ -10,6 +10,9 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using MasterMind.Filters;
 using MasterMind.Models;
+using Infraestrutura.Repositorios.Entidades;
+using Infraestrutura.Repositorios.Implementacao;
+using FluentNHibernate.Mapping;
 
 namespace MasterMind.Controllers
 {
@@ -35,10 +38,9 @@ namespace MasterMind.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            return RedirectToAction("Principal", "Game");
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (ModelState.IsValid && WebSecurity.Login(model.usuario, model.Senha, persistCookie: model.RememberMe))
             {                
-                return RedirectToLocal(returnUrl);
+                return RedirectToAction("Principal", "Game");
             }
 
             // If we got this far, something failed, redisplay form
@@ -73,16 +75,24 @@ namespace MasterMind.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(Cadastro model)
         {
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
-                {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                {                 
+                    GenericoRep<Cadastro> repositorio = new GenericoRep<Cadastro>();
+                    repositorio.Salvar(model);
+                    Cadastro auxcadastro = repositorio.ObterPorId(model.id_user);
+
+                    if (auxcadastro != null)
+                    {
+                        WebSecurity.CreateAccount(model.usuario, model.Senha);
+                        WebSecurity.Login(model.usuario, model.Senha);
+                    }
+                   
+                    return RedirectToAction("Principal", "Game");
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -143,7 +153,7 @@ namespace MasterMind.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Manage(LocalPasswordModel model)
+        public ActionResult Manage(Cadastro model)
         {
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.HasLocalPassword = hasLocalAccount;
@@ -153,10 +163,13 @@ namespace MasterMind.Controllers
                 if (ModelState.IsValid)
                 {
                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.
-                    bool changePasswordSucceeded;
+                    bool changePasswordSucceeded = false;
                     try
                     {
-                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+                        GenericoRep<Cadastro> repositorio = new GenericoRep<Cadastro>();
+                        repositorio.Salvar(model);
+                        Cadastro auxcadastro = repositorio.ObterPorId(model.id_user);
+                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.Senha);                        
                     }
                     catch (Exception)
                     {
@@ -187,7 +200,7 @@ namespace MasterMind.Controllers
                 {
                     try
                     {
-                        WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);
+                        WebSecurity.CreateAccount(User.Identity.Name, model.Senha);
                         return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
                     }
                     catch (Exception e)
@@ -253,7 +266,7 @@ namespace MasterMind.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
         {
-            string provider = null;
+           /* string provider = null;
             string providerUserId = null;
 
             if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
@@ -266,12 +279,12 @@ namespace MasterMind.Controllers
                 // Insert a new user into the database
                 using (UsersContext db = new UsersContext())
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.usuario.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        db.UserProfiles.Add(new UserProfile { usuario = model.UserName });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
@@ -287,7 +300,7 @@ namespace MasterMind.Controllers
             }
 
             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.ReturnUrl = returnUrl;*/
             return View(model);
         }
 

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 using MasterMind.Models;
+using MasterMind.Controllers;
 
 namespace MasterMind.Filters
 {
@@ -38,7 +39,7 @@ namespace MasterMind.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurityInitializer.Instance.EnsureInitialize();
                 }
                 catch (Exception ex)
                 {
