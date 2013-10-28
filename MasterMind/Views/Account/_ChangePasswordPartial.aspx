@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<MasterMind.Models.LocalPasswordModel>" %>
+﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Cadastro>" %>
 
 <h3>Change password</h3>
 
@@ -14,8 +14,8 @@
                 <%: Html.PasswordFor(m => m.OldPassword) %>
             </li>
             <li>
-                <%: Html.LabelFor(m => m.NewPassword) %>
-                <%: Html.PasswordFor(m => m.NewPassword) %>
+                <%: Html.LabelFor(m => m.Senha) %>
+                <%: Html.PasswordFor(m => m.Senha) %>
             </li>
             <li>
                 <%: Html.LabelFor(m => m.ConfirmPassword) %>

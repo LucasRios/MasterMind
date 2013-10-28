@@ -15,14 +15,14 @@
             <legend>Log in</legend>
             <ol>
                 <li>
-                    <%: Html.LabelFor(m => m.UserName) %>
-                    <%: Html.TextBoxFor(m => m.UserName) %>
-                    <%: Html.ValidationMessageFor(m => m.UserName) %>
+                    <%: Html.LabelFor(m => m.usuario) %>
+                    <%: Html.TextBoxFor(m => m.usuario) %>
+                    <%: Html.ValidationMessageFor(m => m.usuario) %>
                 </li>
                 <li>
-                    <%: Html.LabelFor(m => m.Password) %>
-                    <%: Html.PasswordFor(m => m.Password) %>
-                    <%: Html.ValidationMessageFor(m => m.Password) %>
+                    <%: Html.LabelFor(m => m.Senha) %>
+                    <%: Html.PasswordFor(m => m.Senha) %>
+                    <%: Html.ValidationMessageFor(m => m.Senha) %>
                 </li>
                 <li>
                     <%: Html.CheckBoxFor(m => m.RememberMe) %>

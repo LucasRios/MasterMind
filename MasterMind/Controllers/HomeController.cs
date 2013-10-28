@@ -10,8 +10,8 @@ namespace MasterMind.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("List", "Temas");
-            //return RedirectToAction("Login", "Account");
+           // return RedirectToAction("List", "Temas");
+            return RedirectToAction("Login", "Account");
            // return View();
         }
 

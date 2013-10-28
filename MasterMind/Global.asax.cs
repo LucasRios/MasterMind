@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterMind.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,8 +17,7 @@ namespace MasterMind
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
-
+            WebSecurityInitializer.Instance.EnsureInitialize(); 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
