@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+//using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
@@ -16,7 +16,7 @@ namespace MasterMind.Models
         {
         }
 
-        public DbSet<Cadastro> UserProfiles { get; set; }
+        //public DbSet<Cadastro> UserProfiles { get; set; }
     }
 
     public class RegisterExternalLoginModel
@@ -43,7 +43,7 @@ namespace MasterMind.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar Nova Senha")]
-        [Compare("NewPassword", ErrorMessage = "A nova senha não condiz com a confirmação")]
+        //[Compare("NewPassword", ErrorMessage = "A nova senha não condiz com a confirmação")]
         public string ConfirmPassword { get; set; }
     }
 

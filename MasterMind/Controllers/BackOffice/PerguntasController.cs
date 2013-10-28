@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Infraestrutura.Repositorios.Entidades;
+using Infraestrutura.Repositorios.Entidades.DTO;
 using Infraestrutura.Repositorios.Implementacao;
 
 namespace MasterMind.Controllers.BackOffice

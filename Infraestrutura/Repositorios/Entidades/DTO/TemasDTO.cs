@@ -5,7 +5,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 using Infraestrutura.Repositorios.Implementacao;
 
-namespace Infraestrutura.Repositorios.Entidades
+namespace Infraestrutura.Repositorios.Entidades.DTO
 {
     public class TemasDTO
     {

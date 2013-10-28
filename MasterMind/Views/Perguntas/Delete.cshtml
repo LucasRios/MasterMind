@@ -90,6 +90,7 @@
         @Html.HiddenFor(model => model.Txt_Perg)
         <br />
         <input class="btn btn-primary" type="submit" value="Excluir" /> |
-        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas/List", new { @Id_tema=@Model.Tema.Id_tema } )'"/>
+        @*<input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas/List", new { @Id_tema=@Model.Tema.Id_tema } )'"/>*@
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas")'"/>
     </p>
 }
