@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Infraestrutura.Repositorios.Entidades.Usuario>
+@{
+    ViewBag.Title = "Usuarios - Lista";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>USUARIOS</h2>
+
+<p>
+    <input class="btn btn-primary" type="button" value ="Incluir" onclick="window.location.href='@Url.Action("Create", "Usuario")'"/>
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_user)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sobrenome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email    )
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Senha    )
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dt_nasc  )
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pais     )
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cidade   )
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado   )
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sexo     )
+        </th>
+        <th>Ações</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_user)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sobrenome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email    )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Senha    )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dt_nasc  )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pais     )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cidade   )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado   )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sexo     )
+        </td>
+        <td>
+            <input class="btn btn-primary" type="button" value ="Editar" onclick="window.location.href='@Url.Action("Edit", "Usuario", new { Id = item.Id_user })'"/>
+            &nbsp;|&nbsp;<input class="btn btn-primary" type="button" value ="Detalhes" onclick="window.location.href='@Url.Action("Details", "Usuario", new { Id = item.Id_user })'"/>
+            &nbsp;|&nbsp;<input class="btn btn-primary" type="button" value ="Excluir" onclick="window.location.href='@Url.Action("Delete", "Usuario", new { Id = item.Id_user })'"/>
+        </td>
+    </tr>
+}
+
+</table>

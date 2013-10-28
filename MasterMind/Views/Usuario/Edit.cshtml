@@ -1,0 +1,21 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Usuario
+
+@{
+    ViewBag.Title = "Usuario - Editar";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>EDITAR USUÁRIO</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        @Html.Partial("Form")
+        <div>
+            <input class="btn btn-primary" type="submit" value="Salvar" />
+            <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Usuario")'"/>
+        </div>
+    </fieldset>
+}

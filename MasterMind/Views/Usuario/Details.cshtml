@@ -1,0 +1,17 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Usuario
+
+@{
+    ViewBag.Title = "Usuario - Detalhes";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>DETALHES USUÁRIO</h2>
+
+<fieldset>
+    @Html.Partial("FormView")
+</fieldset>
+<br />
+<div>
+    <input class="btn btn-primary" type="button" value ="Editar" onclick="window.location.href='@Url.Action("Edit", "Usuario", new { Id = Model.Id_user })'"/>
+    <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Usuario")'"/>
+</div>

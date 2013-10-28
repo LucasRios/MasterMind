@@ -41,23 +41,45 @@ fieldset
     color: #f00;
 }
 
-.cabecalho
+.titulo-app
 {
-    background-color: #0019b1;
+    /*background-color: #0019b1;*/
+    background-color: #3F9FD9;
+    float: left;
 }
-    .cabecalho h1
+    .titulo-app h1
     {
         margin: 0 0 0 0;
         color: #fff !important;
         text-align: center;
     }
 
+.cabecalho .opcoes
+{
+    float:right;
+} 
 .conteudo
 {
-    margin: 0px 5px 0px 5px;
+    margin: 50px 5px 0px 5px;
 }
 .conteudo h2
 {
     border-bottom: inset;
     margin-bottom: 5px;
+}
+
+#logo
+{
+    margin: 200px 0px 0px 450px;
+}
+
+.alternativas label
+{
+    display: inline;
+}
+
+.classCerto
+{
+    color: #f00;
+    font-weight: bolder;
 }

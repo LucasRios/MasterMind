@@ -26,23 +26,46 @@ namespace MasterMind.Controllers.BackOffice
         [HttpGet]
         public ActionResult Edit(Int32 Id)
         {
+            ViewBag.ListaTemas = TemasDTO.Lista();
             GenericoRep<Perguntas> repositorio = new GenericoRep<Perguntas>();
             Perguntas pergunta = repositorio.ObterPorId(Id);
             return View(pergunta);
         }
 
         [HttpPost]
-        public ActionResult Edit(Perguntas pergunta)
+        public ActionResult Edit(Perguntas pergunta, String RespostaCerta)
         {
+            Int32 respostaCerta = 0;
+            Int32.TryParse(RespostaCerta, out respostaCerta);
+
+            switch (respostaCerta)
+            {
+                case 1:
+                    pergunta.Resposta1.OpcaoCerta = true;
+                    break;
+                case 2:
+                    pergunta.Resposta2.OpcaoCerta = true;
+                    break;
+                case 3:
+                    pergunta.Resposta3.OpcaoCerta = true;
+                    break;
+            }
+
             GenericoRep<Perguntas> repositorio = new GenericoRep<Perguntas>();
             repositorio.Salvar(pergunta);
             return RedirectToAction("List");
         }
 
-        public ActionResult List()
+        public ActionResult List(Int32? Id_tema)
         {
+            ViewBag.ListaTemas = TemasDTO.Lista();
+
             GenericoRep<Perguntas> repositorio = new GenericoRep<Perguntas>();
-            IEnumerable<Perguntas> Perguntas = repositorio.ObterTodos();
+            IEnumerable<Perguntas> Perguntas = new List<Perguntas>();
+
+            if (Id_tema != null && Id_tema > 0)
+                Perguntas = repositorio.ObterTodos().Where(x => x.Tema.Id_tema == Id_tema);
+
             return View(Perguntas);
         }
 
@@ -64,12 +87,29 @@ namespace MasterMind.Controllers.BackOffice
         [HttpGet]
         public ActionResult Create()
         {
+            ViewBag.ListaTemas = TemasDTO.Lista();
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Perguntas pergunta)
+        public ActionResult Create(Perguntas pergunta, String RespostaCerta)
         {
+            Int32 respostaCerta = 0;
+            Int32.TryParse(RespostaCerta, out respostaCerta);
+
+            switch (respostaCerta)
+            {
+                case 1:
+                    pergunta.Resposta1.OpcaoCerta = true;
+                    break;
+                case 2:
+                    pergunta.Resposta2.OpcaoCerta = true;
+                    break;
+                case 3:
+                    pergunta.Resposta3.OpcaoCerta = true;
+                    break;
+            }
+
             GenericoRep<Perguntas> repositorio = new GenericoRep<Perguntas>();
             repositorio.Salvar(pergunta);
             return RedirectToAction("List");

@@ -1,0 +1,23 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Usuario
+
+@{
+    ViewBag.Title = "Usuario - Excluir";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+}
+
+<h2>EXCLUIR USUÁRIO</h2>
+
+<h3 class="msg-atencao">Você realmente quer EXCLUIR este USUÁRIO?</h3>
+<fieldset>
+    @Html.Partial("FormView")
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        @Html.HiddenFor(model => model.Id_user)
+        @Html.HiddenFor(model => model.Nome)
+        <br />
+        <input class="btn btn-primary" type="submit" value="Excluir" /> |
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Usuario")'"/>
+    </p>
+}

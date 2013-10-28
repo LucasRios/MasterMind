@@ -12,6 +12,12 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
+        <div class="editor-label">
+            @Html.Label("Tema")
+            @Html.DropDownListFor(u => u.Tema.Id_tema, new SelectList(ViewBag.ListaTemas, "Id_tema", "Desc_tema"), new { @class = "dropdownlist" })
+            @Html.ValidationMessageFor(model => model.Tema.Id_tema)
+        </div>
+
         <div class="editor-field">
             @Html.HiddenFor(model => model.Id_Perg)
             @Html.ValidationMessageFor(model => model.Id_Perg)
@@ -25,9 +31,53 @@
             @Html.ValidationMessageFor(model => model.Txt_Perg)
         </div>
 
+        <div class="alternativas">
+            @*Respotas*@
+            @*Resposta 1*@
+            <div class="editor-label">
+                @Html.RadioButton("RespostaCerta", 1, @Model.Resposta1.OpcaoCerta)
+                @Html.Label("Alternativa 1")
+            </div>
+            <div class="editor-field">
+                @Html.HiddenFor(model => model.Resposta1.Id_resp)
+                @Html.ValidationMessageFor(model => model.Resposta1.Id_resp)
+
+                @Html.TextBoxFor(model => model.Resposta1.Resp_txt, new  { @class="txtLarge" })
+                @Html.ValidationMessageFor(model => model.Resposta1.Resp_txt)
+            </div>
+
+            @*Resposta 2*@
+            <div class="editor-label">
+                @Html.RadioButton("RespostaCerta", 2, @Model.Resposta2.OpcaoCerta)
+                @Html.Label("Alternativa 2")
+            </div>
+            <div class="editor-field">
+                @Html.HiddenFor(model => model.Resposta2.Id_resp)
+                @Html.ValidationMessageFor(model => model.Resposta2.Id_resp)
+
+                @Html.TextBoxFor(model => model.Resposta2.Resp_txt, new  { @class="txtLarge" })
+                @Html.ValidationMessageFor(model => model.Resposta2.Resp_txt)
+            </div>
+
+
+            @*Resposta 3*@
+            <div class="editor-label">
+                @Html.RadioButton("RespostaCerta", 3, @Model.Resposta3.OpcaoCerta)
+                @Html.Label("Alternativa 3")
+            </div>
+            <div class="editor-field">
+                @Html.HiddenFor(model => model.Resposta3.Id_resp)
+                @Html.ValidationMessageFor(model => model.Resposta3.Id_resp)
+
+                @Html.TextBoxFor(model => model.Resposta3.Resp_txt, new  { @class="txtLarge" })
+                @Html.ValidationMessageFor(model => model.Resposta3.Resp_txt)
+            </div>
+        </div>
+
+
         <div>
             <input class="btn btn-primary" type="submit" value="Salvar" />
-            <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas")'"/>
+            <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas/List", new { @Id_tema=@Model.Tema.Id_tema } )'"/>
         </div>
     </fieldset>
 }

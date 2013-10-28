@@ -3,11 +3,37 @@
 @{
     ViewBag.Title = "Perguntas - Detalhes";
     Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+    
+    String classe1 = String.Empty;
+    String classe2 = String.Empty;
+    String classe3 = String.Empty;
+
+    if (Model.Resposta1.OpcaoCerta == true)
+    {
+        classe1 = "classCerto";
+    }
+    if (Model.Resposta2.OpcaoCerta == true)
+    {    
+        classe2 = "classCerto";
+    }
+    if (Model.Resposta3.OpcaoCerta == true)
+    {
+        classe3 = "classCerto";
+    }   
 }
 
 <h2>DETALHES PERGUNTAS</h2>
 
 <fieldset>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Tema.Desc_tema)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Tema.Desc_tema)
+    </div>
+
+    <br />
+
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Id_Perg)
     </div>
@@ -21,9 +47,42 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Txt_Perg)
     </div>
+
+    <br />
+
+    <div class="@classe1">
+        <div class="display-label">
+            @Html.Label("Alternativa 1")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Resposta1.Resp_txt)
+        </div>
+    </div>
+
+    <br />
+
+    <div class="@classe2">
+        <div class="display-label">
+            @Html.Label("Alternativa 2")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Resposta2.Resp_txt)
+        </div>
+    </div>
+
+    <br />
+
+    <div class="@classe3">
+        <div class="display-label">
+            @Html.Label("Alternativa 3")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Resposta3.Resp_txt)
+        </div>
+    </div>
 </fieldset>
 <br />
 <div>
     <input class="btn btn-primary" type="button" value ="Editar" onclick="window.location.href='@Url.Action("Edit", "Perguntas", new { Id = Model.Id_Perg })'"/>
-    <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas")'"/>
+    <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas/List", new { @Id_tema=@Model.Tema.Id_tema } )    '"/>
 </div>

@@ -13,7 +13,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Table("Temas");
             Id(x => x.Id_tema, "Id_tema").GeneratedBy.Identity();
             Map(x => x.Desc_tema);
-            HasMany<Personagens>(x => x.personagens).KeyColumn("Id_tema").LazyLoad().Cascade.All();
+            //HasMany<Personagens>(x => x.personagens).KeyColumn("Id_tema").LazyLoad().Cascade.All();
         }
     }
 }

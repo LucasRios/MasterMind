@@ -1,0 +1,24 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Usuario
+
+@{
+    ViewBag.Title = "Usuario - Incluir";
+    Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+    Html.EnableClientValidation(true); 
+}
+
+<h2>INCLUIR USUÁRIO</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        @Html.Partial("Form")
+    </fieldset>
+    <br />
+    <div>
+        <input class="btn btn-primary" type="submit" value="Incluir" />
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Usuario")'"/>
+    </div>
+}
+

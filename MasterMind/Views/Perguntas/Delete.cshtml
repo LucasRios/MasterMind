@@ -3,6 +3,22 @@
 @{
     ViewBag.Title = "Perguntas - Excluir";
     Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
+    String classe1 = String.Empty;
+    String classe2 = String.Empty;
+    String classe3 = String.Empty;
+
+    if (Model.Resposta1.OpcaoCerta == true)
+    {
+        classe1 = "classCerto";
+    }
+    if (Model.Resposta2.OpcaoCerta == true)
+    {
+        classe2 = "classCerto";
+    }
+    if (Model.Resposta3.OpcaoCerta == true)
+    {
+        classe3 = "classCerto";
+    }   
 }
 
 <h2>EXCLUIR PERGUNTA</h2>
@@ -10,17 +26,61 @@
 <h3 class="msg-atencao">Você realmente quer EXCLUIR esta PERGUNTA?</h3>
 <fieldset>
     <div class="display-label">
+         @Html.DisplayNameFor(model => model.Tema.Desc_tema)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Tema.Desc_tema)
+    </div>
+
+    <br />
+
+    <div class="display-label">
          @Html.DisplayNameFor(model => model.Id_Perg)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Id_Perg)
     </div>
+
     <br />
+
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Txt_Perg)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Txt_Perg)
+    </div>
+
+    <br />
+
+    <div class="@classe1">
+        <div class="display-label">
+            @Html.Label("Alternativa 1")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Resposta1.Resp_txt)
+        </div>
+    </div>
+
+    <br />
+
+    <div class="@classe2">
+        <div class="display-label">
+            @Html.Label("Alternativa 2")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Resposta2.Resp_txt)
+        </div>
+    </div>
+
+    <br />
+
+    <div class="@classe3">
+        <div class="display-label">
+            @Html.Label("Alternativa 3")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Resposta3.Resp_txt)
+        </div>
     </div>
 </fieldset>
 @using (Html.BeginForm()) {
@@ -30,6 +90,6 @@
         @Html.HiddenFor(model => model.Txt_Perg)
         <br />
         <input class="btn btn-primary" type="submit" value="Excluir" /> |
-        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas")'"/>
+        <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Perguntas/List", new { @Id_tema=@Model.Tema.Id_tema } )'"/>
     </p>
 }
