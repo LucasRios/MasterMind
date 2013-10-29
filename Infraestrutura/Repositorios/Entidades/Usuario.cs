@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Infraestrutura.Repositorios.Entidades
@@ -9,6 +10,7 @@ namespace Infraestrutura.Repositorios.Entidades
     public class Usuario
     {
         [Display(Name="Id Usuario")]
+        [Key]
         public virtual Int32 Id_user { get; set; }
 
         [Display(Name = "Nome Usuário")]
@@ -31,5 +33,6 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual String Estado { get; set; }
         [Required(ErrorMessage = "Campo Obrigatório.")]
         public virtual String Sexo { get; set; }
+
     }
 }

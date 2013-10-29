@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-//using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
@@ -16,7 +16,7 @@ namespace MasterMind.Models
         {
         }
 
-        //public DbSet<Cadastro> UserProfiles { get; set; }
+        public DbSet<Usuario> UserProfiles { get; set; }
     }
 
     public class RegisterExternalLoginModel
@@ -35,23 +35,25 @@ namespace MasterMind.Models
         [Display(Name = "Senha Atual")]
         public string OldPassword { get; set; }
 
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirmar Nova Senha")]
+        [Compare("NewPassword", ErrorMessage = "A nova senha não condiz com a confirmação")]
+        public string ConfirmPassword { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nova Senha")]
         public string Senha { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirmar Nova Senha")]
-        //[Compare("NewPassword", ErrorMessage = "A nova senha não condiz com a confirmação")]
-        public string ConfirmPassword { get; set; }
+
     }
 
     public class LoginModel
     {
         [Required]
-        [Display(Name = "Usuário")]
-        public string usuario { get; set; }
+        [Display(Name = "E-mail")]
+        public string email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

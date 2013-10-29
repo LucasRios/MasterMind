@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Infraestrutura.Repositorios.Entidades;
 using Infraestrutura.Repositorios.Entidades.DTO;
 using Infraestrutura.Repositorios.Implementacao;
+using WebMatrix.WebData;
 
 namespace MasterMind.Controllers.BackOffice
 {
@@ -37,7 +38,7 @@ namespace MasterMind.Controllers.BackOffice
         public ActionResult Edit(Usuario usuario)
         {
             GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
-            repositorio.Salvar(usuario);
+            repositorio.Salvar(usuario);                       
             return RedirectToAction("List");
         }
 
@@ -75,6 +76,7 @@ namespace MasterMind.Controllers.BackOffice
         {
             GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
             repositorio.Salvar(usuario);
+            WebSecurity.CreateAccount(usuario.Email, usuario.Senha);
             return RedirectToAction("List");
         }
     }

@@ -17,7 +17,7 @@ namespace MasterMind.Controllers
                     if (isNotInit)
                     {
                         isNotInit = false;
-                        WebSecurity.InitializeDatabaseConnection("Default", "Cadastro", "Id_User", "usuario", autoCreateTables: true);
+                        WebSecurity.InitializeDatabaseConnection("Default", "Usuario", "Id_User", "email", autoCreateTables: true);
                     }
                 }
             }

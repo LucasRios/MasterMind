@@ -15,9 +15,9 @@
             <legend>Log in</legend>
             <ol>
                 <li>
-                    <%: Html.LabelFor(m => m.usuario) %>
-                    <%: Html.TextBoxFor(m => m.usuario) %>
-                    <%: Html.ValidationMessageFor(m => m.usuario) %>
+                    <%: Html.LabelFor(m => m.email) %>
+                    <%: Html.TextBoxFor(m => m.email) %>
+                    <%: Html.ValidationMessageFor(m => m.email) %>
                 </li>
                 <li>
                     <%: Html.LabelFor(m => m.Senha) %>

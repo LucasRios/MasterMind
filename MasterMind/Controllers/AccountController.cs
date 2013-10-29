@@ -13,6 +13,7 @@ using MasterMind.Models;
 using Infraestrutura.Repositorios.Entidades;
 using Infraestrutura.Repositorios.Implementacao;
 using FluentNHibernate.Mapping;
+using Infraestrutura.Repositorios.Entidades.DTO;
 
 namespace MasterMind.Controllers
 {
@@ -38,7 +39,7 @@ namespace MasterMind.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.usuario, model.Senha, persistCookie: model.RememberMe))
+            if (ModelState.IsValid && WebSecurity.Login(model.email, model.Senha, persistCookie: model.RememberMe))
             {                
                 return RedirectToAction("Principal", "Game");
             }
@@ -66,6 +67,7 @@ namespace MasterMind.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.ListaSexo = SexoDTO.ListaSexo();
             return View();
         }
 
@@ -75,21 +77,22 @@ namespace MasterMind.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Cadastro model)
+        public ActionResult Register(Usuario model)
         {
+            ViewBag.ListaSexo = SexoDTO.ListaSexo();
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
-                {                 
-                    GenericoRep<Cadastro> repositorio = new GenericoRep<Cadastro>();
+                {
+                    GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
                     repositorio.Salvar(model);
-                    Cadastro auxcadastro = repositorio.ObterPorId(model.id_user);
+                    Usuario auxcadastro = repositorio.ObterPorId(model.Id_user);
 
                     if (auxcadastro != null)
                     {
-                        WebSecurity.CreateAccount(model.usuario, model.Senha);
-                        WebSecurity.Login(model.usuario, model.Senha);
+                        WebSecurity.CreateAccount(model.Email, model.Senha);
+                        WebSecurity.Login(model.Email, model.Senha);
                     }
                    
                     return RedirectToAction("Principal", "Game");
@@ -145,7 +148,11 @@ namespace MasterMind.Controllers
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
-            return View();
+
+            GenericoRep<Manage> repositorio = new GenericoRep<Manage>();
+            Manage aux = repositorio.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+
+            return View(aux);
         }
 
         //
@@ -153,7 +160,7 @@ namespace MasterMind.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Manage(Cadastro model)
+        public ActionResult Manage(Manage model)
         {
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.HasLocalPassword = hasLocalAccount;
@@ -163,13 +170,13 @@ namespace MasterMind.Controllers
                 if (ModelState.IsValid)
                 {
                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.
-                    bool changePasswordSucceeded = false;
+                    bool changePasswordSucceeded = false;                  
                     try
                     {
-                        GenericoRep<Cadastro> repositorio = new GenericoRep<Cadastro>();
+                        GenericoRep<Manage> repositorio = new GenericoRep<Manage>();
+                        repositorio.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
                         repositorio.Salvar(model);
-                        Cadastro auxcadastro = repositorio.ObterPorId(model.id_user);
-                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.Senha);                        
+                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.Senha);
                     }
                     catch (Exception)
                     {

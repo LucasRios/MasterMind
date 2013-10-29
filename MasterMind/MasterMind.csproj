@@ -167,6 +167,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BackOffice\BackOfficeController.cs" />
     <Compile Include="Controllers\BackOffice\PerguntasController.cs" />
     <Compile Include="Controllers\BackOffice\PersonagensController.cs" />
