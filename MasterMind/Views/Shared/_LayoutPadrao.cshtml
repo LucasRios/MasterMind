@@ -4,62 +4,68 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>@ViewBag.Title</title>
-    </head>
-    <body>
-        <script src="~/Scripts/BO/additional-methods.min-1.11.1.js"></script>
-        <script src="~/Scripts/BO/jquery-1.9.1.min.js"></script>
-        <script src="~/Scripts/BO/jquery.validate.min-1.11.1.js"></script>
-        <script src="~/Scripts/BO/jquery.validate.unobtrusive.min.js"></script>
-        <script src="~/Scripts/BO/bootstrap.min.js"></script>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <script src="~/Scripts/BO/additional-methods.min-1.11.1.js"></script>
+    <script src="~/Scripts/BO/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/BO/jquery.validate.min-1.11.1.js"></script>
+    <script src="~/Scripts/BO/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/BO/bootstrap.min.js"></script>
 
-        <link href="~/Styles/backoffice.css" rel="stylesheet" />
-        <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
-        <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Styles/backoffice.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
 
-        <div class="cabecalho">
-            <div class="navbar navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container-fluid">
-                        <div class="titulo-app">
-                            <div class="row">
-                                <a href="@Url.Action("Index", "BackOffice")"><h1>Master Mind | Back Office |</h1></a>
-                            </div>
+    <div class="cabecalho">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <div class="titulo-app">
+                        <div class="row">
+                            <a href="@Url.Action("Index", "BackOffice")">
+                                <h1>Master Mind | Back Office |</h1>
+                            </a>
                         </div>
+                    </div>
 
-                        <div class="btn-group pull-right">
+                    <div class="btn-group pull-right">
 
-                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user">
-                            </i>&nbsp;@nomeUsuario <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Perfil</a></li>
-                                <li class="divider"></li>
-                                <li><a href="@Url.Action("Logoff", "Usuario")">Logoff</a></li>
-                            </ul>                    
-                        </div>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user"></i>&nbsp;@nomeUsuario <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Perfil</a></li>
+                            <li class="divider"></li>
+                            <li>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                                }
+                            </li>
+                        </ul>
+                    </div>
 
-                        <div class="nav-collapse collapse opcoes">
-                            <ul class="nav">
-                                <li><a href="@Url.Action("Index", "Temas")">Temas</a></li>
-                                <li><a href="@Url.Action("Index", "Personagens")">Personagens</a></li>
-                                <li><a href="@Url.Action("Index", "Perguntas")">Perguntas</a></li>
-                                <li><a href="@Url.Action("Index", "Usuario")">Usuarios</a></li>
-                            </ul>
-                        </div>
+                    <div class="nav-collapse collapse opcoes">
+                        <ul class="nav">
+                            <li><a href="@Url.Action("Index", "Temas")">Temas</a></li>
+                            <li><a href="@Url.Action("Index", "Personagens")">Personagens</a></li>
+                            <li><a href="@Url.Action("Index", "Perguntas")">Perguntas</a></li>
+                            <li><a href="@Url.Action("Index", "Usuario")">Usuarios</a></li>
+                        </ul>
+                    </div>
 
-                        <div>
-
-                        </div>
+                    <div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <div class="conteudo">
-            @RenderBody()
-        </div>
-    </body>
+    <div class="conteudo">
+        @RenderBody()
+    </div>
+</body>
 </html>

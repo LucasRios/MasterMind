@@ -21,6 +21,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Map(x => x.Cidade );
             Map(x => x.Estado );
             Map(x => x.Sexo);
+            Map(x => x.Id_perfil);
         }
     }
 }

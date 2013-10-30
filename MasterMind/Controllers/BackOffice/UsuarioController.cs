@@ -29,6 +29,7 @@ namespace MasterMind.Controllers.BackOffice
         public ActionResult Edit(Int32 Id)
         {
             ViewBag.ListaSexo = SexoDTO.ListaSexo();
+            ViewBag.ListaPerfil = PerfilDTO.ListaPerfil();
             GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
             Usuario usuario = repositorio.ObterPorId(Id);
             return View(usuario);
@@ -68,6 +69,7 @@ namespace MasterMind.Controllers.BackOffice
         public ActionResult Create()
         {
             ViewBag.ListaSexo = SexoDTO.ListaSexo();
+            ViewBag.ListaPerfil = PerfilDTO.ListaPerfil();
             return View();
         }
 
@@ -79,5 +81,6 @@ namespace MasterMind.Controllers.BackOffice
             WebSecurity.CreateAccount(usuario.Email, usuario.Senha);
             return RedirectToAction("List");
         }
+
     }
 }

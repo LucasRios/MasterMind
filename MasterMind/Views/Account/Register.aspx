@@ -10,6 +10,9 @@
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary() %>
 
+
+    <%: Html.HiddenFor(model => model.Id_perfil, new { @Value = "2"})%>
+
     <fieldset style="margin-left: 40px;">
         <legend>Registration Form</legend>
         <table>

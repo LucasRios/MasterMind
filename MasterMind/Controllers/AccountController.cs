@@ -38,10 +38,19 @@ namespace MasterMind.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
-        {
+        {              
             if (ModelState.IsValid && WebSecurity.Login(model.email, model.Senha, persistCookie: model.RememberMe))
-            {                
+            {
+                GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
+                Usuario aux = repositorio.ObterPorId(WebSecurity.GetUserId(model.email));                
+                
+                if (aux.Id_perfil == 2){
                 return RedirectToAction("Principal", "Game");
+                }
+                else if (aux.Id_perfil == 1)
+                {
+                    return RedirectToAction("Index", "BackOffice");
+                }
             }
 
             // If we got this far, something failed, redisplay form

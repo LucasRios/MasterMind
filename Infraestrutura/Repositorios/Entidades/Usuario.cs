@@ -34,5 +34,7 @@ namespace Infraestrutura.Repositorios.Entidades
         [Required(ErrorMessage = "Campo Obrigatório.")]
         public virtual String Sexo { get; set; }
 
+        public virtual Int32 Id_perfil { get; set; }
+
     }
 }

@@ -60,12 +60,15 @@
     <Compile Include="NH\NHSessionFactoryManager.cs" />
     <Compile Include="NH\NHSessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Entidades\DTO\PerfilDTO.cs" />
     <Compile Include="Repositorios\Entidades\DTO\SexoDTO.cs" />
     <Compile Include="Repositorios\Entidades\DTO\TemasDTO.cs" />
     <Compile Include="Repositorios\Entidades\Manage.cs" />
     <Compile Include="Repositorios\Entidades\Map\ManageMap.cs" />
+    <Compile Include="Repositorios\Entidades\Map\PerfilMap.cs" />
     <Compile Include="Repositorios\Entidades\Map\RespostasMap.cs" />
     <Compile Include="Repositorios\Entidades\Map\UsuarioMap.cs" />
+    <Compile Include="Repositorios\Entidades\Perfil.cs" />
     <Compile Include="Repositorios\Entidades\Respostas.cs" />
     <Compile Include="Repositorios\Entidades\Map\PerguntasMap.cs" />
     <Compile Include="Repositorios\Entidades\Perguntas.cs" />
