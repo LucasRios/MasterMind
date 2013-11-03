@@ -18,7 +18,7 @@ insert into perfil values(2,'Jogador');
 
 
 ALTER TABLE Usuario
-ADD Id_perfil int not null,
+ADD Id_perfil int null,
 CONSTRAINT FK_perfil  FOREIGN KEY(Id_perfil) REFERENCES Perfil(Id_perfil)
 
 GO

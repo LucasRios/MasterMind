@@ -23,10 +23,16 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual String Email { get; set; }
         [Required(ErrorMessage = "Campo Obrigatório.")]
         public virtual String Senha { get; set; }
+
+        [Display(Name = "Data Nascimento")]
+        [DataType(DataType.DateTime), DisplayFormat(DataFormatString="{0: dd/MM/yyyy}", ApplyFormatInEditMode=true)]
         [Required(ErrorMessage = "Campo Obrigatório.")]
         public virtual DateTime Dt_nasc { get; set; }
+
+        [Display(Name = "País")]
         [Required(ErrorMessage = "Campo Obrigatório.")]
         public virtual String Pais { get; set; }
+        
         [Required(ErrorMessage = "Campo Obrigatório.")]
         public virtual String Cidade { get; set; }
         [Required(ErrorMessage = "Campo Obrigatório.")]

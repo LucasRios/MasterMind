@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Infraestrutura.Repositorios.Entidades;
@@ -76,9 +78,16 @@ namespace MasterMind.Controllers.BackOffice
         [HttpPost]
         public ActionResult Create(Usuario usuario)
         {
+            CultureInfo culturaAtual = Thread.CurrentThread.CurrentCulture;
+            CultureInfo culturaUS = CultureInfo.GetCultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = culturaUS;
+
             GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
             repositorio.Salvar(usuario);
             WebSecurity.CreateAccount(usuario.Email, usuario.Senha);
+
+            Thread.CurrentThread.CurrentCulture = culturaAtual;
+
             return RedirectToAction("List");
         }
 
