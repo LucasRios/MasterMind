@@ -13,6 +13,7 @@ namespace Infraestrutura.Repositorios.Entidades
 
         [Display(Name = "Pergunta")]
         [Required(ErrorMessage="Campo Obrigatório.")]
+        [StringLength(256, ErrorMessage = "Máximo 256 caracteres.")]
         public virtual String Txt_Perg { get; set; }
 
         public virtual Temas Tema { get; set; }

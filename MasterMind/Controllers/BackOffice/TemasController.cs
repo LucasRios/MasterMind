@@ -57,8 +57,17 @@ namespace MasterMind.Controllers.BackOffice
         public ActionResult Delete(Temas tema)
         {
             GenericoRep<Temas> repositorio = new GenericoRep<Temas>();
-            repositorio.Excluir(tema);
-            return RedirectToAction("List");
+            try
+            {
+                repositorio.Excluir(tema);
+                return RedirectToAction("List");
+            }
+            catch
+            {
+                TempData["notice"] = "Este tema nao pode ser excluido pois existem perguntas relacionadas a ele.";                 
+            }
+            return View(tema) ;
+            
         }
 
         [HttpGet]

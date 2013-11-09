@@ -5,9 +5,12 @@
     Layout = "~/Views/Shared/_LayoutPadrao.cshtml";
 }
 
+
+
 <h2>EXCLUIR TEMA</h2>
 
 <h3 class="msg-atencao">Você realmente quer EXCLUIR este TEMA?</h3>
+<h3 class="msg-atencao">@TempData["notice"]</h3>
 <fieldset>
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Id_tema)
@@ -31,5 +34,5 @@
         <br />
         <input class="btn btn-primary" type="submit" value="Excluir" /> |
         <input class="btn btn-primary" type="button" value ="Voltar" onclick="window.location.href='@Url.Action("Index", "Temas")'"/>
-    </p>
+    </p>    
 }

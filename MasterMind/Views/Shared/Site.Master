@@ -37,7 +37,6 @@
         </header>
         <div id="body">
             <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
-
                 <asp:ContentPlaceHolder ID="MainContent" runat="server" />
 
         </div>

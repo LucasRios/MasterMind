@@ -176,6 +176,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BackOffice\TemasController.cs" />
     <Compile Include="App_Start\WebSecurityInitializer.cs" />
+    <Compile Include="Controllers\SalasController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -276,6 +277,8 @@
     <Content Include="Styles\bootstrap.min.css" />
     <Content Include="Views\Game\Partida.aspx" />
     <Content Include="Views\Game\Principal.aspx" />
+    <Content Include="Views\Salas\List.aspx" />
+    <Content Include="Views\Salas\Create.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

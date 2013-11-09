@@ -15,6 +15,5 @@ namespace Infraestrutura.Repositorios.Entidades
         [Required(ErrorMessage="Campo Obrigatório.")]
         public virtual String Desc_person { get; set; }
 
-        public virtual Temas Tema { get; set; }
     }
 }

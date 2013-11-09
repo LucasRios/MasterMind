@@ -15,6 +15,7 @@ namespace Infraestrutura.Repositorios.Entidades
 
         [Display(Name = "Descrição Tema")]
         [Required(ErrorMessage="Campo Obrigatório.")]
+        [StringLength(15, ErrorMessage = "Máximo 15 caracteres.")]
         public virtual String Desc_tema { get; set; }
 
         //public virtual IList<Personagens> personagens { get; protected set; }

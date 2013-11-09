@@ -13,7 +13,6 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Table("Personagens");
             Id(x => x.Id_person, "Id_person").GeneratedBy.Identity();
             Map(x => x.Desc_person);
-            References(x => x.Tema).Column("Id_tema").Cascade.None().LazyLoad();
         }
     }
 }

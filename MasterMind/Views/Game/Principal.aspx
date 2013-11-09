@@ -2,11 +2,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-<h2>Principal</h2>
-
+    <% Html.RenderAction("List","Salas"); %>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
+    
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptsSection" runat="server">

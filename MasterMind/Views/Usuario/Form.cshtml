@@ -20,7 +20,7 @@
             @Html.LabelFor(model => model.Senha)
         </div>
         <div class="editor-field">
-            @Html.PasswordFor(model => model.Senha, new { tabindex = 4 })
+            @Html.TextBoxFor(model => model.Senha, new { tabindex = 4 })
             @Html.ValidationMessageFor(model => model.Senha)
         </div>
 
