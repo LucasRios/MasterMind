@@ -11,10 +11,10 @@ namespace Infraestrutura.Repositorios.Entidades.Map
         public SalaMap()
         {
             Table("Salas");
-            Id(x => x.Id_Sala, "Id_sala").GeneratedBy.Identity();
+            Id(x => x.Id_Sala, "Id_Sala").GeneratedBy.Identity();
             Map(x => x.Sala);
             Map(x => x.Perfil);
-            Map(x => x.Id_usuario);
+            Map(x => x.Id_Usuario);
             Map(x => x.Senha);
         }
     }

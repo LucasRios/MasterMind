@@ -50,12 +50,14 @@ namespace MasterMind.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Salas model)
         {
             GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
             repositorio.Salvar(model);
 
-            return RedirectToAction("List");
+            return RedirectToAction("List","Salas");
         }
 
     }

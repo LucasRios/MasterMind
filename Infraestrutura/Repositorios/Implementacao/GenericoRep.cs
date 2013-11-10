@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using Infraestrutura.NH;
+using NHibernate.Criterion;
 
 namespace Infraestrutura.Repositorios.Implementacao
 {

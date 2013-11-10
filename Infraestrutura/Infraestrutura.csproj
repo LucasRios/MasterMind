@@ -60,6 +60,8 @@
     <Compile Include="NH\NHSessionFactoryManager.cs" />
     <Compile Include="NH\NHSessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Entidades\Map\RankingMap.cs" />
+    <Compile Include="Repositorios\Entidades\Ranking.cs" />
     <Compile Include="Repositorios\Entidades\Map\SalaMap.cs" />
     <Compile Include="Repositorios\Entidades\Salas.cs" />
     <Compile Include="Repositorios\Entidades\DTO\PerfilDTO.cs" />

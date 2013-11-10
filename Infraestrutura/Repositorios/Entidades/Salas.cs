@@ -9,7 +9,8 @@ namespace Infraestrutura.Repositorios.Entidades
 {
     public class Salas
     {
-        [Display(Name = "Id Sala")]
+        [Display(Name = "Id_Sala")]
+        [Key]
         public virtual Int32 Id_Sala { get; set; }
 
         [Display(Name = "Descrição Sala")]
@@ -23,6 +24,6 @@ namespace Infraestrutura.Repositorios.Entidades
         [StringLength(25, ErrorMessage = "Máximo 25 caracteres.")]
         public virtual String Senha { get; set; }
 
-        public virtual Int32 Id_usuario { get; set; }     
+        public virtual Int32 Id_Usuario { get; set; }     
     }
 }

@@ -24,6 +24,7 @@
 </style>
 
 <fieldset>
+    <h1>Acesse uma sala abaixo</h1>
     <table class="space">
         <tr class="main">
             <td>Sala
@@ -44,7 +45,7 @@
                 <%:  @Html.DisplayFor(modelItem => item.Sala)%>
             </td>
             <td>
-                <%:  @Html.DisplayFor(modelItem => item.Id_usuario)%>
+                <%:  @Html.DisplayFor(modelItem => item.Id_Usuario)%>
             </td>
             <td>0
             </td>

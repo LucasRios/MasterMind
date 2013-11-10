@@ -1,15 +1,18 @@
-﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Salas>" %>
+﻿<%@ Page Language="C#"  Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Salas>" %>
 
-<% using (Html.BeginForm("Principal", "Game"))
-   { %>
+
+
+
+
+    <% using (Html.BeginForm("Principal", "Game"))
+       { %>
 <%: Html.AntiForgeryToken() %>
 <%: Html.ValidationSummary() %>
 
 <fieldset>
     <div class="editor-field">
-        <%: @Html.HiddenFor(model => model.Id_Sala)%>
-        <%: @Html.ValidationMessageFor(model => model.Id_Sala)%>
         <%: Html.HiddenFor(model => model.Perfil, new { @Value = "2"})%>
+        <h1>Crie sua propria Sala</h1>
     </div>
     <table>
         <tr>
@@ -61,3 +64,6 @@
 </fieldset>
 
 <% } %>
+  
+
+
