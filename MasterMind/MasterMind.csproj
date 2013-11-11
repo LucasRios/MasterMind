@@ -172,6 +172,7 @@
     <Compile Include="Controllers\BackOffice\PerguntasController.cs" />
     <Compile Include="Controllers\BackOffice\PersonagensController.cs" />
     <Compile Include="Controllers\BackOffice\UsuarioController.cs" />
+    <Compile Include="Controllers\JogosController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BackOffice\TemasController.cs" />
@@ -279,6 +280,7 @@
     <Content Include="Views\Game\Ranking_top.aspx" />
     <Content Include="Views\Game\Partida.aspx" />
     <Content Include="Views\Game\Principal.aspx" />
+    <Content Include="Views\Salas\Acesso.aspx" />
     <Content Include="Views\Salas\List.aspx" />
     <Content Include="Views\Salas\Create.aspx" />
     <Content Include="Web.config">

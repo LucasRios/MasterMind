@@ -34,9 +34,9 @@
                     <%:    @Html.LabelFor(model => model.Perfil)%>
                 </div>
             </td>
-            <td>
-                <div class="editor-field">
-                    <input type="radio" name="beds" value="1" checked="checked" style="margin-right: 0; width: 30px" /><asp:label id="Label23" runat="server" font-bold="True" width="80%">Privado</asp:label>
+            <td style="text-align:left;">
+                <div>
+                    <input type="radio" name="beds" value="1" checked="checked" style="margin-right: 0; width: 30px" /><asp:label id="Label23" runat="server" font-bold="True" width="80%" style="text-align:left;">Privado</asp:label>
                 </div>
             </td>
         </tr>
