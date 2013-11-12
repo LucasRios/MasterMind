@@ -3,9 +3,7 @@ using Infraestrutura.Repositorios.Entidades.DTO;
 using Infraestrutura.Repositorios.Implementacao;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using WebMatrix.WebData;
@@ -39,27 +37,47 @@ namespace MasterMind.Controllers
         }
 
         [HttpGet]
-        public ActionResult Acesso()
+        public ActionResult Acesso(Int32 Id)
         {
             ViewBag.ListaTemas = TemasDTO.Lista();
-            return View();
+
+            GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
+            IEnumerable<Jogos> Jogos = new List<Jogos>();
+
+            Jogos = repositorio.ObterTodos().Where(x => x.Sala.Id_Sala == Id);
+
+
+
+            Jogos jogo = new Jogos();
+            GenericoRep<Usuario> usuario = new GenericoRep<Usuario>();
+            GenericoRep<Salas> sala = new GenericoRep<Salas>();
+            
+            jogo.Usuario = usuario.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+            jogo.Sala = sala.ObterPorId(Id);
+
+            jogo.Id_jogo = 0;
+
+
+            return View(jogo);
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Jogos model)
+        public ActionResult Acesso(Jogos model)
         {
-            GenericoRep<Usuario> usuario = new GenericoRep<Usuario>();
-            model.Usuario = usuario.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+            GenericoRep<Salas> sala = new GenericoRep<Salas>();
+            Salas auxSala = sala.ObterPorId(model.Sala.Id_Sala);
 
-            GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
-            model.Id_jogo = 0;
+            if (auxSala.Senha == model.Sala.Senha) 
+            {
+                GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
 
+                repositorio.Salvar(model);
+                return RedirectToAction("Partida", "Game");
+            }
 
-            repositorio.Salvar(model);
-
-            return RedirectToAction("List","Salas");
+            return View();
         }
 
     }

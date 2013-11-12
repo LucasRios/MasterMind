@@ -1,14 +1,12 @@
-﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Jogos>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Jogos>" %>
 
-<% using (Html.BeginForm("Principal", "Game"))
-   { %>
-<%: Html.AntiForgeryToken() %>
-<%: Html.ValidationSummary() %>
-
-
+<asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
+    <% using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) { %>
+        <%: Html.AntiForgeryToken() %>
+        <%: Html.ValidationSummary(true) %>
 <fieldset>
-    <div style="text-align: center">
-        <h1>Acesso à sala <%: @Html.LabelFor(model => model.Sala.Sala)%> </h1>
+    <div>
+        <h1>Acesso à sala <%: @Html.DisplayTextFor(model => model.Sala.Sala)%> </h1>
     </div>
     <table>
         <tr>
@@ -40,5 +38,5 @@
         </tr>
     </table>
 </fieldset>
-
-<% } %>
+ <% } %>
+</asp:Content>

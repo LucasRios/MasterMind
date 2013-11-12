@@ -280,7 +280,7 @@
     <Content Include="Views\Game\Ranking_top.aspx" />
     <Content Include="Views\Game\Partida.aspx" />
     <Content Include="Views\Game\Principal.aspx" />
-    <Content Include="Views\Salas\Acesso.aspx" />
+    <Content Include="Views\Jogos\Acesso.aspx" />
     <Content Include="Views\Salas\List.aspx" />
     <Content Include="Views\Salas\Create.aspx" />
     <Content Include="Web.config">

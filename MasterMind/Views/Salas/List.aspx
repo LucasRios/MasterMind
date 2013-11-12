@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<List<Infraestrutura.Repositorios.Entidades.Salas>>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<List<Infraestrutura.Repositorios.Entidades.Salas>>" %>
 
-<% using (Html.BeginForm("Principal", "Game"))
-   { %>
-<%: Html.AntiForgeryToken() %>
-<%: Html.ValidationSummary() %>
+<asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
+    <% using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) { %>
+        <%: Html.AntiForgeryToken() %>
+        <%: Html.ValidationSummary(true) %>
 
 <style type="text/css">
     table.space {
@@ -53,11 +53,12 @@
                 <%:  @Html.DisplayFor(modelItem => item.Perfil)%>
             </td>
             <td>
-                <input type="button" value="Acessar" />
+                <input type="button" value="Acessar" onclick="window.location.href='<%: @Url.Action("Acesso", "Jogos", new { Id = item.Id_Sala })%>    '" />
             </td>
         </tr>
         <% } %>
     </table>
 </fieldset>
+    <% } %>
 
-<% } %>
+</asp:Content>

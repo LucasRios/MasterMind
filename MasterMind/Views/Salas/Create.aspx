@@ -1,15 +1,11 @@
-﻿<%@ Page Language="C#"  Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Salas>" %>
+﻿<%@ Page Language="C#"  MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Salas>" %>
 
-
-
-
-
-    <% using (Html.BeginForm("Principal", "Game"))
-       { %>
-<%: Html.AntiForgeryToken() %>
-<%: Html.ValidationSummary() %>
-
+<asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
+    <% using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) { %>
+        <%: Html.AntiForgeryToken() %>
+        <%: Html.ValidationSummary(true) %>
 <fieldset>
+    <legend>Create</legend>
     <div class="editor-field">
         <%: Html.HiddenFor(model => model.Perfil, new { @Value = "2"})%>
         <h1>Crie sua propria Sala</h1>
@@ -49,7 +45,7 @@
             <td>
                 <div class="editor-field">
                     <%:  @Html.TextBoxFor(model => model.Senha, new  { @class="txtMedium" })%>
-                    <%:  @Html.ValidationMessageFor(model => model.Senha)%>
+                    <%:  @Html.ValidationMessageFor(model => model.Senha)%>                     
                 </div>
             </td>
         </tr>
@@ -62,8 +58,8 @@
         </tr>
     </table>
 </fieldset>
-
-<% } %>
+    <% } %>
+    </asp:Content>
   
 
 

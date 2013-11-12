@@ -56,12 +56,8 @@ namespace MasterMind.Controllers
         {
             GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
             repositorio.Salvar(model);
-
-            Jogos jogos = new Jogos();
-            jogos.Id_jogo = WebSecurity.GetUserId(User.Identity.Name);
-            jogos.Sala = model;
-
-            return PartialView("Acesso", jogos);
+           
+            return RedirectToAction("Acesso", "Jogos", new { Id = model.Id_Sala });
         }
 
     }
