@@ -7,24 +7,30 @@
 <fieldset>
     <div>
         <h1>Acesso à sala <%: @Html.DisplayTextFor(model => model.Sala.Sala)%> </h1>
+        <%: Html.HiddenFor(model => model.Id_sala)%>
     </div>
     <table>
         <tr>
-            <td>Temas Disponíveis
+            <td><div class="editor-label">Temas Disponíveis</div>
             </td>
             <td>
-                <%   using (Html.BeginForm("Acesso", "Salas", FormMethod.Get)) { %>
-                <%:  @Html.DropDownList("Id_tema", new SelectList(ViewBag.ListaTemas, "Id_tema", "Desc_tema"), new { @class = "dropdownlist" }) %>
-                <%   } %>
+                <%:  @Html.DropDownListFor(u => u.Id_tema, new SelectList(ViewBag.ListaTemas, "Id_tema", "Desc_tema"), new { @class = "dropdownlist"})%>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="editor-label">Nível de Dificuldade</div>
+            </td>
+            <td>
+                <%:  @Html.DropDownListFor(u => u.Id_nivel, new SelectList(ViewBag.ListaNiveis, "Id_nivel", "descricao"), new { @class = "dropdownlist"})%>
             </td>
         </tr>
         <tr>
             <td>
-                Senha de Acesso
+               <div class="editor-label"> Senha de Acesso </div>
             </td>
             <td>
                 <div class="editor-field">
-                    <%:  @Html.TextBoxFor(model => model.Sala.Senha, new  { @class="txtMedium" })%>
+                    <%:  @Html.TextBoxFor(model => model.Senha, new  { @class="txtMedium" })%>
                     <%:  @Html.ValidationMessageFor(model => model.Sala.Senha)%>
                 </div>
             </td>

@@ -45,15 +45,15 @@
                 <%:  @Html.DisplayFor(modelItem => item.Sala)%>
             </td>
             <td>
-                <%:  @Html.DisplayFor(modelItem => item.Id_Usuario)%>
+                <%:  @Html.DisplayFor(modelItem => item.Usuario.Nome)%>
             </td>
             <td>0
             </td>
             <td>
-                <%:  @Html.DisplayFor(modelItem => item.Perfil)%>
+                <%:  @Html.DisplayFor(modelItem => item.Desc_perfil)%>
             </td>
             <td>
-                <input type="button" value="Acessar" onclick="window.location.href='<%: @Url.Action("Acesso", "Jogos", new { Id = item.Id_Sala })%>    '" />
+                <input type="button" value="Acessar" onclick="window.location.href='<%: @Url.Action("Acesso", "Jogos", new { Id = item.Id_Sala, senha = "" })%>    '" />
             </td>
         </tr>
         <% } %>

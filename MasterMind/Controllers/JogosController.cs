@@ -37,9 +37,10 @@ namespace MasterMind.Controllers
         }
 
         [HttpGet]
-        public ActionResult Acesso(Int32 Id)
+        public ActionResult Acesso(Int32 Id, String senha)
         {
             ViewBag.ListaTemas = TemasDTO.Lista();
+            ViewBag.ListaNiveis = NivelDTO.ListaNivel();
 
             GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
             IEnumerable<Jogos> Jogos = new List<Jogos>();
@@ -48,17 +49,17 @@ namespace MasterMind.Controllers
 
 
 
-            Jogos jogo = new Jogos();
-            GenericoRep<Usuario> usuario = new GenericoRep<Usuario>();
+            Jogos model = new Jogos();
+            model.Id_sala = Id;
             GenericoRep<Salas> sala = new GenericoRep<Salas>();
-            
-            jogo.Usuario = usuario.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
-            jogo.Sala = sala.ObterPorId(Id);
 
-            jogo.Id_jogo = 0;
+            model.Sala = sala.ObterPorId(model.Id_sala);
+            model.Id_jogo = 0;
+
+            if (senha != "") { model.Senha=senha; }
 
 
-            return View(jogo);
+            return View(model);
         }
 
         [HttpPost]
@@ -66,10 +67,17 @@ namespace MasterMind.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Acesso(Jogos model)
         {
+            GenericoRep<Usuario> usuario = new GenericoRep<Usuario>();
             GenericoRep<Salas> sala = new GenericoRep<Salas>();
-            Salas auxSala = sala.ObterPorId(model.Sala.Id_Sala);
+            GenericoRep<Temas> tema = new GenericoRep<Temas>();
+            GenericoRep<Nivel> nivel = new GenericoRep<Nivel>();
 
-            if (auxSala.Senha == model.Sala.Senha) 
+            model.Usuario = usuario.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+            model.Sala = sala.ObterPorId(model.Id_sala);
+            model.Tema = tema.ObterPorId(model.Id_tema);
+            model.Niveis = nivel.ObterPorId(model.Id_nivel);
+
+            if (model.Senha == model.Sala.Senha) 
             {
                 GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
 
@@ -77,7 +85,11 @@ namespace MasterMind.Controllers
                 return RedirectToAction("Partida", "Game");
             }
 
-            return View();
+            ViewBag.ListaTemas = TemasDTO.Lista();
+            ViewBag.ListaNiveis = NivelDTO.ListaNivel();
+
+            ModelState.AddModelError("", "A senha para acesso à sala está incorreta");
+            return View(model);
         }
 
     }

@@ -24,7 +24,19 @@ namespace MasterMind.Controllers
         {
             GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
             IEnumerable<Salas> sala = new List<Salas>();
+
+            GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
+            GenericoRep<Perfil> perfil = new GenericoRep<Perfil>();
+
             sala = repositorio.ObterTodos();
+
+            foreach (var i in sala)
+            {
+                if (i.Id_Usuario !=0) { i.Usuario = usu.ObterPorId(i.Id_Usuario); }
+                if (i.Perfil == 1) { i.Desc_perfil = "Pública"; }
+                else { i.Desc_perfil = "Privada"; }
+            }
+
             return View(sala);
         }
 
@@ -55,9 +67,10 @@ namespace MasterMind.Controllers
         public ActionResult Create(Salas model)
         {
             GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
+            model.Id_Usuario = WebSecurity.GetUserId(User.Identity.Name);
             repositorio.Salvar(model);
            
-            return RedirectToAction("Acesso", "Jogos", new { Id = model.Id_Sala });
+            return RedirectToAction("Acesso", "Jogos", new { Id = model.Id_Sala, senha = model.Senha });
         }
 
     }

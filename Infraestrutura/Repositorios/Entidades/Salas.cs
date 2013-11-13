@@ -18,12 +18,16 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual String Sala { get; set; }
 
         [Display(Name = "Perfil")]
-        public virtual String Perfil { get; set; }
+        public virtual Int32 Perfil { get; set; }
 
         [Display(Name = "Senha")]
         [StringLength(25, ErrorMessage = "Máximo 25 caracteres.")]
         public virtual String Senha { get; set; }
 
-        public virtual Int32 Id_Usuario { get; set; }     
+        public virtual Int32 Id_Usuario { get; set; }
+
+        public virtual Usuario Usuario { get; set; }
+        public virtual String Desc_perfil { get; set; }
+
     }
 }

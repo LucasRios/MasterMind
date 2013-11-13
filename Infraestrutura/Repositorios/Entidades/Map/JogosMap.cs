@@ -15,6 +15,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             References(x => x.Tema).Column("Id_tema").Cascade.None().LazyLoad();
             References(x => x.Usuario).Column("Id_user").Cascade.None().LazyLoad();
             References(x => x.Sala).Column("Id_sala").Cascade.None().LazyLoad();
+            References(x => x.Niveis).Column("Id_nivel").Cascade.None().LazyLoad();
         }
     }
 }
