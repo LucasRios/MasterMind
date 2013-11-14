@@ -40,7 +40,6 @@ namespace MasterMind.Controllers
         public ActionResult Acesso(Int32 Id, String senha)
         {
             ViewBag.ListaTemas = TemasDTO.Lista();
-            ViewBag.ListaNiveis = NivelDTO.ListaNivel();
 
             GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
             IEnumerable<Jogos> Jogos = new List<Jogos>();
@@ -50,10 +49,9 @@ namespace MasterMind.Controllers
 
 
             Jogos model = new Jogos();
-            model.Id_sala = Id;
             GenericoRep<Salas> sala = new GenericoRep<Salas>();
 
-            model.Sala = sala.ObterPorId(model.Id_sala);
+            model.Sala = sala.ObterPorId(Id);
             model.Id_jogo = 0;
 
             if (senha != "") { model.Senha=senha; }
@@ -68,27 +66,49 @@ namespace MasterMind.Controllers
         public ActionResult Acesso(Jogos model)
         {
             GenericoRep<Usuario> usuario = new GenericoRep<Usuario>();
-            GenericoRep<Salas> sala = new GenericoRep<Salas>();
             GenericoRep<Temas> tema = new GenericoRep<Temas>();
-            GenericoRep<Nivel> nivel = new GenericoRep<Nivel>();
+            GenericoRep<Salas> sala = new GenericoRep<Salas>();
+
+
+            /*Verifica se no meio tempo a sala foi completada */
+            IEnumerable<Jogos> list = new List<Jogos>();
+            GenericoRep<Jogos> jogos = new GenericoRep<Jogos>();
+            list = jogos.ObterTodos().Where(x => x.Sala.Id_Sala == model.Sala.Id_Sala);
+
+            if (list.Count() >= 9)
+            {
+                ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
+                ViewBag.ListaTemas = TemasDTO.Lista();
+                return View(model);
+            }
+            /*-------*/
 
             model.Usuario = usuario.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
-            model.Sala = sala.ObterPorId(model.Id_sala);
-            model.Tema = tema.ObterPorId(model.Id_tema);
-            model.Niveis = nivel.ObterPorId(model.Id_nivel);
+            model.Sala = sala.ObterPorId(model.Sala.Id_Sala);
+            model.Sala.Usuario = usuario.ObterPorId(model.Sala.Id_Usuario);
 
-            if (model.Senha == model.Sala.Senha) 
+            if (model.Tema.Id_tema != 0)
             {
-                GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
-
-                repositorio.Salvar(model);
-                return RedirectToAction("Partida", "Game");
+                model.Tema = tema.ObterPorId(model.Tema.Id_tema);
+                ModelState.Remove("Tema.Desc_tema");
             }
+            if (ModelState.IsValid)
+            {
+                if (model.Senha == model.Sala.Senha)
+                {
+                    GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
 
+                    repositorio.Salvar(model);
+                    return RedirectToAction("Partida", "Game");
+                }
+
+                ViewBag.ListaTemas = TemasDTO.Lista();
+
+                ModelState.AddModelError("", "A senha para acesso à sala está incorreta");
+                return View(model);
+            }
             ViewBag.ListaTemas = TemasDTO.Lista();
-            ViewBag.ListaNiveis = NivelDTO.ListaNivel();
-
-            ModelState.AddModelError("", "A senha para acesso à sala está incorreta");
+            ModelState.AddModelError("", "Dados incorretos");
             return View(model);
         }
 

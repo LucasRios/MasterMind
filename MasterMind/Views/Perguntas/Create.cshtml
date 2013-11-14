@@ -19,6 +19,12 @@
             @Html.ValidationMessageFor(model => model.Tema.Id_tema)
         </div>
 
+        <div class="editor-label">
+            @Html.Label("Nível")
+            @Html.DropDownListFor(u => u.Niveis.Id_Nivel, new SelectList(ViewBag.ListaNivel, "Id_nivel", "descricao"), new { @class = "dropdownlist" })
+            @Html.ValidationMessageFor(model => model.Niveis.Id_Nivel)
+        </div>
+
         <div class="editor-field">
             @Html.HiddenFor(model => model.Id_Perg)
             @Html.ValidationMessageFor(model => model.Id_Perg)

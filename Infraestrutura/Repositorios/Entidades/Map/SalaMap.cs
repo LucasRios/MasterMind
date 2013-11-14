@@ -16,6 +16,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Map(x => x.Perfil);
             Map(x => x.Id_Usuario);
             Map(x => x.Senha);
+            References(x => x.Niveis).Column("Id_nivel").Cascade.None().LazyLoad();
         }
     }
 }

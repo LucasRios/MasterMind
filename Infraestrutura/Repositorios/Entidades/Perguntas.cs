@@ -16,7 +16,10 @@ namespace Infraestrutura.Repositorios.Entidades
         [StringLength(256, ErrorMessage = "Máximo 256 caracteres.")]
         public virtual String Txt_Perg { get; set; }
 
+        [Required(ErrorMessage = "Campo Obrigatório.")]
         public virtual Temas Tema { get; set; }
+        [Required(ErrorMessage = "Campo Obrigatório.")]
+        public virtual Nivel Niveis { get; set; }
         public virtual Respostas Resposta1 { get; set; }
         public virtual Respostas Resposta2 { get; set; }
         public virtual Respostas Resposta3 { get; set; }

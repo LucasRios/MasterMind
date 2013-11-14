@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<List<Infraestrutura.Repositorios.Entidades.Salas>>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Infraestrutura.Repositorios.Entidades.Salas>>" %>
 
 <asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
     <% using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) { %>
@@ -35,6 +35,8 @@
             </td>
             <td>Perfil
             </td>
+            <td>Nível
+            </td>
             <td></td>
         </tr>
 
@@ -47,13 +49,16 @@
             <td>
                 <%:  @Html.DisplayFor(modelItem => item.Usuario.Nome)%>
             </td>
-            <td>0
+            <td><%:  @Html.DisplayFor(modelItem => item.qtde_usu)%> /9
             </td>
             <td>
                 <%:  @Html.DisplayFor(modelItem => item.Desc_perfil)%>
             </td>
             <td>
-                <input type="button" value="Acessar" onclick="window.location.href='<%: @Url.Action("Acesso", "Jogos", new { Id = item.Id_Sala, senha = "" })%>    '" />
+                <%:  @Html.DisplayFor(modelItem => item.Niveis.descricao)%>
+            </td>
+            <td>
+                 <input type="button" value="Acessar" onclick="window.location.href='<%: @Url.Action("Acesso", "Jogos", new { Id = item.Id_Sala, senha = "" })%>    '" />
             </td>
         </tr>
         <% } %>

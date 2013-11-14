@@ -3,12 +3,11 @@ using Infraestrutura.Repositorios.Entidades.DTO;
 using Infraestrutura.Repositorios.Implementacao;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 using WebMatrix.WebData;
+using System.Linq;
+using System.Web;
+
 
 
 namespace MasterMind.Controllers
@@ -24,18 +23,25 @@ namespace MasterMind.Controllers
         {
             GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
             IEnumerable<Salas> sala = new List<Salas>();
-
+            
             GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
+            GenericoRep<Jogos> jogos = new GenericoRep<Jogos>();
             GenericoRep<Perfil> perfil = new GenericoRep<Perfil>();
+            IEnumerable<Jogos> list = new List<Jogos>();
 
             sala = repositorio.ObterTodos();
 
             foreach (var i in sala)
             {
+                list = jogos.ObterTodos().Where(x => x.Sala.Id_Sala == i.Id_Sala);
+                i.qtde_usu = list.Count();
+
                 if (i.Id_Usuario !=0) { i.Usuario = usu.ObterPorId(i.Id_Usuario); }
                 if (i.Perfil == 1) { i.Desc_perfil = "Pública"; }
                 else { i.Desc_perfil = "Privada"; }
             }
+
+            sala = sala.Where(u => u.qtde_usu < 9 ).ToList();
 
             return View(sala);
         }
@@ -47,6 +53,7 @@ namespace MasterMind.Controllers
             Salas sala = repositorio.ObterPorId(Id);
             return View(sala);
         }
+
         [HttpPost]
         public ActionResult Delete(Salas sala)
         {
@@ -58,6 +65,8 @@ namespace MasterMind.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            ViewBag.ListaNiveis = NivelDTO.ListaNivel();
+
             return View();
         }
 
@@ -66,11 +75,23 @@ namespace MasterMind.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Salas model)
         {
-            GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
-            model.Id_Usuario = WebSecurity.GetUserId(User.Identity.Name);
-            repositorio.Salvar(model);
-           
-            return RedirectToAction("Acesso", "Jogos", new { Id = model.Id_Sala, senha = model.Senha });
+            GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
+            model.Perfil = 2;
+
+            model.Usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+            model.Id_Usuario = model.Usuario.Id_user;
+
+            if (ModelState.IsValid)
+            {
+                GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
+
+                repositorio.Salvar(model);
+
+                return RedirectToAction("Acesso", "Jogos", new { Id = model.Id_Sala, senha = model.Senha });
+            }
+            ViewBag.ListaNiveis = NivelDTO.ListaNivel();
+            ModelState.AddModelError("", "Campos inválidos");
+            return View(model);
         }
 
     }

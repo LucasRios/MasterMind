@@ -28,6 +28,7 @@ namespace MasterMind.Controllers.BackOffice
         public ActionResult Edit(Int32 Id)
         {
             ViewBag.ListaTemas = TemasDTO.Lista();
+            ViewBag.ListaNivel = NivelDTO.ListaNivel();
             GenericoRep<Perguntas> repositorio = new GenericoRep<Perguntas>();
             Perguntas pergunta = repositorio.ObterPorId(Id);
             return View(pergunta);
@@ -60,6 +61,7 @@ namespace MasterMind.Controllers.BackOffice
         public ActionResult List(Int32? Id_tema)
         {
             ViewBag.ListaTemas = TemasDTO.Lista();
+            ViewBag.ListaNivel = NivelDTO.ListaNivel();
 
             GenericoRep<Perguntas> repositorio = new GenericoRep<Perguntas>();
             IEnumerable<Perguntas> Perguntas = new List<Perguntas>();
@@ -89,6 +91,7 @@ namespace MasterMind.Controllers.BackOffice
         public ActionResult Create()
         {
             ViewBag.ListaTemas = TemasDTO.Lista();
+            ViewBag.ListaNivel = NivelDTO.ListaNivel();
             return View();
         }
 
