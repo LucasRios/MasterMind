@@ -19,7 +19,7 @@ namespace MasterMind.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult List()
+        public ActionResult List(Int32? Id_nivel, Int32? Id_perfil)
         {
             GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
             IEnumerable<Salas> sala = new List<Salas>();
@@ -29,7 +29,21 @@ namespace MasterMind.Controllers
             GenericoRep<Perfil> perfil = new GenericoRep<Perfil>();
             IEnumerable<Jogos> list = new List<Jogos>();
 
+            ViewBag.ListaNivel = NivelDTO.ListaNivel();
+            ViewBag.ListaTPSala = TipoSalaDTO.ListaTipoSala();
+
             sala = repositorio.ObterTodos();
+
+            if (Id_nivel != null && Id_nivel > 0)
+            {
+                sala = repositorio.ObterTodos().Where(x => x.Niveis.Id_Nivel == Id_nivel);
+            }
+            else sala = repositorio.ObterTodos();
+
+            if (Id_perfil != null && Id_perfil > 0)
+            {
+                sala = sala.Where(x => x.Perfil == Id_perfil);
+            }   
 
             foreach (var i in sala)
             {

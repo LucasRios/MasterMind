@@ -39,14 +39,23 @@ namespace MasterMind.Controllers
         [HttpGet]
         public ActionResult Acesso(Int32 Id, String senha)
         {
-            ViewBag.ListaTemas = TemasDTO.Lista();
+
+            GenericoRep<Temas> temasrep = new GenericoRep<Temas>();
+            IEnumerable<Temas> ltemas = new List<Temas>();
+
+            ltemas = temasrep.ObterTodos();
 
             GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
             IEnumerable<Jogos> Jogos = new List<Jogos>();
 
             Jogos = repositorio.ObterTodos().Where(x => x.Sala.Id_Sala == Id);
 
+            foreach (var i in Jogos)
+            {
+                ltemas = ltemas.Where(x => x.Id_tema != i.Tema.Id_tema);                
+            }
 
+            ViewBag.ListaTemas = ltemas;
 
             Jogos model = new Jogos();
             GenericoRep<Salas> sala = new GenericoRep<Salas>();
@@ -78,6 +87,14 @@ namespace MasterMind.Controllers
             if (list.Count() >= 9)
             {
                 ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
+                ViewBag.ListaTemas = TemasDTO.Lista();
+                return View(model);
+            }
+
+            list = list.Where(x => x.Tema.Id_tema == model.Tema.Id_tema);
+            if(list.Count() > 0)
+            {
+                ModelState.AddModelError("", "Este tema acabou de ser escolhido. Por favor escolha outro!");
                 ViewBag.ListaTemas = TemasDTO.Lista();
                 return View(model);
             }

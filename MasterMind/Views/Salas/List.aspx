@@ -23,6 +23,27 @@
     }
 </style>
 
+ <fieldset style="height: 66px; border: solid; width : 100%">
+        <legend style= "display: block;">Listagem de salas</legend>
+     <table>
+         <tr>
+                 <td>
+                    <div class="editor-label">Níveis</div>
+                </td>
+                <td>
+          <%:   @Html.DropDownList("Id_nivel", new SelectList(ViewBag.ListaNivel, "Id_nivel", "descricao"), new { @class = "dropdownlist" }) %>
+                </td>
+                 <td>
+                    <div class="editor-label">Perfil</div>
+                </td>
+                <td>
+          <%:   @Html.DropDownList("Id_perfil", new SelectList(ViewBag.ListaTPSala, "Id_TPSala", "descricao"), new { @class = "dropdownlist" }) %>
+                </td>
+            <td><input type="submit" value="Consultar" class="btn btn-info"/></td>
+         </tr>
+     </table>
+ </fieldset>
+
 <fieldset>
     <h1>Acesse uma sala abaixo</h1>
     <table class="space">
