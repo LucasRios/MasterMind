@@ -1,49 +1,68 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
 <!DOCTYPE html>
+
+<script type="text/javascript" DEFER="DEFER">
+    var background = ['@Url.Content("../Images/carta_.jpg")',
+        '@Url.Content("../Images/cartoon.jpg")',
+        '@Url.Content("../Images/logo.png")',
+        '@Url.Content("../Images/bullet")',
+        '@Url.Content("../Images/carta2.png")'];
+
+    $(document).ready(function () {
+        PickRandomBackground();
+    });
+
+    function PickRandomBackground() {
+        var index = Math.floor(Math.random() * 5);
+        $('body').css('background', background[index])
+    }
+</script>
+
 <html lang="en">
-    <head runat="server">
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,heigth=device-heigth" />
-        <%: Styles.Render("~/Content/css") %>
-        <%: Scripts.Render("~/bundles/modernizr") %>
-        <style type="text/css">
-            #menu {
-                margin-top: 78px;
-            }
-            .content-wrapper {
-                height: 75px;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <asp:Image ID="Image3" runat="server" ImageUrl="~/Images/logo.png"                 
-                        style="position: absolute; top: 7px; left: 28px; height: 67px; width: 70px;" />  
-                    <asp:Image ID="Image4" runat="server" ImageUrl="~/Images/letras.png" 
-                        style="position: absolute; top: 17px; left: 106px; height: 40px; width: 349px;" />
-                    <nav style="margin-top: 51px">
-                        <ul id="menu">
-                            <li><%: Html.ActionLink("Home", "Index", "Home") %></li>
-                            <li><%: Html.ActionLink("Sobre", "About", "Home") %></li>
-                        </ul>
-                    </nav>                     
-                </div>
-                <div class="float-right">
+<style type="text/css">
+    #menu {
+        margin-top: 78px;
+    }
 
-                </div>
+    .content-wrapper {
+        height: 75px;
+    }
+</style>
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,heigth=device-heigth" />
+    <%: Styles.Render("~/Content/css") %>
+    <%: Scripts.Render("~/bundles/modernizr") %>
+</head>
+<body onLoad="PickRandomBackground()">
+    <header>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <asp:Image ID="Image3" runat="server" ImageUrl="~/Images/logo.png"
+                    Style="position: absolute; top: 7px; left: 28px; height: 67px; width: 70px;" />
+                <asp:Image ID="Image4" runat="server" ImageUrl="~/Images/letras.png"
+                    Style="position: absolute; top: 17px; left: 106px; height: 40px; width: 349px;" />
+                <nav style="margin-top: 51px">
+                    <ul id="menu">
+                        <li><%: Html.ActionLink("Home", "Index", "Home") %></li>
+                        <li><%: Html.ActionLink("Sobre", "About", "Home") %></li>
+                    </ul>
+                </nav>
             </div>
-        </header>
-        <div id="body">
-            <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
-                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-
+            <div class="float-right">
+            </div>
         </div>
-        <footer>
-        </footer>
+    </header>
+    <div id="body">
+        <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
 
-        <%: Scripts.Render("~/bundles/jquery") %>
-        <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
+    </div>
+    <footer>
+    </footer>
+
+    <%: Scripts.Render("~/bundles/jquery") %>
+    <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
 </body>
 </html>

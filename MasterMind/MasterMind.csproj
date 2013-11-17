@@ -276,6 +276,7 @@
     <Content Include="Styles\backoffice.css" />
     <Content Include="Styles\bootstrap-responsive.min.css" />
     <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Views\Game\Personagem.aspx" />
     <Content Include="Views\Game\Ranking.aspx" />
     <Content Include="Views\Game\Ranking_top.aspx" />
     <Content Include="Views\Game\Partida.aspx" />
