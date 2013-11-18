@@ -18,26 +18,29 @@
 
     td {
         text-align: center;
-        padding: 4px 15px 2px 4px ;
-        font-weight: bold;      
+        padding: 4px 15px 2px 4px;
+        font-weight: bold;
     }
 </style>
 
 <fieldset>
     <table class="space">
         <tr class="main">
-            <td colspan="2" >Ranking</td>
+            <td colspan="2">Ranking</td>
         </tr>
         <tr>
-             <td>Pos.</td>
-             <td>Usuário</td>
+            <td>Pos.</td>
+            <td>Usuário</td>
         </tr>
 
         <% 
        int i = 0;
-            foreach (var item in Model )
-            {
-                i = i + 1;%>
+       foreach (var item in Model)
+       {
+           i = i + 1;
+           if (i <= Model.Count - 1)
+           {
+        %>
         <tr>
             <td>
                 <%:  @Html.DisplayFor(modelItem => i)%>
@@ -46,7 +49,21 @@
                 <%:  @Html.DisplayFor(modelItem => item.Id_User.Nome)%>
             </td>
         </tr>
-        <% } %>
+        <% }
+                else
+                { %>
+        <tr>
+            <td colspan="2">
+                Sua posição
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <%:  @Html.DisplayFor(modelItem => item.Id_Ranking)%>
+            </td>
+        </tr>
+        <%}
+            } %>
     </table>
 </fieldset>
 

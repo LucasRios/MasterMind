@@ -48,6 +48,7 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual String Sexo { get; set; }
 
         public virtual Int32 Id_perfil { get; set; }
+        public virtual Personagens Personagem { get; set; }
 
     }
 }

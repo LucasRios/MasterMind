@@ -6,6 +6,7 @@
                             <li><%: Html.ActionLink("Salas", "List", "Salas")%> </li>
                             <li><%: Html.ActionLink("Criar Salas", "Create","Salas")%> </li>
                             <li><%: Html.ActionLink("Ranking", "Ranking", "Game")%></li>
+                            <li><%: Html.ActionLink("Escolher Personagem", "Personagem", "Game")%></li>
                         </ul>
                     </div>
         <% Html.RenderAction("Ranking_top", "Game"); %>
