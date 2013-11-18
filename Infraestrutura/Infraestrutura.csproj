@@ -90,6 +90,7 @@
     </Compile>
     <Compile Include="Repositorios\Entidades\Usuario.cs" />
     <Compile Include="Repositorios\Implementacao\GenericoRep.cs" />
+    <Compile Include="Repositorios\Implementacao\PerguntasRep.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

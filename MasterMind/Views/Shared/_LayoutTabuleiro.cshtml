@@ -1,0 +1,62 @@
+﻿@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_LayoutTabuleiro.cshtml</title>
+
+</head>
+<body>
+    <script src="~/Scripts/BO   /additional-methods.min-1.11.1.js"></script>
+    <script src="~/Scripts/BO/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/BO/jquery.validate.min-1.11.1.js"></script>
+    <script src="~/Scripts/BO/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/BO/bootstrap.min.js"></script>
+
+    <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Styles/jogo.css" rel="stylesheet" />
+
+    <header>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+
+                    <div class="content-wrapper">
+                        @*<div class="float-left">*@
+                            <div class="logoMM">
+                                <img src="@Url.Content("~/Images/logo.png")" />
+                            </div>
+                            <div class="tituloMM">
+                                <img src="@Url.Content("~/Images/letras.png")"/>
+                            </div>
+
+                        @*</div>*@                      
+
+                        @*<div class="float-right">*@
+                            <div class="nav-collapse collapse opcoes">
+                                <ul class="nav">
+                                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                                    <li><a href="@Url.Action("About", "Home")">Sobre</a></li>
+                                </ul>
+                            </div>
+
+                        @*</div>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="divBody">
+        @RenderBody()
+    </div>
+
+    <footer>
+    </footer>
+</body>
+</html>

@@ -1,7 +1,7 @@
 USE [MasterMind]
 GO
 
- Object  Table [dbo].[Ranking]    Script Date 10112013 144205 
+ --Object  Table [dbo].[Ranking]    Script Date 10112013 144205 
 SET ANSI_NULLS ON
 GO
 

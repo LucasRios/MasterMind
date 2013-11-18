@@ -19,9 +19,13 @@ namespace MasterMind.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Partida()
-        {            
-            return View();
+        {
+            GenericoRep<Perguntas> perguntasRep = new GenericoRep<Perguntas>();
+            ViewBag.PerguntaInicial = perguntasRep.ObterPorId(5);
+
+            return View(@"~/Views/Game/Partida.cshtml");
         }
 
         public ActionResult Ranking_top()
@@ -32,11 +36,14 @@ namespace MasterMind.Controllers
             ranking = ranking.OrderByDescending(c => c.qtde_certas).ThenBy(c => c.qtde_erradas).ToList();
 
             List<Ranking> aux = new List<Ranking>();
-            for (var i = 0; i <= 2; i++) 
-            {
-                aux.Add(ranking.ElementAt(i));
-            }
 
+            if (ranking != null && ranking.Count() >=3)
+            {
+                for (var i = 0; i <= 2; i++)
+                {
+                    aux.Add(ranking.ElementAt(i));
+                }
+            }
             return View(aux);
         }
 
@@ -48,5 +55,36 @@ namespace MasterMind.Controllers
             return View(ranking);
         }
 
+
+        public JsonResult ObterPergunta(Int32 IdTema, Int32 IdNivel)
+        {
+            JsonResult json = new JsonResult();
+
+            PerguntasRep repositorio = new PerguntasRep();
+
+            var vm = new { perguntas = repositorio.ObterPerguntas(IdTema, IdNivel) } ;
+
+            json.Data = vm;
+            json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            return json;
+        }
+
+        public JsonResult Responder(Int32 IdResposta)
+        {
+            JsonResult json = new JsonResult();
+
+            GenericoRep<Respostas> respostaRep = new GenericoRep<Respostas>();
+            Respostas resposta = respostaRep.ObterPorId(IdResposta);
+            Boolean opcaoCerta = resposta.OpcaoCerta;
+
+            var vm = new { opcaoCerta = opcaoCerta };
+
+            json.Data = vm;
+            json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            return json;
+        }
+    
     }
 }

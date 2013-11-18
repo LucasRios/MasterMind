@@ -1,0 +1,55 @@
+﻿@using Infraestrutura.Repositorios.Entidades;
+
+@{
+    ViewBag.Title = "Partida";
+    Layout = "~/Views/Shared/_LayoutTabuleiro.cshtml";
+    Perguntas pergunta = ViewBag.PerguntaInicial;
+}
+
+<script src="~/Scripts/Game/game.js"></script>
+
+<div id="divPergunta">
+    <div id="divPersonagem">
+        <img src="@Url.Content("~/Images/cartoon.jpg")"/>
+    </div>
+        
+    <div id="divAlternativas">
+        <h3>@pergunta.Txt_Perg</h3>
+
+        <div class="alternativas">
+            @*Respotas*@
+            @*Resposta 1*@
+            <div class="editor-label">
+                @Html.RadioButton("MinhaResposta", pergunta.Resposta1.Id_resp, false)
+                @Html.Label(pergunta.Resposta1.Resp_txt)
+            </div>
+
+            @*Resposta 2*@
+            <div class="editor-label">
+                @Html.RadioButton("MinhaResposta", pergunta.Resposta2.Id_resp, false)
+                @Html.Label(pergunta.Resposta2.Resp_txt)
+            </div>
+
+
+            @*Resposta 3*@
+            <div class="editor-label">
+                @Html.RadioButton("MinhaResposta", pergunta.Resposta3.Id_resp, false)
+                @Html.Label(pergunta.Resposta3.Resp_txt)
+            </div>
+        </div>
+
+    </div>
+
+    <div id="divCartas" title="Responder" onclick="Responder()">
+        <img src="@Url.Content("~/Images/cartas2.png")"/>
+    </div>
+</div>
+
+<div id="divParticipantes">
+    <h3>Participantes</h3>
+    <ul>
+        <li>Jogador 1</li>
+        <li>Jogador 2</li>
+        <li>Jogador 3</li>
+    </ul>
+</div>

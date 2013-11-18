@@ -11,7 +11,7 @@ namespace Infraestrutura.Repositorios.Implementacao
 {
     public class GenericoRep<T> where T : class
     {
-        private readonly ISession _session;
+        protected readonly ISession _session;
 
         public GenericoRep()
         {
