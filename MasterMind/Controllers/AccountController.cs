@@ -150,6 +150,8 @@ namespace MasterMind.Controllers
 
         public ActionResult Manage(ManageMessageId? message)
         {
+            ViewBag.ListaSexo = SexoDTO.ListaSexo();
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Sua senha foi alterada."
                 : message == ManageMessageId.SetPasswordSuccess ? "Senha salva com sucesso."
@@ -171,6 +173,8 @@ namespace MasterMind.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(Manage model)
         {
+            ViewBag.ListaSexo = SexoDTO.ListaSexo();
+
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.HasLocalPassword = hasLocalAccount;
             ViewBag.ReturnUrl = Url.Action("Manage");

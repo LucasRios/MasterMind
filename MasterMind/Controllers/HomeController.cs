@@ -10,9 +10,14 @@ namespace MasterMind.Controllers
     {
         public ActionResult Index()
         {
-            //return RedirectToAction("Index", "BackOffice");
-            return RedirectToAction("Login", "Account");
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Principal", "Game");
+            }
+            else 
+            {
+                return RedirectToAction("Login", "Account");
+            }            
         }
 
         public ActionResult About()
