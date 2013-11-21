@@ -2,24 +2,7 @@
 
 <!DOCTYPE html>
 
-<script type="text/javascript" DEFER="DEFER">
-    var background = ['@Url.Content("../Images/carta_.jpg")',
-        '@Url.Content("../Images/cartoon.jpg")',
-        '@Url.Content("../Images/logo.png")',
-        '@Url.Content("../Images/bullet")',
-        '@Url.Content("../Images/carta2.png")'];
-
-    $(document).ready(function () {
-        PickRandomBackground();
-    });
-
-    function PickRandomBackground() {
-        var index = Math.floor(Math.random() * 5);
-        $('body').css('background', background[index])
-    }
-</script>
-
-<html lang="en">
+<html lang="pt-br">
 <style type="text/css">
     #menu {
         margin-top: 78px;
@@ -46,7 +29,6 @@
                 <nav style="margin-top: 51px">
                     <ul id="menu">
                         <li><%: Html.ActionLink("Home", "Index", "Home") %></li>
-                        <li><%: Html.ActionLink("Sobre", "About", "Home") %></li>
                     </ul>
                 </nav>
             </div>
