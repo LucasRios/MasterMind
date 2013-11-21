@@ -1,5 +1,11 @@
 ﻿$(function () {
-
+    $(".alternativa-off").bind({
+        click: function () {
+            $(this).parent().children().children("label").removeClass("alternativa-on");
+            $(this).children("label").removeClass("alternativa-off");
+            $(this).children("label").addClass("alternativa-on");
+        }
+    });
 
 });
 

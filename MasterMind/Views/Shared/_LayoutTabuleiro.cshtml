@@ -10,8 +10,9 @@
 
 </head>
 <body>
-    <script src="~/Scripts/BO   /additional-methods.min-1.11.1.js"></script>
-    <script src="~/Scripts/BO/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/BO/additional-methods.min-1.11.1.js"></script>
+@*    <script src="~/Scripts/BO/jquery-1.9.1.min.js"></script>*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/BO/jquery.validate.min-1.11.1.js"></script>
     <script src="~/Scripts/BO/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/BO/bootstrap.min.js"></script>
@@ -19,6 +20,7 @@
     <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
     <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Styles/jogo.css" rel="stylesheet" />
+    <link href="~/Styles/tabuleiro.css" rel="stylesheet" />
 
     <header>
         <div class="navbar navbar-fixed-top">
@@ -39,7 +41,9 @@
                         @*<div class="float-right">*@
                             <div class="nav-collapse collapse opcoes">
                                 <ul class="nav">
-                                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                                    <li><a href="@Url.Action("Prototipo", "Game")">Prototipo</a></li>
+                                    <li><a href="@Url.Action("Index", "Home")">Início</a></li>
+                                    <li><a href="@Url.Action("Login", "Account")">Abandonar Jogo</a></li>
                                     <li><a href="@Url.Action("About", "Home")">Sobre</a></li>
                                 </ul>
                             </div>

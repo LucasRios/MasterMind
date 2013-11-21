@@ -90,6 +90,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Repositorios\Entidades\Usuario.cs" />
+    <Compile Include="Repositorios\Implementacao\SalasRep.cs" />
+    <Compile Include="Repositorios\Implementacao\UsuariosRep.cs" />
     <Compile Include="Repositorios\Implementacao\GenericoRep.cs" />
     <Compile Include="Repositorios\Implementacao\PerguntasRep.cs" />
   </ItemGroup>

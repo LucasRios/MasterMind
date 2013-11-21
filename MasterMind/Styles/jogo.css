@@ -67,7 +67,7 @@ fieldset
     /*position: absolute;*/ 
     /*top: 7px;*/ 
     left: 28px; 
-    height: 67px; 
+    /*height: 67px;*/ 
     width: 70px;
     float:left;
 }
@@ -78,7 +78,7 @@ fieldset
     left: 106px; 
     height: 40px; 
     float:left;
-    width: 349px;
+    width: 250px;
 }
 
 .conteudo
@@ -155,7 +155,8 @@ header .content-wrapper {
     float:left;
     border: 1px solid rgb(128, 128, 128);
     width: 20%;
-    min-height: 500px;
+    min-height: 550px;
+    background-color: #ffffff;
 }
 
 #divParticipantes
@@ -166,9 +167,29 @@ header .content-wrapper {
     position: relative;
     float: right;
     width: 20%;
-    min-height: 500px;
+    min-height: 550px;
+    background-color: #ffffff;
 }
+    #divParticipantes ul
+    {
+        list-style-type: none;
+        margin: 5px;
+    }
+        #divParticipantes ul li span
+        {
+            padding: 15px 5px 15px 5px;
+        }
 
+.tema-jogador
+{
+    float:left;
+    width: 45%;
+}
+.acertos-erros-jogador
+{
+    float:left;
+    width: 55%;
+}
 #divBody
 {
     clear: both;
@@ -188,6 +209,7 @@ header .content-wrapper {
 
 #divAlternativas
 {
+    margin-top: 15px;
     float:left;
 }
     #divAlternativas h3
@@ -202,7 +224,40 @@ header .content-wrapper {
     clear:both;
     width: 140px;
     height: 114px;
+    margin-top: 15px;
     margin-left: 15px;
     cursor: pointer;
 }
 
+.alternativa-off
+{
+    color: #000000;
+}
+
+.alternativa-on
+{
+    color: #f00;
+    font-weight: bold;
+}
+
+#divTextoPergunta
+{
+    height: 95px;
+    display: table;
+}
+
+#divTextoPergunta h3
+{
+    /*color: #3F9FD9;
+    font: bold;*/
+    text-align: right;
+    height: 100%;
+    align-content: center;
+    vertical-align: middle;
+}
+
+.dados-jogador
+{
+    margin-top: 10px;
+    border: 1px dotted #000000;
+}

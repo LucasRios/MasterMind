@@ -1,0 +1,44 @@
+﻿*
+{
+    /*position:relative;*/
+}
+
+body
+{
+    background-color: #808080;
+}
+
+#divTabuleiro
+{
+    float: left;
+    width: 55%;
+}
+
+#tabuleiro
+{
+    margin-left: 10%;
+    border: none;
+}
+
+#tabuleiro tr,#tabuleiro td
+{
+    margin:0px;
+    padding:0px;
+}
+
+#tabuleiro td img
+{
+    padding:0px;
+}
+
+.celula-ativa
+{
+    border: none;
+    border: 1px solid #FFFFFF !important;
+}
+
+.celula-inativa
+{
+    border: none;
+    /*border: 1px solid #000000 !important;*/
+}

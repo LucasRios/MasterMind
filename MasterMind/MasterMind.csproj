@@ -260,6 +260,8 @@
     <Content Include="Scripts\BO\jquery.validate.min-1.11.1.js" />
     <Content Include="Scripts\BO\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Game\game.js" />
+    <Content Include="Scripts\Game\tabuleiro.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -277,6 +279,8 @@
     <Content Include="Styles\backoffice.css" />
     <Content Include="Styles\bootstrap-responsive.min.css" />
     <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Styles\jogo.css" />
+    <Content Include="Styles\tabuleiro.css" />
     <Content Include="Views\Game\Ranking.aspx" />
     <Content Include="Views\Game\Ranking_top.aspx" />
     <Content Include="Views\Game\Partida.aspx" />

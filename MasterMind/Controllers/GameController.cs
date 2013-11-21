@@ -21,10 +21,35 @@ namespace MasterMind.Controllers
         }
 
         [HttpGet]
+        public ActionResult Prototipo()
+        {
+            return View(@"~/Views/Game/Partida.aspx");
+        }
+
+        [HttpGet]
         public ActionResult Partida()
-        {            
-            GenericoRep<Perguntas> perguntasRep = new GenericoRep<Perguntas>();
-            ViewBag.PerguntaInicial = perguntasRep.ObterPorId(5);
+        {
+            GenericoRep<Salas> salasRep = new GenericoRep<Salas>();
+            Salas sala = salasRep.ObterPorId(1);
+
+            ///
+            /// Jogadores
+            /// 
+            SalasRep SalasRep = new SalasRep();
+            IList<Usuario> usuarios = SalasRep.ObterUsuarios(sala.Id_Sala);
+            ViewBag.Jogadores = usuarios;
+
+            ///
+            /// Pergunta Inicial
+            /// 
+            PerguntasRep perguntasRep = new PerguntasRep();
+
+            Int32 IdTema = 1;
+            IList<Perguntas> perguntas = perguntasRep.ObterPerguntas(IdTema);
+
+            Random indicePergunta = new Random();
+
+            ViewBag.PerguntaInicial = perguntas[indicePergunta.Next(0, perguntas.Count - 1)];
 
             return View(@"~/Views/Game/Partida.cshtml");
         }
@@ -45,14 +70,6 @@ namespace MasterMind.Controllers
                     aux.Add(ranking.ElementAt(i));
                 }
             }
-            for (var i = 0; i <= ranking.Count()-1; i++)
-            {
-                ranking.ElementAt(i).Id_Ranking = i+1;
-
-                if (ranking.ElementAt(i).Id_User.Id_user == WebSecurity.GetUserId(User.Identity.Name))
-                aux.Add(ranking.ElementAt(i));
-            }
-
             return View(aux);
         }
 
@@ -64,14 +81,13 @@ namespace MasterMind.Controllers
             return View(ranking);
         }
 
-
         public JsonResult ObterPergunta(Int32 IdTema, Int32 IdNivel)
         {
             JsonResult json = new JsonResult();
 
             PerguntasRep repositorio = new PerguntasRep();
 
-            var vm = new { perguntas = repositorio.ObterPerguntas(IdTema, IdNivel) } ;
+            var vm = new { perguntas = repositorio.ObterPerguntas(IdTema, IdNivel) };
 
             json.Data = vm;
             json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -94,44 +110,5 @@ namespace MasterMind.Controllers
 
             return json;
         }
-    
-        [HttpGet]
-        public ActionResult Personagem()
-        {
-            ViewBag.ListaPerson = PersonagemDTO.ListaPerson();
-
-            Usuario usuario = new Usuario();
-            GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
-
-            usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
-
-            return View(usuario);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult Personagem(Usuario model)
-        {
-
-            if (model.Personagem.Id_person != 0)
-            {
-                Usuario usuario = new Usuario();
-                GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
-
-                usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
-                usuario.Personagem = model.Personagem;
-
-                GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
-
-                repositorio.Salvar(usuario);               
-
-                return RedirectToAction("Principal", "Game" );
-            }
-
-            ViewBag.ListaPerson = PersonagemDTO.ListaPerson();
-            return View(model);
-        }
-
     }
 }

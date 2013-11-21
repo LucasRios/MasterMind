@@ -4,52 +4,98 @@
     ViewBag.Title = "Partida";
     Layout = "~/Views/Shared/_LayoutTabuleiro.cshtml";
     Perguntas pergunta = ViewBag.PerguntaInicial;
+    List<Usuario> jogadores = ViewBag.Jogadores;
 }
 
 <script src="~/Scripts/Game/game.js"></script>
+<script src="@Url.Content("~/Scripts/Game/tabuleiro.js")"></script>
 
 <div id="divPergunta">
     <div id="divPersonagem">
         <img src="@Url.Content("~/Images/cartoon.jpg")"/>
     </div>
-        
-    <div id="divAlternativas">
+
+    <div id="divTextoPergunta">
         <h3>@pergunta.Txt_Perg</h3>
+    </div>
+
+    <div style="clear:both;"></div>
+
+    <div id="divAlternativas">
 
         <div class="alternativas">
             @*Respotas*@
             @*Resposta 1*@
-            <div class="editor-label">
-                @Html.RadioButton("MinhaResposta", pergunta.Resposta1.Id_resp, false)
-                @Html.Label(pergunta.Resposta1.Resp_txt)
+            <div class="editor-label alternativa-off" >
+                <label>A - </label>@Html.RadioButton("MinhaResposta", pergunta.Resposta1.Id_resp, false)
+                <label>@pergunta.Resposta1.Resp_txt</label>
             </div>
 
             @*Resposta 2*@
-            <div class="editor-label">
-                @Html.RadioButton("MinhaResposta", pergunta.Resposta2.Id_resp, false)
-                @Html.Label(pergunta.Resposta2.Resp_txt)
+            <div class="editor-label alternativa-off" >
+                <label>B - </label>@Html.RadioButton("MinhaResposta", pergunta.Resposta2.Id_resp, false)
+                <label>@pergunta.Resposta2.Resp_txt</label>
             </div>
 
 
             @*Resposta 3*@
-            <div class="editor-label">
-                @Html.RadioButton("MinhaResposta", pergunta.Resposta3.Id_resp, false)
-                @Html.Label(pergunta.Resposta3.Resp_txt)
+            <div class="editor-label alternativa-off">
+                <label>C - </label>@Html.RadioButton("MinhaResposta", pergunta.Resposta3.Id_resp, false)
+                <label>@pergunta.Resposta3.Resp_txt</label>
             </div>
         </div>
 
     </div>
+
+    <div style="clear:both;"></div>
 
     <div id="divCartas" title="Responder" onclick="Responder()">
         <img src="@Url.Content("~/Images/cartas2.png")"/>
     </div>
 </div>
 
+<div id="divTabuleiro">
+
+    @*<form id="criacao_tabuleiro" name="criacao_tabuleiro" action="" onsubmit="return false;">
+        <label>casas<input type="text" name="casas" /></label>
+        <label>filas<input type="text" name="filas" /></label>
+        <input type="button" name="cria_tabuleiro" value="criar tabuleiro" onclick="cria_tab()"/>
+        <input type="button" name="empilha_pecas" value="empilha_pecas" onclick="empilha()"/>
+    </form>
+    <form id="add_peca" name="add_peca" action="" onsubmit="return false;">
+        <label>col<input type="text" name="col" /></label>
+        <label>lin<input type="text" name="lin" /></label>
+        <select id="cor" name="cor">
+            <option value="verde">verde</option>
+            <option value="vermelho">vermelho</option>
+            <option value="amarelo">amarelo</option>
+        </select>
+        <label>nivel<input type="text" name="nivel" /></label>
+        <input type="button" name="poe" value="poe" onclick="poe_peca();"/>
+    </form>*@
+    <table id="tabuleiro">
+    </table>
+</div>
+
+
 <div id="divParticipantes">
     <h3>Participantes</h3>
     <ul>
-        <li>Jogador 1</li>
-        <li>Jogador 2</li>
-        <li>Jogador 3</li>
+        @foreach(Usuario jogador in jogadores)
+        {
+            <li>
+                <div class="dados-jogador">
+                    <span>@jogador.Nome (@jogador.Cidade/@jogador.Estado-@jogador.Pais)</span>
+                    <br />
+                    <div class="tema-jogador">
+                        <span>&nbspTema: </span>
+                    </div>
+                    <div class="acertos-erros-jogador">
+                        <span>Acertos: 0</span> <span>Erros: 0</span>
+                    </div>
+                    <div style="clear:both;"></div>
+                </div>
+            </li>
+        }
     </ul>
 </div>
