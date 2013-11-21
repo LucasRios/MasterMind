@@ -14,6 +14,7 @@ using Infraestrutura.Repositorios.Entidades;
 using Infraestrutura.Repositorios.Implementacao;
 using FluentNHibernate.Mapping;
 using Infraestrutura.Repositorios.Entidades.DTO;
+using System.Drawing;
 
 namespace MasterMind.Controllers
 {
@@ -178,18 +179,56 @@ namespace MasterMind.Controllers
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.HasLocalPassword = hasLocalAccount;
             ViewBag.ReturnUrl = Url.Action("Manage");
+
+            GenericoRep<Usuario> auxUsu = new GenericoRep<Usuario>();
+            IEnumerable<Usuario> lauxUsu = auxUsu.ObterTodos().Where(x => x.Email == model.Email);
+
+            if ((lauxUsu.Count() > 0) && (lauxUsu.ElementAt(0).Id_user != model.Id_user))
+            {
+                ModelState.AddModelError("Usuário", "Já existe este e-mail cadastrado para outro usuário!");
+                return View(model);            
+            }
+
             if (hasLocalAccount)
             {
                 if (ModelState.IsValid)
                 {
                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.
-                    bool changePasswordSucceeded = false;                  
+                    bool changePasswordSucceeded = false;
+
+                    /*             HttpPostedFileBase imagem = model.imagem;   
+                     * if (imagem != null)
+                        {
+                            if (imagem.ContentLength > 10240)
+                            {
+                                ModelState.AddModelError("photo", "O tamanho da foto não pode exceder 10 KB");
+                                return View(model);
+                            }
+
+                            var supportedTypes = new[] { "jpg", "jpeg", "png" };
+
+                            var fileExt = System.IO.Path.GetExtension(imagem.FileName).Substring(1);
+
+                            if (!supportedTypes.Contains(fileExt))
+                            {
+                                ModelState.AddModelError("photo", "Tipo inválido. Somente os tipos (jpg, jpeg, png) são suportados.");
+                                return View(model);
+                            }
+
+                            string pic = System.IO.Path.GetFileName(imagem.FileName);
+                            string path = System.IO.Path.Combine(
+                                                   Server.MapPath("~/images/profile"), pic);
+                            // file is uploaded
+                            imagem.SaveAs(path);
+                        } */
+
                     try
                     {
                         GenericoRep<Manage> repositorio = new GenericoRep<Manage>();
                         repositorio.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
-                        repositorio.Salvar(model);
                         changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.Senha);
+
+                        repositorio.Salvar(model);
                     }
                     catch (Exception)
                     {
@@ -286,41 +325,6 @@ namespace MasterMind.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
         {
-           /* string provider = null;
-            string providerUserId = null;
-
-            if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
-            {
-                return RedirectToAction("Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
-                {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.usuario.ToLower() == model.UserName.ToLower());
-                    // Check if user already exists
-                    if (user == null)
-                    {
-                        // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { usuario = model.UserName });
-                        db.SaveChanges();
-
-                        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("UserName", "Este usuário já exite. Tente um outro nome");
-                    }
-                }
-            }
-
-            ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-            ViewBag.ReturnUrl = returnUrl;*/
             return View(model);
         }
 
@@ -406,7 +410,7 @@ namespace MasterMind.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "Este nome de usuário já existe.";
+                    return "Este e-mail já está cadastrado para um usuário.";
 
                 case MembershipCreateStatus.DuplicateEmail:
                     return "Este e-mail já está cadastrado para um usuário.";

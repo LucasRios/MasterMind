@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 namespace Infraestrutura.Repositorios.Entidades
@@ -38,6 +39,7 @@ namespace Infraestrutura.Repositorios.Entidades
 
         [StringLength(20, ErrorMessage = "Máximo 20 caracteres.")]
         [Required(ErrorMessage = "Campo Obrigatório.")]
+        [Display(Name = "Nova Senha")]
         public virtual String Senha { get; set; }
 
         [Display(Name = "Data Nascimento")]

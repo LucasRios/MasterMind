@@ -40,6 +40,20 @@ namespace MasterMind.Controllers
         public ActionResult Acesso(Int32 Id, String senha)
         {
 
+            /*Verifica se o usuário já está nesta sala e está tentando entrar de novo */
+            IEnumerable<Jogos> list = new List<Jogos>();
+            GenericoRep<Jogos> jogos = new GenericoRep<Jogos>();
+            list = jogos.ObterTodos().Where(x => x.Sala.Id_Sala == Id);
+            list = list.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name));
+
+            if (list.Count() > 0)
+            {
+                ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
+                ViewBag.ListaTemas = TemasDTO.Lista();
+                return RedirectToAction("Partida", "Game");
+            }
+            /*-------*/
+
             GenericoRep<Temas> temasrep = new GenericoRep<Temas>();
             IEnumerable<Temas> ltemas = new List<Temas>();
 
@@ -84,7 +98,7 @@ namespace MasterMind.Controllers
             GenericoRep<Jogos> jogos = new GenericoRep<Jogos>();
             list = jogos.ObterTodos().Where(x => x.Sala.Id_Sala == model.Sala.Id_Sala);
 
-            if (list.Count() >= 9)
+            if (list.Count() > 8)
             {
                 ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
                 ViewBag.ListaTemas = TemasDTO.Lista();

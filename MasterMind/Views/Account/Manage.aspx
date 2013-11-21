@@ -10,10 +10,7 @@
 
     <p>Você está logado como <strong><%: User.Identity.Name %></strong>.</p>
 
-        <div id="Div1" class="editor-field" runat="server">
-    <img id="Img1" runat="server" src="../../Images/usu.png" />
-    <br /><asp:fileupload ID="Fileupload1" runat="server" Width="295px"></asp:fileupload>
-    </div>
+
     <% Html.RenderPartial("_ChangePasswordPartial"); %>
     </form>
         </section>

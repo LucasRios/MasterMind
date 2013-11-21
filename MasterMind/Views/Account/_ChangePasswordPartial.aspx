@@ -1,13 +1,12 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Manage>" %>
 
 <h3>Editar Cadastro</h3>
-
-<% using (Html.BeginForm("Manage", "Account"))
+<% using (Html.BeginForm("Manage", "Account", FormMethod.Post, new {enctype = "multipart/form-data"}))
    { %>
 <%: Html.AntiForgeryToken() %>
 <%: Html.ValidationSummary() %>
 
-
+<form method="post" enctype="multipart/form-data">
 <fieldset runat="server">
     <legend>Change Password Form</legend>
     <div class="editor-field">
@@ -35,7 +34,6 @@
         </tr>
         <tr>
             <td>
-
                 <div class="editor-label">
                     <%:  Html.LabelFor(model => model.Nome)%>
                 </div>
@@ -62,7 +60,7 @@
                     <%:  Html.LabelFor(model => model.Email)%>
                 </div>
                 <div class="editor-field">
-                    <%: Html.TextBoxFor(model => model.Email, new { tabindex=3 })%>
+                    <%: Html.TextBoxFor(model => model.Email, new { tabindex=3, @readonly = "readonly" })%>
                     <%: Html.ValidationMessageFor(model => model.Email)%>
                 </div>
 
@@ -123,5 +121,6 @@
 
     <input type="submit" value="Submeter" />
 </fieldset>
+    </form>
 <% } %>
    
