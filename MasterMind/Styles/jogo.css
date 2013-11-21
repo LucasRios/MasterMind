@@ -221,14 +221,23 @@ header .content-wrapper {
 
 #divCartas
 {
-    clear:both;
-    width: 140px;
+    float:left;
+    width: 120px;
     height: 114px;
     margin-top: 15px;
     margin-left: 15px;
     cursor: pointer;
 }
 
+#divSeta
+{
+    float:left;
+    width: 120px;
+    height: 100px;
+    /*margin-top: 15px;
+    margin-left: 15px;
+    cursor: pointer;*/
+}
 .alternativa-off
 {
     color: #000000;
@@ -260,4 +269,14 @@ header .content-wrapper {
 {
     margin-top: 10px;
     border: 1px dotted #000000;
+}
+
+#divCerto
+{
+    display: none;
+}
+
+#divErrado
+{
+    display: none;
 }

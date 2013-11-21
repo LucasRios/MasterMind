@@ -12,6 +12,13 @@
 function Responder() {
     $.post("Responder", { IdResposta: $(".alternativas :radio:checked").val() })
     .success(function (response) {
-        alert(response.opcaoCerta);
+        if (response.opcaoCerta) {
+            $("#divCerto").css('display', 'inline');
+            $("#divErrado").css('display', 'none');
+        }
+        else {
+            $("#divErrado").css('display', 'inline');
+            $("#divCerto").css('display', 'none');
+        }
     });
 };
