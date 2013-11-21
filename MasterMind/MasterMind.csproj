@@ -247,10 +247,16 @@
     <Content Include="Images\cartas2.png" />
     <Content Include="Images\carta_.jpg" />
     <Content Include="Images\cartoon.jpg" />
+    <Content Include="Images\certo.jpg" />
+    <Content Include="Images\errado.jpg" />
     <Content Include="Images\fundo.jpg" />
+    <Content Include="Images\geografia.gif" />
     <Content Include="Images\Gradiente_prata.png" />
+    <Content Include="Images\Gradiente_prata_topo.png" />
+    <Content Include="Images\heroAccent.png" />
     <Content Include="Images\letras.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\seta.gif" />
     <Content Include="Images\tabuleiro.png" />
     <Content Include="Images\usu.png" />
     <Content Include="img\glyphicons-halflings.png" />
