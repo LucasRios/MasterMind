@@ -38,7 +38,11 @@
        foreach (var item in Model)
        {
            i = i + 1;
-           if (i <= Model.Count - 1)
+
+           int limite = Model.Count;
+           if (ViewBag.achouRanking) limite = limite - 1;
+           
+           if (i <= limite)
            {
         %>
         <tr>

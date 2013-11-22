@@ -59,15 +59,25 @@ namespace MasterMind.Controllers
             GenericoRep<Ranking> repositorio = new GenericoRep<Ranking>();
             IEnumerable<Ranking> ranking = repositorio.ObterTodos();
 
-            ranking = ranking.OrderByDescending(c => c.qtde_certas).ThenBy(c => c.qtde_erradas).ToList();
+            ranking = ranking.OrderByDescending(c => c.qtde_partidas_ganhas).ThenByDescending(c => c.qtde_certas).ThenBy(c => c.qtde_erradas).ToList();
 
             List<Ranking> aux = new List<Ranking>();
 
-            if (ranking != null && ranking.Count() >= 3)
+            if (ranking != null)
             {
                 for (var i = 0; i <= 2; i++)
                 {
-                    aux.Add(ranking.ElementAt(i));
+                   aux.Add(ranking.ElementAt(i));
+                }
+                ViewBag.achouRanking = false;
+                for (var i = 0; i <= ranking.Count() - 1; i++)
+                {
+                    if (ranking.ElementAt(i).Id_User.Id_user == WebSecurity.GetUserId(User.Identity.Name))
+                    {
+                        ViewBag.achouRanking = true;
+                        ranking.ElementAt(i).Id_Ranking = i + 1;
+                        aux.Add(ranking.ElementAt(i));
+                    }
                 }
             }
             return View(aux);
@@ -77,7 +87,7 @@ namespace MasterMind.Controllers
         {
             GenericoRep<Ranking> repositorio = new GenericoRep<Ranking>();
             IEnumerable<Ranking> ranking = repositorio.ObterTodos();
-            ranking = ranking.OrderByDescending(c => c.qtde_certas).ThenBy(c => c.qtde_erradas).ToList();
+            ranking = ranking.OrderByDescending(c => c.qtde_partidas_ganhas).ThenByDescending(c => c.qtde_certas).ThenBy(c => c.qtde_erradas).ToList();
             return View(ranking);
         }
 
@@ -103,12 +113,42 @@ namespace MasterMind.Controllers
             Respostas resposta = respostaRep.ObterPorId(IdResposta);
             Boolean opcaoCerta = resposta.OpcaoCerta;
 
+            atualiza_ranking(opcaoCerta);
+
             var vm = new { opcaoCerta = opcaoCerta };
 
             json.Data = vm;
             json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
             return json;
+        }
+
+        private void atualiza_ranking(Boolean opcaoCerta, Boolean partidaGanha = false)
+        {
+            GenericoRep<Ranking> rankingRep = new GenericoRep<Ranking>();
+            IEnumerable<Ranking> rList = rankingRep.ObterTodos().Where(x => x.Id_User.Id_user == WebSecurity.GetUserId(User.Identity.Name));
+
+            Ranking ranking = new Ranking();
+
+            if (rList.Count() > 0)
+                ranking = rList.ElementAt(0);
+            else
+            {
+                GenericoRep<Usuario> UsuRep = new GenericoRep<Usuario>();
+                Usuario usu = new Usuario();
+                usu = UsuRep.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+                ranking.Id_User = usu;
+            }
+
+            if (opcaoCerta) ranking.qtde_certas = (ranking.qtde_certas + 1);
+            else ranking.qtde_erradas = (ranking.qtde_erradas + 1);
+
+            ranking.qtde_respostas = ranking.qtde_respostas + 1;
+
+            if (partidaGanha) ranking.qtde_partidas_ganhas = ranking.qtde_partidas_ganhas + 1;
+
+            rankingRep.Salvar(ranking);
+
         }
     }
 }

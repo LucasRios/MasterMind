@@ -24,7 +24,6 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual Int32 qtde_usu { get; set; }
 
         [Display(Name = "Senha")]
-        [Required(ErrorMessage = "Campo Obrigatório.")]
         [StringLength(25, ErrorMessage = "Máximo 25 caracteres.")]
         public virtual String Senha { get; set; }
 

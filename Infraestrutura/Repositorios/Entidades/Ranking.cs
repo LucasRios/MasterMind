@@ -18,7 +18,10 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual Int32 qtde_erradas { get; set; } 
  
         [Display(Name="qtde_respostas")]
-        public virtual Int32 qtde_respostas { get; set; } 
+        public virtual Int32 qtde_respostas { get; set; }
+
+        [Display(Name = "qtde_partidas_ganhas")]
+        public virtual Int32 qtde_partidas_ganhas { get; set; } 
 
         public virtual Usuario Id_User { get; set; }
     }

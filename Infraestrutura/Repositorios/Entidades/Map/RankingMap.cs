@@ -16,6 +16,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Map(x => x.qtde_certas);
             Map(x => x.qtde_erradas  );
             Map(x => x.qtde_respostas  );
+            Map(x => x.qtde_partidas_ganhas);
         }
     }
 }

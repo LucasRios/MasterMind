@@ -50,7 +50,7 @@ namespace MasterMind.Controllers
             {
                 ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
                 ViewBag.ListaTemas = TemasDTO.Lista();
-                return RedirectToAction("Partida", "Game");
+                return RedirectToAction("Partida", "Game", new { Id_Jogo = list.ElementAt(0).Id_jogo });
             }
             /*-------*/
 
@@ -98,7 +98,7 @@ namespace MasterMind.Controllers
             GenericoRep<Jogos> jogos = new GenericoRep<Jogos>();
             list = jogos.ObterTodos().Where(x => x.Sala.Id_Sala == model.Sala.Id_Sala);
 
-            if (list.Count() > 8)
+            if (list.Count() >= 8)
             {
                 ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
                 ViewBag.ListaTemas = TemasDTO.Lista();
@@ -130,7 +130,10 @@ namespace MasterMind.Controllers
                     GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
 
                     repositorio.Salvar(model);
-                    return RedirectToAction("Partida", "Game");
+
+                    servidor_cria_sala(model);//o servidor verifica se a sala encheu, e se a mesma for pública ele cria uma nova
+
+                    return RedirectToAction("Partida", "Game", new { Id_Jogo = model.Id_jogo });
                 }
 
                 ViewBag.ListaTemas = TemasDTO.Lista();
@@ -141,6 +144,34 @@ namespace MasterMind.Controllers
             ViewBag.ListaTemas = TemasDTO.Lista();
             ModelState.AddModelError("", "Dados incorretos");
             return View(model);
+        }
+
+        private void servidor_cria_sala(Jogos model)
+        {
+            if (model.Sala.Perfil == 1)
+            {
+                GenericoRep<Jogos> repJogos = new GenericoRep<Jogos>();
+                IEnumerable<Jogos> lJogos = repJogos.ObterTodos().Where(x => x.Sala.Id_Sala == model.Sala.Id_Sala);
+
+                if (lJogos.Count() >= 8) 
+                {
+                    Salas sala_new = new Salas();
+                    
+                    sala_new.Desc_perfil = model.Sala.Desc_perfil;
+                    sala_new.Id_Usuario = model.Sala.Id_Usuario;
+                    sala_new.Niveis = model.Sala.Niveis;
+                    sala_new.Perfil = model.Sala.Perfil;
+                    sala_new.qtde_usu = model.Sala.qtde_usu;
+                    sala_new.Sala = model.Sala.Sala;
+                    sala_new.Senha = model.Sala.Senha;
+                    sala_new.Usuario = model.Sala.Usuario;
+
+                    GenericoRep<Salas> repSalas = new GenericoRep<Salas>();
+                    repSalas.Salvar(sala_new);
+                }
+
+            }
+
         }
 
     }

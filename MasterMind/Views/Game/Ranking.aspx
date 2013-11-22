@@ -34,6 +34,7 @@
                 <tr class="main">
                     <td>Posição</td>
                     <td>Usuário</td>
+                    <td>Partidas Vencidas</td>
                     <td>Resp. Certas</td>
                     <td>Resp. Erradas</td>
                     <td>Respondidas</td>
@@ -50,6 +51,9 @@
                     </td>
                     <td>
                         <%:  @Html.DisplayFor(modelItem => item.Id_User.Nome)%>
+                    </td>
+                    <td>
+                        <%:  @Html.DisplayFor(modelItem => item.qtde_partidas_ganhas)%>
                     </td>
                     <td>
                         <%:  @Html.DisplayFor(modelItem => item.qtde_certas)%>

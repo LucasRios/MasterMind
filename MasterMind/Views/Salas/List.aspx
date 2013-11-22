@@ -70,7 +70,7 @@
             <td>
                 <%:  @Html.DisplayFor(modelItem => item.Usuario.Nome)%>
             </td>
-            <td><%:  @Html.DisplayFor(modelItem => item.qtde_usu)%> /9
+            <td><%:  @Html.DisplayFor(modelItem => item.qtde_usu)%> /8
             </td>
             <td>
                 <%:  @Html.DisplayFor(modelItem => item.Desc_perfil)%>
