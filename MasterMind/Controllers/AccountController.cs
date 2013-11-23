@@ -196,39 +196,48 @@ namespace MasterMind.Controllers
                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.
                     bool changePasswordSucceeded = false;
 
-                    /*             HttpPostedFileBase imagem = model.imagem;   
-                     * if (imagem != null)
+                    HttpPostedFileBase imagem = Request.Files["photo"];
+
+                    if ((imagem != null) && (imagem.FileName != ""))
+                    {
+                        if (imagem.ContentLength > 100240)
                         {
-                            if (imagem.ContentLength > 10240)
-                            {
-                                ModelState.AddModelError("photo", "O tamanho da foto não pode exceder 10 KB");
-                                return View(model);
-                            }
+                            ModelState.AddModelError("photo", "O tamanho da foto não pode exceder 100 KB");
+                            return View(model);
+                        }
 
-                            var supportedTypes = new[] { "jpg", "jpeg", "png" };
+                        var supportedTypes = new[] { "jpg", "jpeg", "png" };
 
-                            var fileExt = System.IO.Path.GetExtension(imagem.FileName).Substring(1);
+                        var fileExt = System.IO.Path.GetExtension(imagem.FileName).Substring(1);
 
-                            if (!supportedTypes.Contains(fileExt))
-                            {
-                                ModelState.AddModelError("photo", "Tipo inválido. Somente os tipos (jpg, jpeg, png) são suportados.");
-                                return View(model);
-                            }
+                        if (!supportedTypes.Contains(fileExt))
+                        {
+                            ModelState.AddModelError("photo", "Tipo inválido. Somente os tipos (jpg, jpeg, png) são suportados.");
+                            return View(model);
+                        }
 
-                            string pic = System.IO.Path.GetFileName(imagem.FileName);
-                            string path = System.IO.Path.Combine(
-                                                   Server.MapPath("~/images/profile"), pic);
-                            // file is uploaded
-                            imagem.SaveAs(path);
-                        } */
+                        string arquivo = System.IO.Path.Combine(
+                                                   Server.MapPath("~/img/usuarios"), model.Id_user+"."+fileExt);
+
+                        imagem.SaveAs(arquivo);
+                        model.imagem = "../../img/usuarios/"+ model.Id_user + "." + fileExt;
+                    }
 
                     try
                     {
                         GenericoRep<Manage> repositorio = new GenericoRep<Manage>();
                         repositorio.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
-                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.Senha);
+
+                        if (model.Senha != null)
+                            changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.Senha);
+                        else
+                        {
+                            model.Senha = model.OldPassword;
+                            model.ConfirmPassword = model.OldPassword;
+                        }
 
                         repositorio.Salvar(model);
+                        changePasswordSucceeded = true;
                     }
                     catch (Exception)
                     {
@@ -237,7 +246,7 @@ namespace MasterMind.Controllers
 
                     if (changePasswordSucceeded)
                     {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        return RedirectToAction("Manage", new { Message = "Cadastro alterado com sucesso" });
                     }
                     else
                     {

@@ -12,6 +12,7 @@ namespace Infraestrutura.Repositorios.Entidades.DTO
     {
         public virtual Int32 Id_person { get; set; }
         public virtual String Desc_Person { get; set; }
+        public virtual String Imagem { get; set; }
 
         public static IList<PersonagemDTO> ListaPerson()
         {
@@ -24,7 +25,8 @@ namespace Infraestrutura.Repositorios.Entidades.DTO
             lista.Insert(0, new PersonagemDTO
             {
                 Id_person = 0,
-                Desc_Person = "Selecione um Personagem"
+                Desc_Person = "Selecione um Personagem",
+                Imagem = ""
             });
 
             foreach (Personagens personagem in listaPerson)
@@ -32,7 +34,8 @@ namespace Infraestrutura.Repositorios.Entidades.DTO
                 lista.Add(new PersonagemDTO
                 {
                     Id_person = personagem.Id_person,
-                    Desc_Person = personagem.Desc_person
+                    Desc_Person = personagem.Desc_person,
+                    Imagem = personagem.Imagem
                 });
             }
             return lista;

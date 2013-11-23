@@ -17,6 +17,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Desc_person)
         </th>
+        <th>
+            Imagem
+        </th>
         <th>Ações</th>
     </tr>
 
@@ -27,6 +30,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Desc_person)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Imagem)
         </td>
         <td>
             <input class="btn btn-primary" type="button" value ="Editar" onclick="window.location.href='@Url.Action("Edit", "Personagens", new { Id = item.Id_person })'"/>

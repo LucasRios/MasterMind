@@ -7,7 +7,9 @@
 
 <h2>EDITAR PERSONAGEM</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Create", "Personagens", FormMethod.Post,
+                            new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -23,6 +25,13 @@
         <div class="editor-field">
             @Html.TextBoxFor(model => model.Desc_person, new { @class="txtMedium"})
             @Html.ValidationMessageFor(model => model.Desc_person)
+        </div>
+
+                <div class="editor-label">
+            @Html.LabelFor(model => model.Imagem)
+        </div>
+        <div class="editor-field">
+            <input type="file" name="photo" id="file" />
         </div>
 
         <div>

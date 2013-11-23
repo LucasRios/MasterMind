@@ -13,9 +13,9 @@ namespace Infraestrutura.Repositorios.Entidades
         [Display(Name = "Id Usuario")]
         public virtual Int32 Id_user { get; set; }
 
-        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Senha Atual")]
+        [Required(ErrorMessage = "Campo Obrigatório.")]
         public virtual string OldPassword { get; set; }
 
         [DataType(DataType.Password)]
@@ -38,7 +38,6 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual String Email { get; set; }
 
         [StringLength(20, ErrorMessage = "Máximo 20 caracteres.")]
-        [Required(ErrorMessage = "Campo Obrigatório.")]
         [Display(Name = "Nova Senha")]
         public virtual String Senha { get; set; }
 
@@ -62,6 +61,9 @@ namespace Infraestrutura.Repositorios.Entidades
 
         [Required(ErrorMessage = "Campo Obrigatório.")]
         public virtual String Sexo { get; set; }
+
+        [Display(Name = "imagem")]
+        public virtual String imagem { get; set; }
 
     }
 }

@@ -37,6 +37,33 @@ namespace MasterMind.Controllers.BackOffice
         [HttpPost]
         public ActionResult Edit(Personagens personagem)
         {
+            HttpPostedFileBase imagem = Request.Files["photo"];
+
+            if ((imagem != null) && (imagem.FileName != ""))
+            {
+                if (imagem.ContentLength > 100240)
+                {
+                    ModelState.AddModelError("photo", "O tamanho da foto não pode exceder 100 KB");
+                    return View(personagem);
+                }
+
+                var supportedTypes = new[] { "jpg", "jpeg", "png" };
+
+                var fileExt = System.IO.Path.GetExtension(imagem.FileName).Substring(1);
+
+                if (!supportedTypes.Contains(fileExt))
+                {
+                    ModelState.AddModelError("photo", "Tipo inválido. Somente os tipos (jpg, jpeg, png) são suportados.");
+                    return View(personagem);
+                }
+
+                string arquivo = System.IO.Path.Combine(
+                                           Server.MapPath("~/img/personagens"), personagem.Id_person + "." + fileExt);
+
+                imagem.SaveAs(arquivo);
+                personagem.Imagem = "../../img/personagens/" + personagem.Id_person + "." + fileExt;
+            }
+
             GenericoRep<Personagens> repositorio = new GenericoRep<Personagens>();
             repositorio.Salvar(personagem);
             return RedirectToAction("List");
@@ -75,6 +102,39 @@ namespace MasterMind.Controllers.BackOffice
         public ActionResult Create(Personagens personagem)
         {
             GenericoRep<Personagens> repositorio = new GenericoRep<Personagens>();
+            repositorio.Salvar(personagem);
+
+            IEnumerable<Personagens> iper = repositorio.ObterTodos().Where(x => x.Desc_person.Trim().ToUpper() == personagem.Desc_person.Trim().ToUpper());
+
+            personagem = iper.ElementAt(0);
+
+            HttpPostedFileBase imagem = Request.Files["photo"];
+
+            if ((imagem != null) && (imagem.FileName != ""))
+            {
+                if (imagem.ContentLength > 100240)
+                {
+                    ModelState.AddModelError("photo", "O tamanho da foto não pode exceder 100 KB");
+                    return View(personagem);
+                }
+
+                var supportedTypes = new[] { "jpg", "jpeg", "png" };
+
+                var fileExt = System.IO.Path.GetExtension(imagem.FileName).Substring(1);
+
+                if (!supportedTypes.Contains(fileExt))
+                {
+                    ModelState.AddModelError("photo", "Tipo inválido. Somente os tipos (jpg, jpeg, png) são suportados.");
+                    return View(personagem);
+                }
+
+                string arquivo = System.IO.Path.Combine(
+                                           Server.MapPath("~/img/personagens"), personagem.Id_person + "." + fileExt);
+
+                imagem.SaveAs(arquivo);
+                personagem.Imagem = "../../img/personagens/" + personagem.Id_person + "." + fileExt;
+            }
+
             repositorio.Salvar(personagem);
             return RedirectToAction("List");
         }

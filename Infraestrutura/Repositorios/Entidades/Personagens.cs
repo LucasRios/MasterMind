@@ -15,5 +15,8 @@ namespace Infraestrutura.Repositorios.Entidades
         [Required(ErrorMessage="Campo Obrigatório.")]
         public virtual String Desc_person { get; set; }
 
+        [Display(Name = "Imagem")]
+        public virtual String Imagem { get; set; }
+
     }
 }
