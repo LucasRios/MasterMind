@@ -65,7 +65,7 @@ namespace MasterMind.Controllers
 
             if (ranking != null)
             {
-                for (var i = 0; i <= 2; i++)
+                for (var i = 0; i <= 2 && i<=ranking.Count()-1; i++)
                 {
                    aux.Add(ranking.ElementAt(i));
                 }
