@@ -50,7 +50,7 @@ namespace MasterMind.Controllers
             {
                 ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
                 ViewBag.ListaTemas = TemasDTO.Lista();
-                return RedirectToAction("Partida", "Game", new { Id_Jogo = list.ElementAt(0).Id_jogo });
+                return RedirectToAction("Partida", "Game", new { Id_Sala = list.ElementAt(0).Sala.Id_Sala });
             }
             /*-------*/
 
@@ -97,6 +97,7 @@ namespace MasterMind.Controllers
             IEnumerable<Jogos> list = new List<Jogos>();
             GenericoRep<Jogos> jogos = new GenericoRep<Jogos>();
             list = jogos.ObterTodos().Where(x => x.Sala.Id_Sala == model.Sala.Id_Sala);
+            model.SequenciaEntradaUsuarioSala = list.Count() + 1;
 
             if (list.Count() >= 8)
             {
@@ -133,7 +134,7 @@ namespace MasterMind.Controllers
 
                     servidor_cria_sala(model);//o servidor verifica se a sala encheu, e se a mesma for pública ele cria uma nova
 
-                    return RedirectToAction("Partida", "Game", new { Id_Jogo = model.Id_jogo });
+                    return RedirectToAction("Partida", "Game", new { Id_Sala = model.Sala.Id_Sala });
                 }
 
                 ViewBag.ListaTemas = TemasDTO.Lista();

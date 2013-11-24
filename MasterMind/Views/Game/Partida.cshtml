@@ -4,7 +4,8 @@
     ViewBag.Title = "Partida";
     Layout = "~/Views/Shared/_LayoutTabuleiro.cshtml";
     Perguntas pergunta = ViewBag.PerguntaInicial;
-    List<Usuario> jogadores = ViewBag.Jogadores;
+    IList<Jogos> partida = ViewBag.Partida;
+    
 }
 
 <script src="~/Scripts/Game/game.js"></script>
@@ -93,17 +94,18 @@
 <div id="divParticipantes">
     <h3>Participantes</h3>
     <ul>
-        @foreach(Usuario jogador in jogadores)
+        @foreach(Jogos jogo in partida)
         {
             <li>
                 <div class="dados-jogador">
-                    <span>@jogador.Nome (@jogador.Cidade/@jogador.Estado-@jogador.Pais)</span>
+                    <span>@jogo.Usuario.Nome (@jogo.Usuario.Cidade/@jogo.Usuario.Estado-@jogo.Usuario.Pais)</span>
                     <br />
                     <div class="tema-jogador">
-                        <span>&nbspTema: </span>
+                        <span>&nbsp;&nbsp;Tema: @jogo.Tema.Desc_tema</span>
                     </div>
+                    <div style="clear:both;"></div>
                     <div class="acertos-erros-jogador">
-                        <span>Acertos: 0</span> <span>Erros: 0</span>
+                        <span>&nbsp;&nbsp;Acertos: @jogo.Acertos</span> <span>Erros: @jogo.Erros</span>
                     </div>
                     <div style="clear:both;"></div>
                 </div>

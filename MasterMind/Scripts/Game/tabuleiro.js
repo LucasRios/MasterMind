@@ -1,32 +1,17 @@
 ﻿var tam_celula = (12 + 0) * 4;
 var pathPecas = "../Images/svg/";
 
-var posicaoPecas = [
-    {
-        Id_user: 0,
-        Id_nome: 'jogador1',
-        linha: 0,
-        coluna: 5,
-        tema: 'tema1',
-        cor: 'verde'
-    },
-    {
-        Id_user: 0,
-        Id_nome: 'jogador2',
-        linha: 0,
-        coluna: 6,
-        tema: 'tema2',
-        cor: 'amarelo'
-    },
-    {
-        Id_user: 0,
-        Id_nome: 'jogador3',
-        linha: 0,
-        coluna: 7,
-        tema: 'tema3',
-        cor: 'vermelho'
-    },
-];
+var objJogador = {
+    Id_user: 0,
+    Id_nome: 'jogador1',
+    linha: 0,
+    coluna: 5,
+    tema: 'tema1',
+    cor: 'verde'
+}
+
+var posicaoPecas = [];
+
 $(function () {
     cria_tabuleiro(5, 3);
     coloca_peca(posicaoPecas[0].linha, posicaoPecas[0].coluna, pathPecas + posicaoPecas[0].cor, 0)

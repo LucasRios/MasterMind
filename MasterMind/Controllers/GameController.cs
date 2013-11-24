@@ -27,25 +27,27 @@ namespace MasterMind.Controllers
         }
 
         [HttpGet]
-        public ActionResult Partida()
+        public ActionResult Partida(Int32 Id_Sala)
         {
-            GenericoRep<Salas> salasRep = new GenericoRep<Salas>();
-            Salas sala = salasRep.ObterPorId(1);
+            ///
+            /// Partida - GAMES
+            ///
+            JogosRep jogoRep = new JogosRep();
+            IList<Jogos> partida = jogoRep.ObterPorIdSala(Id_Sala);
+            ViewBag.Partida = partida;
 
             ///
-            /// Jogadores
-            /// 
-            SalasRep SalasRep = new SalasRep();
-            IList<Usuario> usuarios = SalasRep.ObterUsuarios(sala.Id_Sala);
-            ViewBag.Jogadores = usuarios;
+            /// SALA 
+            ///
+            GenericoRep<Salas> salasRep = new GenericoRep<Salas>();
+            Salas sala = salasRep.ObterPorId(Id_Sala);
 
             ///
             /// Pergunta Inicial
             /// 
             PerguntasRep perguntasRep = new PerguntasRep();
 
-            Int32 IdTema = 1;
-            IList<Perguntas> perguntas = perguntasRep.ObterPerguntas(IdTema);
+            IList<Perguntas> perguntas = perguntasRep.ObterPerguntas(partida[0].Tema.Id_tema);
 
             Random indicePergunta = new Random();
 
