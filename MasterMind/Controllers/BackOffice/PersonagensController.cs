@@ -13,12 +13,14 @@ namespace MasterMind.Controllers.BackOffice
     {
         public ActionResult Index()
         {
+            ViewBag.ListaTemas = TemasDTO.Lista();
             return RedirectToAction("List");
         }
 
         [HttpGet]
         public ActionResult Details(Int32 Id)
         {
+            ViewBag.ListaTemas = TemasDTO.Lista();
             GenericoRep<Personagens> repositorio = new GenericoRep<Personagens>();
             Personagens personagem = repositorio.ObterPorId(Id);
             return View(personagem);
@@ -37,6 +39,7 @@ namespace MasterMind.Controllers.BackOffice
         [HttpPost]
         public ActionResult Edit(Personagens personagem)
         {
+            ViewBag.ListaTemas = TemasDTO.Lista();
             HttpPostedFileBase imagem = Request.Files["photo"];
 
             if ((imagem != null) && (imagem.FileName != ""))
@@ -64,15 +67,23 @@ namespace MasterMind.Controllers.BackOffice
                 personagem.Imagem = "../../img/personagens/" + personagem.Id_person + "." + fileExt;
             }
 
+
+            ViewBag.ListaTemas = TemasDTO.Lista();
             GenericoRep<Personagens> repositorio = new GenericoRep<Personagens>();
             repositorio.Salvar(personagem);
             return RedirectToAction("List");
         }
 
-        public ActionResult List()
+        public ActionResult List(Int32? Id_tema)
         {
+            ViewBag.ListaTemas = TemasDTO.Lista();
+
             GenericoRep<Personagens> repositorio = new GenericoRep<Personagens>();
             IEnumerable<Personagens> Personagens = repositorio.ObterTodos();
+
+            if (Id_tema != null && Id_tema > 0)
+                Personagens = repositorio.ObterTodos().Where(x => x.Tema.Id_tema == Id_tema);
+
             return View(Personagens);
         }
 

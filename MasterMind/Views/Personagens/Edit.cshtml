@@ -7,7 +7,7 @@
 
 <h2>EDITAR PERSONAGEM</h2>
 
-@using (Html.BeginForm("Create", "Personagens", FormMethod.Post,
+@using (Html.BeginForm("Edit", "Personagens", FormMethod.Post,
                             new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -31,7 +31,18 @@
             @Html.LabelFor(model => model.Imagem)
         </div>
         <div class="editor-field">
-            <input type="file" name="photo" id="file" />
+            <input type="file" name="photo" id="file"/>
+        </div>
+
+       <div class="editor-label">
+            @Html.Label("Tema")
+            @Html.DropDownListFor(u => u.Tema.Id_tema, new SelectList(ViewBag.ListaTemas, "Id_tema", "Desc_tema"), new { @class = "dropdownlist" })
+            @Html.ValidationMessageFor(model => model.Tema.Id_tema)
+        </div>
+
+       <div class="editor-field">
+            @Html.TextBoxFor(model => model.Nivel, new { @class = "txtMedium" })
+            @Html.ValidationMessageFor(model => model.Nivel)
         </div>
 
         <div>

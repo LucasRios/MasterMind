@@ -32,6 +32,21 @@ namespace MasterMind.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult Login_2(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login_2(LoginModel model, string returnUrl)
+        {
+            return Login(model, returnUrl);
+        }
+
         //
         // POST: /Account/Login
 
@@ -39,14 +54,15 @@ namespace MasterMind.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
-        {              
+        {
             if (ModelState.IsValid && WebSecurity.Login(model.email, model.Senha, persistCookie: model.RememberMe))
             {
                 GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
-                Usuario aux = repositorio.ObterPorId(WebSecurity.GetUserId(model.email));                
-                
-                if (aux.Id_perfil == 2){
-                return RedirectToAction("Principal", "Game");
+                Usuario aux = repositorio.ObterPorId(WebSecurity.GetUserId(model.email));
+
+                if (aux.Id_perfil == 2)
+                {
+                    return RedirectToAction("Principal", "Game");
                 }
                 else if (aux.Id_perfil == 1)
                 {
@@ -70,6 +86,84 @@ namespace MasterMind.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        private IEnumerable<PersonagemDTO> ListaPerson(int id_user)
+        {
+            GenericoRep<Ranking> usu = new GenericoRep<Ranking>();
+
+            IEnumerable<Ranking> usuario = usu.ObterTodos().Where(x => x.Id_User.Id_user == id_user);
+
+            int nivel_usu = 0;
+
+            if (usuario.Count() > 0)
+            {
+                nivel_usu = usuario.ElementAt(0).qtde_partidas_ganhas / 2;            
+            }
+
+            return PersonagemDTO.ListaPerson().Where(x => x.Nivel == nivel_usu); 
+        }
+
+        [HttpGet]
+        public ActionResult Personagem(Int32? Id_person)
+        {
+            Personagens personagem = new Personagens();
+
+            Usuario usuario = new Usuario();
+            GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
+
+            usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.SelectedPerson = "";
+            ViewBag.NameSelectedPerson = "";
+            if (Id_person != null && Id_person > 0)
+            {
+                GenericoRep<Personagens> repPerson = new GenericoRep<Personagens>();
+                personagem = repPerson.ObterPorId((int)Id_person);
+                ViewBag.SelectedPerson = personagem.Imagem;
+                ViewBag.NameSelectedPerson = personagem.Desc_person;
+                ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));
+                usuario.auxId_person = (int)Id_person;
+            }
+            
+            ViewBag.UserPerson = usuario.Personagem.Imagem; 
+            ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));            
+            
+            return View(usuario);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Personagem(Usuario model)
+        {
+
+            if (model.Personagem.Id_person != 0)
+            {
+                Usuario usuario = new Usuario();
+                GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
+
+                if (model.auxId_person != 0)
+                {
+                    GenericoRep<Personagens> repPerson = new GenericoRep<Personagens>();
+                    model.Personagem = repPerson.ObterPorId(model.auxId_person);
+                }
+
+                usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+                usuario.Personagem = model.Personagem;
+
+                GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
+
+                repositorio.Salvar(usuario);
+
+                return RedirectToAction("Principal", "Game");
+            }
+
+            ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.SelectedPerson = model.Personagem.Imagem;
+            ViewBag.NameSelectedPerson = model.Personagem.Desc_person;
+            ViewBag.UserPerson = model.Personagem.Imagem;
+            return View(model);
+        }
+
 
         //
         // GET: /Account/Register
@@ -104,7 +198,7 @@ namespace MasterMind.Controllers
                         WebSecurity.CreateAccount(model.Email, model.Senha);
                         WebSecurity.Login(model.Email, model.Senha);
                     }
-                   
+
                     return RedirectToAction("Principal", "Game");
                 }
                 catch (MembershipCreateUserException e)
@@ -186,7 +280,7 @@ namespace MasterMind.Controllers
             if ((lauxUsu.Count() > 0) && (lauxUsu.ElementAt(0).Id_user != model.Id_user))
             {
                 ModelState.AddModelError("Usuário", "Já existe este e-mail cadastrado para outro usuário!");
-                return View(model);            
+                return View(model);
             }
 
             if (hasLocalAccount)
@@ -217,10 +311,10 @@ namespace MasterMind.Controllers
                         }
 
                         string arquivo = System.IO.Path.Combine(
-                                                   Server.MapPath("~/img/usuarios"), model.Id_user+"."+fileExt);
+                                                   Server.MapPath("~/img/usuarios"), model.Id_user + "." + fileExt);
 
                         imagem.SaveAs(arquivo);
-                        model.imagem = "../../img/usuarios/"+ model.Id_user + "." + fileExt;
+                        model.imagem = "../../img/usuarios/" + model.Id_user + "." + fileExt;
                     }
 
                     try
@@ -246,7 +340,7 @@ namespace MasterMind.Controllers
 
                     if (changePasswordSucceeded)
                     {
-                        return RedirectToAction("Manage", new { Message = "Cadastro alterado com sucesso" });
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {

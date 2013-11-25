@@ -1,0 +1,88 @@
+﻿body
+{
+    margin: 0 0 0 0;
+}
+
+table
+{
+    border-style: solid;
+    border-width: 1px;
+}
+table tr th, table tr td
+{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-style: solid;
+    border-left-width: 1px;
+}
+
+fieldset
+{
+    background-color: #c1bdbd;
+    padding: 5px 5px 5px 5px !important;
+}
+
+.display-label, .editor-label
+{
+    font-weight: bold;
+}
+
+.txtMedium
+{
+    width: 200px;
+}
+.txtLarge
+{
+    width: 400px;
+}
+
+.msg-atencao
+{
+    color: #f00;
+}
+
+.titulo-app
+{
+    /*background-color: #0019b1;*/
+    background-color: #3F9FD9;
+    float: left;
+}
+    .titulo-app h1
+    {
+        margin: 0 0 0 0;
+        color: #fff !important;
+        text-align: center;
+    }
+
+.cabecalho .opcoes
+{
+    float:right;
+} 
+.conteudo
+{
+    margin: 50px 5px 0px 5px;
+}
+.conteudo h2
+{
+    border-bottom: inset;
+    margin-bottom: 5px;
+}
+
+#login_2
+{
+    margin: 0px 0px 0px 0px;
+    height:100%;
+    background-image:url(../../Images/Login_2.jpg);
+    background-size: contain;
+}
+
+.alternativas label
+{
+    display: inline;
+}
+
+.classCerto
+{
+    color: #f00;
+    font-weight: bolder;
+}

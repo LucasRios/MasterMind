@@ -9,6 +9,7 @@ namespace Infraestrutura.Repositorios.Entidades
     public class Personagens
     {
         [Display(Name="Id Personagem")]
+        [Key]
         public virtual Int32 Id_person { get; set; }
 
         [Display(Name = "Descrição Personagem")]
@@ -17,6 +18,12 @@ namespace Infraestrutura.Repositorios.Entidades
 
         [Display(Name = "Imagem")]
         public virtual String Imagem { get; set; }
+
+        [Display(Name = "Nível")]
+        public virtual Int32 Nivel { get; set; }
+
+        [Required(ErrorMessage = "Campo Obrigatório.")]
+        public virtual Temas Tema { get; set; }
 
     }
 }

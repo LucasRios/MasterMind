@@ -64,7 +64,7 @@ namespace MasterMind.Controllers.BackOffice
             }
             catch
             {
-                TempData["notice"] = "Este tema nao pode ser excluido pois existem perguntas relacionadas a ele.";                 
+                TempData["notice"] = "Este tema nao pode ser excluido pois existem perguntas ou personagens relacionados a ele.";                 
             }
             return View(tema) ;
             

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Usuario>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div>
@@ -6,7 +6,7 @@
             <li><%: Html.ActionLink("Salas", "List", "Salas")%> </li>
             <li><%: Html.ActionLink("Criar Salas", "Create","Salas")%> </li>
             <li><%: Html.ActionLink("Ranking", "Ranking", "Game")%></li>
-            <li><%: Html.ActionLink("Escolher Personagem", "Personagem", "Game")%></li>
+            <li><%: Html.ActionLink("Escolher Personagem", "Personagem", "Account")%></li>
             <li><%: Html.ActionLink("Manutenção da Conta", "Manage", "Account")%></li>
             <li><% using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                    { %>

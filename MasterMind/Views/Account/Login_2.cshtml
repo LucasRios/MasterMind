@@ -1,0 +1,43 @@
+﻿@model MasterMind.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Html.EnableClientValidation(true);
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <link href="~/Styles/Logins.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+
+    <div id="login_2">
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        { 
+            @Html.AntiForgeryToken() 
+            @Html.ValidationSummary(true) 
+
+
+            @Html.LabelFor(m => m.email) 
+            @Html.TextBoxFor(m => m.email) 
+            @Html.ValidationMessageFor(m => m.email) 
+             
+            @Html.LabelFor(m => m.Senha) 
+            @Html.PasswordFor(m => m.Senha) 
+            @Html.ValidationMessageFor(m => m.Senha) 
+              
+          <br />  @Html.CheckBoxFor(m => m.RememberMe) 
+            @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" }) 
+              
+            <input type="submit" value="Acessar" />
+            <p>
+                @Html.ActionLink("Registre-se", "Register")  se você não possui uma conta.
+            </p>
+        }
+    </div>
+</body>
+</html>
+

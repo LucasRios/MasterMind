@@ -9,6 +9,7 @@ namespace Infraestrutura.Repositorios.Entidades
     public class Temas
     {
         [Display(Name="Id Tema")]
+        [Key]
         [Required(ErrorMessage = "Campo Obrigatório.")]
         [Range(1, Int32.MaxValue, ErrorMessage="Tema inválido.")]
         public virtual Int32 Id_tema { get; set; }

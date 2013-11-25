@@ -16,6 +16,11 @@ namespace MasterMind.Controllers
             }
             else 
             {
+               /* Random random = new Random();
+                int i = random.Next(1, 2);
+
+                if (i==1) return RedirectToAction("Login", "Account");
+                else*/
                 return RedirectToAction("Login", "Account");
             }            
         }

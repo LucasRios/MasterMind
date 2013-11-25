@@ -20,8 +20,25 @@
         <th>
             Imagem
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tema.Desc_tema)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nivel)
+        </th>
         <th>Ações</th>
     </tr>
+
+    @using (Html.BeginForm("List", "Personagens", FormMethod.Get)) {
+        <div class="editor-label">
+            @Html.Label("Tema")
+            @Html.DropDownList("Id_tema", new SelectList(ViewBag.ListaTemas, "Id_tema", "Desc_tema"), new { @class = "dropdownlist" })
+            <br />
+            <input type="submit" value="Consultar" class="btn btn-info"/>
+        </div>
+
+            <br />
+    }
 
 @foreach (var item in Model) {
     <tr>
@@ -33,6 +50,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Imagem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tema.Desc_tema)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nivel)
         </td>
         <td>
             <input class="btn btn-primary" type="button" value ="Editar" onclick="window.location.href='@Url.Action("Edit", "Personagens", new { Id = item.Id_person })'"/>

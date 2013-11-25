@@ -17,7 +17,12 @@ namespace MasterMind.Controllers
 
         public ActionResult Principal()
         {
-            return View();
+            Usuario usuario = new Usuario();
+            GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
+
+            usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+
+            return View(usuario);
         }
 
         [HttpGet]

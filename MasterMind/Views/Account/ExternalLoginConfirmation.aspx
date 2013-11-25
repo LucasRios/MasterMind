@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<MasterMind.Models.RegisterExternalLoginModel>" %>
+﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<MasterMind.Models.RegisterExternalLoginModel>" %>
 
 <asp:Content ID="externalLoginConfirmationContent" ContentPlaceHolderID="MainContent" runat="server">
     <hgroup class="title">

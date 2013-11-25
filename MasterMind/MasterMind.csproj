@@ -255,8 +255,10 @@
     <Content Include="Images\Gradiente_prata_topo.png" />
     <Content Include="Images\heroAccent.png" />
     <Content Include="Images\letras.png" />
+    <Content Include="Images\Login_2.jpg" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\seta.gif" />
+    <Content Include="Images\seta_dir.png" />
     <Content Include="Images\tabuleiro.png" />
     <Content Include="Images\usu.png" />
     <Content Include="img\glyphicons-halflings.png" />
@@ -285,8 +287,10 @@
     <Content Include="Styles\backoffice.css" />
     <Content Include="Styles\bootstrap-responsive.min.css" />
     <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Styles\Logins.css" />
     <Content Include="Styles\jogo.css" />
     <Content Include="Styles\tabuleiro.css" />
+    <Content Include="Views\Account\Personagem.aspx" />
     <Content Include="Views\Game\Ranking.aspx" />
     <Content Include="Views\Game\Ranking_top.aspx" />
     <Content Include="Views\Game\Partida.aspx" />
@@ -357,6 +361,7 @@
     <Content Include="Views\Usuario\FormView.cshtml" />
     <Content Include="Views\Game\Partida.cshtml" />
     <Content Include="Views\Shared\_LayoutTabuleiro.cshtml" />
+    <Content Include="Views\Account\Login_2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
