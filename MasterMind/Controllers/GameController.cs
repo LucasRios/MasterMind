@@ -58,6 +58,16 @@ namespace MasterMind.Controllers
 
             ViewBag.PerguntaInicial = perguntas[indicePergunta.Next(0, perguntas.Count - 1)];
 
+            ///
+            /// Atualiza hora da pergunta atual do jogador
+            /// 
+            Jogos Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+            Jogador.PerguntaAtualFeitaEm = DateTime.Now;
+            jogoRep.Salvar(Jogador);
+
+
+            ViewBag.Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+
             return View(@"~/Views/Game/Partida.cshtml");
         }
 
@@ -121,6 +131,7 @@ namespace MasterMind.Controllers
             Boolean opcaoCerta = resposta.OpcaoCerta;
 
             atualiza_ranking(opcaoCerta);
+            //atualiza_acerto_erro(opcaoCerta);
 
             var vm = new { opcaoCerta = opcaoCerta };
 
@@ -156,6 +167,40 @@ namespace MasterMind.Controllers
 
             rankingRep.Salvar(ranking);
 
+        }           
+        private void atualiza_acerto_erro(Boolean opcaoCerta)
+        {
+            int id_sala = Convert.ToInt32(Request.Params["Id_Sala"]);
+            JogosRep JogoRep = new JogosRep();
+            Jogos jogador = JogoRep.ObterPorIdSala(id_sala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+
+            if (opcaoCerta)
+                jogador.Acertos = jogador.Acertos + 1;
+            else jogador.Erros = jogador.Erros + 1;
+
+            jogador.DataUltimaResposta = DateTime.Now;
+
+            JogoRep.Salvar(jogador);
+        }
+        private void atualiza_nivel_personagem()
+        {
+            GenericoRep<Ranking> rankingRep = new GenericoRep<Ranking>();
+            Ranking ranking = rankingRep.ObterTodos().Where(x => x.Id_User.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+
+            GenericoRep<Usuario> UsuRep = new GenericoRep<Usuario>();
+            Usuario usuario = UsuRep.ObterTodos().Where(x => x.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+
+            if (usuario.Personagem.Nivel < (int)(ranking.qtde_partidas_ganhas / 2))
+            {
+                GenericoRep<Personagens> PerRep = new GenericoRep<Personagens>();
+                IEnumerable<Personagens> lPersonagem = PerRep.ObterTodos().Where(x => x.Tema.Id_tema == usuario.Personagem.Tema.Id_tema);
+                Personagens Personagem = lPersonagem.Where(x => x.Nivel == (int)(ranking.qtde_partidas_ganhas / 2)).ElementAt(0);
+                usuario.Personagem = Personagem;
+
+                UsuRep.Salvar(usuario);
+            }
+
+              
         }
     }
 }

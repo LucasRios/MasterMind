@@ -130,6 +130,8 @@ namespace MasterMind.Controllers
                 {
                     GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
 
+                    model.DataEntradaSala = DateTime.Now;
+
                     repositorio.Salvar(model);
 
                     servidor_cria_sala(model);//o servidor verifica se a sala encheu, e se a mesma for pública ele cria uma nova
