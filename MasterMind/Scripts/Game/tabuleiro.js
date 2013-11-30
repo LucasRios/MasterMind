@@ -1,24 +1,75 @@
 ﻿var tam_celula = (12 + 0) * 4;
-var pathPecas = "../Images/svg/";
-
-var objJogador = {
-    Id_user: 0,
-    Id_nome: 'jogador1',
-    linha: 0,
-    coluna: 5,
-    tema: 'tema1',
-    cor: 'verde'
-}
 
 var posicaoPecas = [];
 
+//var trilhas = '.';
+
 $(function () {
-    cria_tabuleiro(5, 3);
-    coloca_peca(posicaoPecas[0].linha, posicaoPecas[0].coluna, pathPecas + posicaoPecas[0].cor, 0)
-    coloca_peca(posicaoPecas[1].linha, posicaoPecas[1].coluna, pathPecas + posicaoPecas[1].cor, 0)
-    coloca_peca(posicaoPecas[2].linha, posicaoPecas[2].coluna, pathPecas + posicaoPecas[2].cor, 0)
+    AtualizarTabuleiro();
+    //$('.celula-ativa').bind({
+    //    click: function () {
+    //        trilhas += '\n' + $(this).attr("id");
+    //        alert(trilhas);
+    //    }
+    //});
 });
 
+function AtualizarTabuleiro() {
+    cria_tabuleiro(5, 3);
+    $.get("ObterStatusTabuleiro", { Id_Sala: $("#hddId_Sala").val() })
+    .success(function (response) {
+        posicaoPecas = response.statusTabuleiro;
+        var acabou = false;
+        for (i = 0; i < posicaoPecas.length; i++) {
+            coloca_peca(posicaoPecas[i].Linha, posicaoPecas[i].Coluna, peca(posicaoPecas[i].CorPeca), 0)
+            if (posicaoPecas[i].Linha == 6 && posicaoPecas[i].Coluna == 6) {
+                acabou = true;
+            }
+        }
+        if (acabou) {
+            GameOver();
+        }
+        else {
+            GameContinue();
+        }
+    });
+}
+
+function GameOver() {
+    $("#divTextoPergunta").css('display', 'none');
+    $("#divAlternativas").css('display', 'none');
+    $("#divCartas").css('display', 'none');
+    $("#divSeta").css('display', 'none');
+
+    $("#divGame-Over").css('display', 'block');
+}
+
+function GameContinue() {
+    $("#divTextoPergunta").css('display', 'block');
+    $("#divAlternativas").css('display', 'block');
+    $("#divCartas").css('display', 'block');
+    $("#divSeta").css('display', 'block');
+}
+
+function peca(idCorPeca) {
+    var pathPecas = "../Images/svg/";
+    var cor = '';
+    switch (idCorPeca) {
+        case 1:
+            cor = 'amarelo';
+            break;
+        case 2:
+            cor = 'vermelho';
+            break;
+        case 3:
+            cor = 'verde';
+            break;
+        default:
+            cor = 'verde';
+            break;
+    }
+    return pathPecas + cor + '.svg';
+}
 
 function cria_tabuleiro(casas, largura_fileira) {
     var varicao_cor = Math.ceil(255 / ((2 * casas) + largura_fileira));
@@ -44,7 +95,7 @@ function cria_tabuleiro(casas, largura_fileira) {
 }
 
 function coloca_peca(linha, coluna, cor, nivel) {
-    $("#celula_" + linha + "_" + coluna).append("<img src='" + cor + ".svg' width='" + (tam_celula - (nivel * 4)) + "' height='" + (tam_celula - (nivel * 4)) + "' style='position:relative;float:left;top:" + Math.ceil(tam_celula / 2) + "px;margin-top:-" + (tam_celula - (nivel * 2)) + "px; margin-left:" + (nivel * 2) + "px; z-indez:" + (100 - nivel) + "; '/>");
+    $("#celula_" + linha + "_" + coluna).append("<img src='" + cor + "' width='" + (tam_celula - (nivel * 4)) + "' height='" + (tam_celula - (nivel * 4)) + "' style='position:relative;float:left;top:" + Math.ceil(tam_celula / 2) + "px;margin-top:-" + (tam_celula - (nivel * 2)) + "px; margin-left:" + (nivel * 2) + "px; z-indez:" + (100 - nivel) + "; '/>");
 }
 
 // Testes

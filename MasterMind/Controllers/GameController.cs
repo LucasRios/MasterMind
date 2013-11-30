@@ -46,16 +46,14 @@ namespace MasterMind.Controllers
             ///
             GenericoRep<Salas> salasRep = new GenericoRep<Salas>();
             Salas sala = salasRep.ObterPorId(Id_Sala);
+            ViewBag.Sala = sala;
 
             ///
             /// Pergunta Inicial
             /// 
             PerguntasRep perguntasRep = new PerguntasRep();
-
             IList<Perguntas> perguntas = perguntasRep.ObterPerguntas(partida[0].Tema.Id_tema);
-
             Random indicePergunta = new Random();
-
             ViewBag.PerguntaInicial = perguntas[indicePergunta.Next(0, perguntas.Count - 1)];
 
             ///
@@ -66,9 +64,35 @@ namespace MasterMind.Controllers
             jogoRep.Salvar(Jogador);
 
 
-            ViewBag.Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+            //ViewBag.Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
 
             return View(@"~/Views/Game/Partida.cshtml");
+        }
+
+        [HttpGet]
+        public JsonResult ObterStatusTabuleiro(Int32 Id_Sala)
+        {
+            Int32 layoutTabuleiro = 1;
+
+            JogosRep jogoRep = new JogosRep();
+            IList<Jogos> partida = jogoRep.ObterPorIdSala(Id_Sala);
+
+            TrilhasTabuleiroRep trilhasRep = new TrilhasTabuleiroRep();
+            List<StatusPartidaTabuleiroDTO> statusPartida = new List<StatusPartidaTabuleiroDTO>();
+
+            foreach (Jogos item in partida)
+            {
+                TrilhasTabuleiro trilha = trilhasRep.ObterTrilhas(layoutTabuleiro, (int)item.SequenciaEntradaUsuarioSala, item.Acertos+1).FirstOrDefault();
+                StatusPartidaTabuleiroDTO status = new StatusPartidaTabuleiroDTO();
+                status.Id_user = item.Usuario.Id_user;
+                status.Linha = trilha.Linha;
+                status.Coluna = trilha.Coluna;
+                status.CorPeca = (int)item.SequenciaEntradaUsuarioSala;
+                statusPartida.Add(status);
+            }
+
+            var vm = new { statusTabuleiro = statusPartida };
+            return Json(vm, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Ranking_top()
@@ -122,7 +146,7 @@ namespace MasterMind.Controllers
             return json;
         }
 
-        public JsonResult Responder(Int32 IdResposta)
+        public JsonResult Responder(Int32 IdResposta, Int32 IdSala)
         {
             JsonResult json = new JsonResult();
 
@@ -130,11 +154,10 @@ namespace MasterMind.Controllers
             Respostas resposta = respostaRep.ObterPorId(IdResposta);
             Boolean opcaoCerta = resposta.OpcaoCerta;
 
+            Boolean ganhou = atualiza_acerto_erro(opcaoCerta, IdSala);
             atualiza_ranking(opcaoCerta);
-            //atualiza_acerto_erro(opcaoCerta);
 
-            var vm = new { opcaoCerta = opcaoCerta };
-
+            var vm = new { opcaoCerta = opcaoCerta, ganhou = ganhou };
             json.Data = vm;
             json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
@@ -168,11 +191,10 @@ namespace MasterMind.Controllers
             rankingRep.Salvar(ranking);
 
         }           
-        private void atualiza_acerto_erro(Boolean opcaoCerta)
+        private Boolean atualiza_acerto_erro(Boolean opcaoCerta, Int32 IdSala)
         {
-            int id_sala = Convert.ToInt32(Request.Params["Id_Sala"]);
             JogosRep JogoRep = new JogosRep();
-            Jogos jogador = JogoRep.ObterPorIdSala(id_sala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+            Jogos jogador = JogoRep.ObterPorIdSala(IdSala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
 
             if (opcaoCerta)
                 jogador.Acertos = jogador.Acertos + 1;
@@ -181,6 +203,9 @@ namespace MasterMind.Controllers
             jogador.DataUltimaResposta = DateTime.Now;
 
             JogoRep.Salvar(jogador);
+
+            Int32 respostaFinal = 21;
+            return jogador.Acertos == respostaFinal;
         }
         private void atualiza_nivel_personagem()
         {

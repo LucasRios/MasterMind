@@ -10,11 +10,12 @@
 });
 
 function Responder() {
-    $.post("Responder", { IdResposta: $(".alternativas :radio:checked").val() })
+    $.post("Responder", { IdResposta: $(".alternativas :radio:checked").val(), IdSala: $("#hddId_Sala").val() })
     .success(function (response) {
         if (response.opcaoCerta) {
             $("#divCerto").css('display', 'inline');
             $("#divErrado").css('display', 'none');
+            AtualizarTabuleiro();
         }
         else {
             $("#divErrado").css('display', 'inline');

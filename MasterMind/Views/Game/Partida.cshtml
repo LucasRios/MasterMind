@@ -5,16 +5,27 @@
     Layout = "~/Views/Shared/_LayoutTabuleiro.cshtml";
     Perguntas pergunta = ViewBag.PerguntaInicial;
     IList<Jogos> partida = ViewBag.Partida;
-    Jogos jogador = ViewBag.Jogador;
+    //Jogos jogador = ViewBag.Jogador;
+    Salas sala = ViewBag.Sala;
+    Usuario eu = ViewBag.Eu;
     
 }
 
 <script src="~/Scripts/Game/game.js"></script>
 <script src="@Url.Content("~/Scripts/Game/tabuleiro.js")"></script>
 
+<div>
+    @Html.Hidden("hddId_Sala", sala.Id_Sala, new  { id = "hddId_Sala"} );
+</div>
+
 <div id="divPergunta">
     <div id="divPersonagem">
-        <img src="@Url.Content(jogador.Usuario.Personagem.Imagem)" width="70" height="70"/>
+@*        <img src="@Url.Content(jogador.Usuario.Personagem.Imagem)" width="70" height="70"/>*@
+          <img src="@Url.Content("~/Images/cartoon.jpg")"/>
+    </div>
+
+    <div id="divGame-Over">
+        <p>Game Over</p>
     </div>
 
     <div id="divTextoPergunta">
@@ -99,7 +110,8 @@
         {
             <li>
                 <div class="dados-jogador">
-                    <span> <img src="@Url.Content(jogo.Usuario.Personagem.Imagem)" width="50" height="50"/> @jogo.Usuario.Nome (@jogo.Usuario.Cidade/@jogo.Usuario.Estado-@jogo.Usuario.Pais)</span>
+                    @*<span> <img src="@Url.Content(jogo.Usuario.Personagem.Imagem)" width="50" height="50"/> @jogo.Usuario.Nome (@jogo.Usuario.Cidade/@jogo.Usuario.Estado-@jogo.Usuario.Pais)</span>*@
+                    <span>@jogo.Usuario.Nome (@jogo.Usuario.Cidade/@jogo.Usuario.Estado-@jogo.Usuario.Pais)</span>
                     <br />
                     <div class="tema-jogador">
                         <span>&nbsp;&nbsp;Tema: @jogo.Tema.Desc_tema</span>
