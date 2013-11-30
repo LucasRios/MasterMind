@@ -9,35 +9,64 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
 </head>
-<body>
+<body id="login_2">
     <link href="~/Styles/Logins.css" rel="stylesheet" />
     <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
     <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
 
-    <div id="login_2">
-        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
-        { 
-            @Html.AntiForgeryToken() 
-            @Html.ValidationSummary(true) 
+    <header>
+        <div id="header_login_2"></div>
+    </header>
 
+    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+    { 
+        @Html.AntiForgeryToken() 
+        @Html.ValidationSummary(true) 
+        <section id="loginForm">
+            <div>
+                <table>
+                    <tr>
+                        <td style="width: 33%"></td>
+                        <td style="width: 66%;text-align:left;">
+                            <img src="~/Images/logo_login_2.png" />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td id="td_left">
+                            @Html.LabelFor(m => m.email)
+                            @Html.TextBoxFor(m => m.email)
+                            @Html.ValidationMessageFor(m => m.email)
+                        </td>
 
-            @Html.LabelFor(m => m.email) 
-            @Html.TextBoxFor(m => m.email) 
-            @Html.ValidationMessageFor(m => m.email) 
-             
-            @Html.LabelFor(m => m.Senha) 
-            @Html.PasswordFor(m => m.Senha) 
-            @Html.ValidationMessageFor(m => m.Senha) 
-              
-          <br />  @Html.CheckBoxFor(m => m.RememberMe) 
-            @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" }) 
-              
-            <input type="submit" value="Acessar" />
-            <p>
-                @Html.ActionLink("Registre-se", "Register")  se você não possui uma conta.
-            </p>
-        }
-    </div>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td id="td_left">
+                            <div style="margin-left:10%">                                
+                            @Html.LabelFor(m => m.Senha)
+                            @Html.PasswordFor(m => m.Senha)
+                            @Html.ValidationMessageFor(m => m.Senha)
+                            </div>
+
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td id="td_left">
+                            <input type="submit" value="Acessar" style="height:40px; width:100px" />&nbsp;&nbsp;&nbsp; @Html.ActionLink("Registre-se", "Register")  se você não possui uma conta.
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+
+            </div>
+        </section>
+    }
 </body>
 </html>
+
 

@@ -1,0 +1,82 @@
+﻿@using Infraestrutura.Repositorios.Entidades;
+@model Infraestrutura.Repositorios.Entidades.Jogos
+
+@{
+    ViewBag.Title = "Sala de Espera";
+    Layout = "~/Views/Shared/_LayoutTabuleiro.cshtml";
+    IList<Jogos> partida = ViewBag.Partida;
+    Html.EnableClientValidation(true);
+    Jogos jogador = ViewBag.jogador;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <head>
+        <title></title>
+        <meta http-equiv="refresh" content="5" />
+    </head>
+    <body>
+
+        @Html.HiddenFor(model => model.Id_jogo, new { @name = "id_jogo" })
+
+        <link href="~/Content/Site.css" rel="stylesheet" />
+        <div id="divTempo" style="text-align: center">
+            <h1>Acesso à sala @jogador.Sala.Sala</h1>
+            <h6>@ViewBag.TempoRestante</h6>
+
+            Status Atual:
+        @if (jogador.DataEntradaSala != null)
+        {
+            <span>&nbsp;Pronto para jogar </span> 
+        }
+        else
+        {
+            <span>&nbsp;Aguardando Confirmação </span>  
+        }
+
+            <br>
+            <input type="submit"  name="action:Sala_Espera" value="Modificar Status" />
+
+        </div>
+
+        <div id="divPlayers">
+            <h3>Participantes</h3>
+            <ul>
+                @foreach (Jogos jogo in partida)
+                {         
+                    <li>
+                        <div class="dados-jogador" title="SelectPlayer">
+                            <table style="border: none">
+                                <tr style="border: none">
+                                    <td style="border: none">
+                                        <img src="@Url.Content(jogo.Usuario.Personagem.Imagem)" width="50" height="50"/>
+                                    </td>
+                                    <td style="border: none">
+                                        <h2>@jogo.Usuario.Nome </h2>
+                                    </td>
+                                    <td style="border: none">
+                                        <button type="submit" value="Info" name="action:Info">Info.</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div>
+            <img src="~/Images/seta_dir.png" width="50" height="50" />
+        </div>
+
+        <div id="divParcial">
+        @if (ViewBag.selecionado != null)
+        {
+            Html.RenderPartial("_AcessoPartial", new { Id_jogo = (int)ViewBag.selecionado });   
+        }
+        </div>
+    </body>
+    
+}
+

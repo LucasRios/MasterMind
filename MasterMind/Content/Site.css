@@ -52,6 +52,29 @@ mark {
     float: right;
 }
 
+#menu {
+    /*margin-top: 50px;*/
+}
+
+header .content-wrapper {
+    margin: 0;
+    background: url("../Images/Gradiente_prata.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    height: 57px;
+}
+
+header .logoMM
+{
+    margin-left:20px;
+
+    width: 70px;
+    float:left;
+}
+header .tituloMM
+{ 
+    float:left;
+    width: 250px;
+}
+
 .clear-fix:after {
     content: ".";
     clear: both;
@@ -95,10 +118,6 @@ h5, h6 {
 
 /* main layout
 ----------------------------------------------------------*/
-.content-wrapper {
-    margin: 0 auto;
-    
-}
 
 #body {
     background: url("../Images/fundo.jpg");
@@ -114,11 +133,6 @@ h5, h6 {
 
     .featured + .main-content {
     }
-
-header .content-wrapper {
-    padding-top: 20px; 
-    background: url("../Images/Gradiente_prata.png") repeat-x;
-}
 
 footer {
     clear: both;
@@ -189,7 +203,8 @@ footer {
 
 
 /* menu
-----------------------------------------------------------*/
+----------------------
+    ------------------------------------*/
 ul#menu {
     font-size: 1.3em;
     font-weight: 600;
@@ -670,10 +685,6 @@ tr.pager td {
         background-position: 10px 0;
     }
 
-    .content-wrapper {
-        padding-right: 10px;
-        padding-left: 10px;
-    }
 
     .featured .content-wrapper {
         padding: 10px;

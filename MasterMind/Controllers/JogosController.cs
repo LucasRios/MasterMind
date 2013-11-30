@@ -33,7 +33,77 @@ namespace MasterMind.Controllers
         {
             GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
             repositorio.Excluir(jogos);
-            return RedirectToAction("List","Salas");
+            return RedirectToAction("List", "Salas");
+        }
+
+        [HttpGet]
+        public ActionResult Sala_Espera(Int32 Id_Sala, Int32? id_selecionado)
+        {
+            int TempoRestante = 100;
+
+            JogosRep jogoRep = new JogosRep();
+            IEnumerable<Jogos> partida = jogoRep.ObterPorIdSala(Id_Sala);
+            ViewBag.Partida = partida;
+            Jogos jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+            ViewBag.jogador = jogador;
+
+            if ((id_selecionado != 0) && (id_selecionado != null)) ViewBag.selecionado = id_selecionado; //Verifica se o usuário clicou no div para ver detalhes de um jogador
+            else ViewBag.selecionado = "";
+
+            if (partida.Count() >= 2) // se existem mais de dois jogadores na sala de espera
+            {
+                partida = partida.Where(x => x.DataEntradaSala != null).OrderBy(x => x.DataEntradaSala);
+
+                if (partida.Count() >= 1) // se pelo menos 1 deles selecionou "estou pronto"
+                {
+                    TempoRestante = 1 - DateTime.Now.Subtract(DateTime.Parse(partida.ElementAt(0).DataEntradaSala.ToString())).Minutes;
+                    ViewBag.TempoRestante = "Tempo restante para iniciar a partida " + TempoRestante.ToString() + " minutos";
+                }
+                else ViewBag.TempoRestante = "Não há um mínimo de jogadores confirmados para iniciar a partida";
+                
+                //Se 8 deles selecionaram "estou pronto" ou se o tempo acabou
+                if ((partida.Count() >= 8) || (TempoRestante <= 0)) return RedirectToAction("Partida", "Game", new { Id_Sala = Id_Sala });
+            }
+            else  ViewBag.TempoRestante = "Não há jogadores suficientes para iniciar a partida";
+
+            Response.AddHeader("Refresh", "5");
+
+            return View(jogador);
+        }
+
+        [HttpPost]
+        public ActionResult Sala_Espera(Jogos jogo)
+        {           
+            JogosRep jogoRep = new JogosRep();
+            Jogos modelo = jogoRep.ObterPorId(jogo.Id_jogo);
+
+            if (modelo.DataEntradaSala == null)
+            {
+                modelo.DataEntradaSala = DateTime.Now;
+                jogoRep.Salvar(modelo);
+            }
+            else
+            {
+                modelo.DataEntradaSala = null;
+                jogoRep.Salvar(modelo);            
+            }
+
+            return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = modelo.Sala.Id_Sala });
+        }
+
+        [HttpGet]
+        public ActionResult _AcessoPartial(Int32 Id_jogo)
+        {       
+            GenericoRep<Jogos> repjogo = new GenericoRep<Jogos>();
+            Jogos jogos = repjogo.ObterPorId(Id_jogo);
+            Temas tema = jogos.Tema;
+            ViewBag.tema = tema;
+
+            GenericoRep<Ranking> repRanking = new GenericoRep<Ranking>();
+            Ranking ranking = repRanking.ObterTodos().Where(x => x.Id_User.Id_user == jogos.Usuario.Id_user).ElementAt(0);
+            ViewBag.rank = ranking;
+
+            return View();
         }
 
         [HttpGet]
@@ -66,7 +136,7 @@ namespace MasterMind.Controllers
 
             foreach (var i in Jogos)
             {
-                ltemas = ltemas.Where(x => x.Id_tema != i.Tema.Id_tema);                
+                ltemas = ltemas.Where(x => x.Id_tema != i.Tema.Id_tema);
             }
 
             ViewBag.ListaTemas = ltemas;
@@ -77,7 +147,7 @@ namespace MasterMind.Controllers
             model.Sala = sala.ObterPorId(Id);
             model.Id_jogo = 0;
 
-            if (senha != "") { model.Senha=senha; }
+            if (senha != "") { model.Senha = senha; }
 
 
             return View(model);
@@ -107,7 +177,7 @@ namespace MasterMind.Controllers
             }
 
             list = list.Where(x => x.Tema.Id_tema == model.Tema.Id_tema);
-            if(list.Count() > 0)
+            if (list.Count() > 0)
             {
                 ModelState.AddModelError("", "Este tema acabou de ser escolhido. Por favor escolha outro!");
                 ViewBag.ListaTemas = TemasDTO.Lista();
@@ -130,13 +200,11 @@ namespace MasterMind.Controllers
                 {
                     GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
 
-                    model.DataEntradaSala = DateTime.Now;
-
                     repositorio.Salvar(model);
 
                     servidor_cria_sala(model);//o servidor verifica se a sala encheu, e se a mesma for pública ele cria uma nova
 
-                    return RedirectToAction("Partida", "Game", new { Id_Sala = model.Sala.Id_Sala });
+                    return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = model.Sala.Id_Sala });
                 }
 
                 ViewBag.ListaTemas = TemasDTO.Lista();
@@ -156,10 +224,10 @@ namespace MasterMind.Controllers
                 GenericoRep<Jogos> repJogos = new GenericoRep<Jogos>();
                 IEnumerable<Jogos> lJogos = repJogos.ObterTodos().Where(x => x.Sala.Id_Sala == model.Sala.Id_Sala);
 
-                if (lJogos.Count() >= 8) 
+                if (lJogos.Count() >= 8)
                 {
                     Salas sala_new = new Salas();
-                    
+
                     sala_new.Desc_perfil = model.Sala.Desc_perfil;
                     sala_new.Id_Usuario = model.Sala.Id_Usuario;
                     sala_new.Niveis = model.Sala.Niveis;

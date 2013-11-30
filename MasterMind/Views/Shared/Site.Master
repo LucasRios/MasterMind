@@ -3,38 +3,25 @@
 <!DOCTYPE html>
 
 <html lang="pt-br">
-<style type="text/css">
-    #menu {
-        margin-top: 78px;
-    }
 
-    .content-wrapper {
-        height: 75px;
-    }
-</style>
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,heigth=device-heigth" />
     <%: Styles.Render("~/Content/css") %>
     <%: Scripts.Render("~/bundles/modernizr") %>
 </head>
-<body onLoad="PickRandomBackground()">
+<body>
     <header>
+
         <div class="content-wrapper">
-            <div class="float-left">
-                <asp:Image ID="Image3" runat="server" ImageUrl="~/Images/logo.png"
-                    Style="position: absolute; top: 7px; left: 28px; height: 67px; width: 70px;" />
-                <asp:Image ID="Image4" runat="server" ImageUrl="~/Images/letras.png"
-                    Style="position: absolute; top: 17px; left: 106px; height: 40px; width: 349px;" />
-                <nav style="margin-top: 51px">
-                    <ul id="menu">
-                        <li><%: Html.ActionLink("Home", "Index", "Home") %></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="float-right">
-            </div>
+
+            <a href="<%: Url.Action("Index", "Home") %>">
+                <asp:Image ID="Image3" runat="server" class="logoMM" ImageUrl="~/Images/logo.png" />
+                <asp:Image ID="Image4" runat="server" class="tituloMM" ImageUrl="~/Images/letras.png" />
+            </a>
+
         </div>
+
     </header>
     <div id="body">
         <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />

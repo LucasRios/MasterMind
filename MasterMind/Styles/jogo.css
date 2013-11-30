@@ -1,6 +1,7 @@
 ﻿body
 {
     margin: 0 0 0 0;
+    background: url("../Images/fundo.jpg");
 }
 
 table
@@ -159,6 +160,27 @@ header .content-wrapper {
     background-color: #ffffff;
 }
 
+#divPlayers
+{
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid rgb(128, 128, 128);
+    position: relative;
+    float: left;
+    width: 20%;
+    min-height: 550px;
+    background-color: #ffffff;
+}
+    #divPlayers ul
+    {
+        list-style-type: none;
+        margin: 5px;
+    }
+        #divPlayers ul li span
+        {
+            padding: 15px 5px 15px 5px;
+        }
+
 #divParticipantes
 {
     margin: 5px;
@@ -268,7 +290,7 @@ header .content-wrapper {
 .dados-jogador
 {
     margin-top: 10px;
-    border: 1px dotted #000000;
+    border: 1px dashed #000000;
 }
 
 #divCerto

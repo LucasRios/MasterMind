@@ -1,0 +1,34 @@
+﻿@using Infraestrutura.Repositorios.Entidades;
+
+
+@using (Html.BeginForm("Sala_Espera", "Jogos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    Html.AntiForgeryToken();
+    Html.ValidationSummary();
+
+    if ((ViewBag.rank != null) && (ViewBag.tema != null))
+    {
+        Ranking jogador = ViewBag.rank;
+        Temas tema = ViewBag.tema;        
+    <fieldset>
+        <h2>Jogador</h2>
+        <ul>
+            <li>
+                <div class="dados-jogador">
+                    <img src="@Url.Content(jogador.Id_User.Personagem.Imagem)" width="50" height="50"/>
+                    <h2>@jogador.Id_User.Nome</h2>
+                    <br />
+                    (@jogador.Id_User.Cidade/@jogador.Id_User.Estado-@jogador.Id_User.Pais)
+                    <br />
+                    <div class="tema-jogador">
+                        <span>&nbsp;&nbsp;Tema: @tema.Desc_tema</span>
+                    </div>
+                    <div style="clear: both;"></div>
+                    <div style="clear: both;"></div>
+                </div>
+            </li>
+        </ul>
+    </fieldset>  
+    }
+
+}

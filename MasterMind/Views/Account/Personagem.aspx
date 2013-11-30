@@ -7,10 +7,10 @@
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary(true) %>
     <fieldset>
-        <div>
+        <div style="align-content: center">
             <h1>Escolha seu personagem favorito</h1>
         </div>
-        <div style="text-align: center">
+        <div style="position: relative; align-content: center; text-align: center">
             <table style="text-align: center">
                 <tr style="text-align: center">
                     <td style="text-align: center">
@@ -22,25 +22,31 @@
                     <td style="text-align: center">
                         <table>
                             <tr>
-                                <td>                                    
-                                        <h6>Personagem Atual</h6>
-                                        <img src="<%: ViewBag.UserPerson %>" height="100" width="100" />
-                                        <br /><h6><%: @Html.ValueFor(model => model.Personagem.Desc_person) %></h6>
+                                <td>
+                                    <h6>Personagem Atual</h6>
+                                    <% if (ViewBag.UserPerson != null)
+                                       { %>
+
+                                    <img src="<%: ViewBag.UserPerson %>" height="100" width="100" />
+                                    <br />
+                                    <h6><%: @Html.ValueFor(model => model.Personagem.Desc_person) %></h6>
+                                    <%} %>
                                 </td>
                                 <td style="vertical-align: central">
-                                        <img src="../../Images/seta_dir.png" height="50" width="50" />  
+                                    <img src="../../Images/seta_dir.png" height="50" width="50" />
                                 </td>
-                                <td style="vertical-align: top">                                    
-                                        <h6>Novo Personagem</h6>
-                                        <% if (!string.IsNullOrEmpty(ViewBag.SelectedPerson))%>
-                                        <% {%>
-                                        <img src="<%: ViewBag.SelectedPerson %>" height="100" width="100" />
-                                        <% }
-                                           else
-                                           {%>
-                                        <img src="../../Images/usu.png" height="100" width="100" />
-                                        <% }%>
-                                       <br /> <h6><%: ViewBag.NameSelectedPerson %> </h6>
+                                <td style="vertical-align: top">
+                                    <h6>Novo Personagem</h6>
+                                    <% if (!string.IsNullOrEmpty(ViewBag.SelectedPerson))%>
+                                    <% {%>
+                                    <img src="<%: ViewBag.SelectedPerson %>" height="100" width="100" />
+                                    <br />
+                                    <h6><%: ViewBag.NameSelectedPerson %> </h6>
+                                    <% }
+                                       else
+                                       {%>
+                                    <img src="../../Images/usu.png" height="100" width="100" />
+                                    <%} %>
                                 </td>
                             </tr>
                         </table>

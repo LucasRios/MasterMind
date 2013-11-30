@@ -39,6 +39,21 @@ namespace MasterMind.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult Login_3(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login_3(LoginModel model, string returnUrl)
+        {
+            return Login(model, returnUrl);
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -110,10 +125,16 @@ namespace MasterMind.Controllers
 
             Usuario usuario = new Usuario();
             GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
+            
+            if (usuario.Personagem != null)
+            {
+                ViewBag.UserPerson = usuario.Personagem.Imagem;
+            }
+            else ViewBag.UserPerson = null;
 
             usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.SelectedPerson = "";
-            ViewBag.NameSelectedPerson = "";
+            ViewBag.NameSelectedPerson = null;
             if (Id_person != null && Id_person > 0)
             {
                 GenericoRep<Personagens> repPerson = new GenericoRep<Personagens>();
@@ -121,10 +142,12 @@ namespace MasterMind.Controllers
                 ViewBag.SelectedPerson = personagem.Imagem;
                 ViewBag.NameSelectedPerson = personagem.Desc_person;
                 ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));
+                usuario.Personagem = personagem;
                 usuario.auxId_person = (int)Id_person;
             }
-            
-            ViewBag.UserPerson = usuario.Personagem.Imagem; 
+
+
+
             ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));            
             
             return View(usuario);
@@ -199,7 +222,7 @@ namespace MasterMind.Controllers
                         WebSecurity.Login(model.Email, model.Senha);
                     }
 
-                    return RedirectToAction("Principal", "Game");
+                    return RedirectToAction("Personagem", "Account");
                 }
                 catch (MembershipCreateUserException e)
                 {

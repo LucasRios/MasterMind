@@ -3,17 +3,48 @@
     margin: 0 0 0 0;
 }
 
-table
-{
-    border-style: solid;
-    border-width: 1px;
+.table_log3 {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 0;
+    border: 0 none;
+        align-content:center;
+    text-align:center;
 }
-table tr th, table tr td
-{
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-left-style: solid;
-    border-left-width: 1px;
+
+.td_log3 {
+    padding: 0.0em 0em 0.0em 0em;
+    border: 0 none;
+        align-content:center;
+    text-align:center;
+}
+
+tr.pager td {
+    padding: 0 0.25em 0 0;
+        align-content:center;
+    text-align:center;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 0.75em;
+    border: 0 none;
+        align-content:center;
+    text-align:center;
+}
+
+td {
+    padding: 0.25em 2em 0.25em 0em;
+    border: 0 none;
+        align-content:center;
+    text-align:center;
+}
+
+tr.pager td {
+    padding: 0 0.25em 0 0;
+        align-content:center;
+    text-align:center;
 }
 
 fieldset
@@ -68,12 +99,41 @@ fieldset
     margin-bottom: 5px;
 }
 
+#header_login_2 {
+    margin: 0px 0px 0px 0px;
+    height: 117px;
+    background: url("../Images/header_login.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+#header_login_3 {
+    margin: 0px 0px 0px 0px;
+    height: 300px;
+    width:100%;    
+}
+
+#login_3 {
+    margin: 0px 0px 0px 0px;
+    background-image:url(../../Images/Login_2.jpg);
+    background-size: auto;
+}
+
+footer {
+    clear: both;  
+}
+
+#td_left {
+    text-align:left;
+}
+
+#td_right {
+ text-align:right;
+}
+
 #login_2
 {
     margin: 0px 0px 0px 0px;
-    height:100%;
     background-image:url(../../Images/Login_2.jpg);
-    background-size: contain;
+    background-size: auto;
 }
 
 .alternativas label
@@ -86,3 +146,40 @@ fieldset
     color: #f00;
     font-weight: bolder;
 }
+
+#divLeft {     
+    float: left;
+    width: 33%;
+}
+
+#loginForm {
+    align-content:center;
+    text-align:center;
+}
+
+    #loginForm .validation-error {
+        display: block;
+        margin-left: 15px;
+    }
+
+    #loginForm .validation-summary-errors ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    #loginForm .validation-summary-errors li {
+        display: inline;
+        list-style: none;
+        margin: 0;
+    }
+
+    #loginForm input {
+        width: 250px;
+    }
+
+    #loginForm input[type="checkbox"],
+    #loginForm input[type="submit"],
+    #loginForm input[type="button"],
+    #loginForm button {
+        width: auto;
+    }

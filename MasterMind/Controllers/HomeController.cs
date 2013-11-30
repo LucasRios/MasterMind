@@ -14,15 +14,17 @@ namespace MasterMind.Controllers
             {
                 return RedirectToAction("Principal", "Game");
             }
-            else 
+            else
             {
-               /* Random random = new Random();
-                int i = random.Next(1, 2);
+                Random random = new Random();
+                int i = random.Next(1, 3);
 
-                if (i==1) return RedirectToAction("Login", "Account");
-                else*/
-                return RedirectToAction("Login", "Account");
-            }            
+                if (i == 1) return RedirectToAction("Login", "Account");
+                else if (i == 2) return RedirectToAction("Login_2", "Account");
+                else return RedirectToAction("Login_3", "Account");
+                
+
+            }
         }
 
         public ActionResult About()

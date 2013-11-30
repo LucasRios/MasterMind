@@ -11,7 +11,7 @@
 </head>
 <body>
     <script src="~/Scripts/BO/additional-methods.min-1.11.1.js"></script>
-@*    <script src="~/Scripts/BO/jquery-1.9.1.min.js"></script>*@
+    @*    <script src="~/Scripts/BO/jquery-1.9.1.min.js"></script>*@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/BO/jquery.validate.min-1.11.1.js"></script>
     <script src="~/Scripts/BO/jquery.validate.unobtrusive.min.js"></script>
@@ -29,24 +29,24 @@
 
                     <div class="content-wrapper">
                         @*<div class="float-left">*@
+                        <a href="@Url.Action("Index", "Home")">
                             <div class="logoMM">
                                 <img src="@Url.Content("~/Images/logo.png")" />
                             </div>
                             <div class="tituloMM">
                                 <img src="@Url.Content("~/Images/letras.png")"/>
                             </div>
+                        </a>
 
-                        @*</div>*@                      
+                        @*</div>*@
 
                         @*<div class="float-right">*@
-                            <div class="nav-collapse collapse opcoes">
-                                <ul class="nav">
-                                    <li><a href="@Url.Action("Prototipo", "Game")">Prototipo</a></li>
-                                    <li><a href="@Url.Action("Index", "Home")">Início</a></li>
-                                    <li><a href="@Url.Action("Login", "Account")">Abandonar Jogo</a></li>
-                                    <li><a href="@Url.Action("About", "Home")">Sobre</a></li>
-                                </ul>
-                            </div>
+                        <div class="nav-collapse collapse opcoes">
+                            <ul class="nav">
+                                <li><a href="@Url.Action("Prototipo", "Game")">Prototipo</a></li>
+                                <li><a href="@Url.Action("Login", "Account")">Abandonar Jogo</a></li>
+                            </ul>
+                        </div>
 
                         @*</div>*@
 

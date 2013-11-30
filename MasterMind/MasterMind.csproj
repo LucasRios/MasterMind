@@ -249,14 +249,20 @@
     <Content Include="Images\cartoon.jpg" />
     <Content Include="Images\certo.jpg" />
     <Content Include="Images\errado.jpg" />
+    <Content Include="Images\footer_log.png" />
     <Content Include="Images\fundo.jpg" />
     <Content Include="Images\geografia.gif" />
     <Content Include="Images\Gradiente_prata.png" />
     <Content Include="Images\Gradiente_prata_topo.png" />
+    <Content Include="Images\header_login.png" />
+    <Content Include="Images\header_login_3.png" />
     <Content Include="Images\heroAccent.png" />
     <Content Include="Images\letras.png" />
     <Content Include="Images\Login_2.jpg" />
+    <Content Include="Images\Login_3.jpg" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\logo_login.png" />
+    <Content Include="Images\logo_login_2.png" />
     <Content Include="Images\seta.gif" />
     <Content Include="Images\seta_dir.png" />
     <Content Include="Images\tabuleiro.png" />
@@ -362,6 +368,9 @@
     <Content Include="Views\Game\Partida.cshtml" />
     <Content Include="Views\Shared\_LayoutTabuleiro.cshtml" />
     <Content Include="Views\Account\Login_2.cshtml" />
+    <Content Include="Views\Jogos\Sala_Espera.cshtml" />
+    <Content Include="Views\Jogos\_AcessoPartial.cshtml" />
+    <Content Include="Views\Account\Login_3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
