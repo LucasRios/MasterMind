@@ -48,7 +48,7 @@ namespace MasterMind.Controllers
             ViewBag.jogador = jogador;
 
             if ((id_selecionado != 0) && (id_selecionado != null)) ViewBag.selecionado = id_selecionado; //Verifica se o usuário clicou no div para ver detalhes de um jogador
-            else ViewBag.selecionado = "";
+            else ViewBag.selecionado = null;
 
             if (partida.Count() >= 2) // se existem mais de dois jogadores na sala de espera
             {
