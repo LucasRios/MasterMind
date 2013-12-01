@@ -2,11 +2,21 @@
 
 <asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
 
+
     <% using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
        { %>
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary(true) %>
-    <fieldset>
+
+    <html>
+    <head>
+            <link rel="shortcut icon" href="../favicon.ico">
+    <link href="../../Content/Site.css" rel="stylesheet" />
+    <link href="../../Styles/style1.css" rel="stylesheet" />
+    <link href="../../Styles/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="../../Styles/bootstrap.min.css" rel="stylesheet" />
+    </head>
+    <body id="body_perso">
         <div style="align-content: center">
             <h1>Escolha seu personagem favorito</h1>
         </div>
@@ -62,12 +72,15 @@
                 <tr style="text-align: center">
                     <td colspan="2" style="text-align: center">
                         <div>
-                            <input type="submit" value="Salvar" />
+                            <input type="submit" class="btn btn-info" value="Salvar" />
                         </div>
                     </td>
                 </tr>
             </table>
         </div>
-    </fieldset>
+    </body>
+    </html>
     <% } %>
 </asp:Content>
+
+

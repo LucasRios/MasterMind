@@ -1,6 +1,6 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Infraestrutura.Repositorios.Entidades.Salas>>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Principal.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Infraestrutura.Repositorios.Entidades.Salas>>" %>
 
-<asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="aboutContent" ContentPlaceHolderID="PrincipalMiddle" runat="server">
     <% using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) { %>
         <%: Html.AntiForgeryToken() %>
         <%: Html.ValidationSummary(true) %>
@@ -24,7 +24,7 @@
 </style>
 
  <fieldset style="height: 66px; border: solid; width : 100%">
-        <legend style= "display: block;">Listagem de salas</legend>
+     <legend></legend>
      <table>
          <tr>
                  <td>
@@ -79,7 +79,7 @@
                 <%:  @Html.DisplayFor(modelItem => item.Niveis.descricao)%>
             </td>
             <td>
-                 <input type="button" value="Acessar" onclick="window.location.href='<%: @Url.Action("Acesso", "Jogos", new { Id = item.Id_Sala, senha = "" })%>    '" />
+                 <input type="button" value="Acessar" class="btn btn-info" onclick="window.location.href='<%: @Url.Action("Acesso", "Jogos", new { Id = item.Id_Sala, senha = "" })%>    '" />
             </td>
         </tr>
         <% } %>

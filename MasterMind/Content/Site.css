@@ -5,6 +5,17 @@
     width:100%
 }
 
+#body_perso {
+    color: #696969;
+    font-size: .85em;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    margin: 0;
+    padding: 0;
+    background: url("../Images/fundo.jpg");
+    max-width: 100%;
+    height:100%;
+}
+
 body {
 
     color: #696969;
@@ -201,6 +212,10 @@ footer {
         list-style: none;
     }
 
+    .display-label, .editor-label
+{
+    font-weight: bold;
+}
 
 /* menu
 ----------------------

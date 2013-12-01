@@ -1,6 +1,6 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Jogos>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Principal.Master" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Jogos>" %>
 
-<asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="aboutContent" ContentPlaceHolderID="PrincipalMiddle" runat="server">
     <% using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
        { %>
     <%: Html.AntiForgeryToken() %>
@@ -36,7 +36,7 @@
             <tr>
                 <td colspan="2" style="text-align: center">
                     <div>
-                        <input type="submit" value="Acessar" />
+                        <input type="submit" class="btn btn-info" value="Acessar" />
                     </div>
                 </td>
             </tr>

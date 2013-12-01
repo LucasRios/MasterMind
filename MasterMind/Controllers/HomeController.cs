@@ -12,7 +12,7 @@ namespace MasterMind.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                return RedirectToAction("Principal", "Game");
+                return RedirectToAction("List", "Salas");
             }
             else
             {

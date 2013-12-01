@@ -1,0 +1,51 @@
+﻿@model Infraestrutura.Repositorios.Entidades.Usuario
+
+<div class="Cabecalho" style="width: 200px;">
+
+    <h2>@Html.DisplayFor(model => model.Nome)
+        @Html.DisplayFor(model => model.Sobrenome)</h2>
+
+    
+    
+    <div style="text-align: center">
+        @if (!string.IsNullOrEmpty(Html.DisplayFor(model => model.imagem).ToString()))
+        {
+            <img src="@Html.DisplayFor(model => model.imagem).ToString()" height="100" width="100" />
+        }
+        else
+        {
+            <img src="../../Images/usu.png" height="100" width="100" />
+        }
+    </div>
+
+    <br />
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Email)
+    </div>
+    <div class="display-field">
+        <p>@Html.DisplayFor(model => model.Email)</p>
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Dt_nasc)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Dt_nasc)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Pais)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Pais)
+    </div>
+
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Estado)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Estado)
+    </div>
+</div>

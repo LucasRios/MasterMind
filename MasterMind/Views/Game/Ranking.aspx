@@ -1,8 +1,8 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<List<Infraestrutura.Repositorios.Entidades.Ranking>>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Principal.Master" Inherits="System.Web.Mvc.ViewPage<List<Infraestrutura.Repositorios.Entidades.Ranking>>" %>
 
 
 
-<asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="aboutContent" ContentPlaceHolderID="PrincipalMiddle" runat="server">
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary() %>
 
