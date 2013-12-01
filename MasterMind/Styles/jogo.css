@@ -190,8 +190,16 @@ header .content-wrapper {
     float: right;
     width: 20%;
     min-height: 550px;
+    max-height: 550px;
     background-color: #ffffff;
+    overflow: scroll;
+    background-color: lightgray;
 }
+    #divParticipantes .nome-jogador
+    {
+        font-weight: bolder;
+    }
+
     #divParticipantes ul
     {
         list-style-type: none;
@@ -215,7 +223,7 @@ header .content-wrapper {
 #divBody
 {
     clear: both;
-    margin-top: 80px;
+    margin-top: 50px;
 }
 
 #divPersonagem
@@ -265,10 +273,11 @@ header .content-wrapper {
     color: #000000;
 }
 
-.alternativa-on
+.alternativa-on, .alternativa-certa label
 {
-    color: #f00;
-    font-weight: bold;
+    color: green;
+    font-weight: bolder !important;
+    font-size: 1em;
 }
 
 #divTextoPergunta
@@ -287,12 +296,6 @@ header .content-wrapper {
     vertical-align: middle;
 }
 
-.dados-jogador
-{
-    margin-top: 10px;
-    border: 1px dashed #000000;
-}
-
 #divCerto
 {
     display: none;
@@ -305,7 +308,7 @@ header .content-wrapper {
 
 .usuario-logado
 {
-    float: right; padding-top: 20px; padding-left: 5px; font-size:large; border-left: solid; color: blue; height: 30px; margin: 0;
+    float: right; padding-top: 20px; padding-left: 5px; font-size:large; border-left: solid; color: blue; height: 40px; margin: 0;
 }
 
 #divGame-Over, #divTextoPergunta, #divAlternativas, #divCartas, #divSeta 
@@ -321,4 +324,80 @@ header .content-wrapper {
     font-size: 3em;
     font-weight: bolder;
     font-family: Verdana;
+}
+
+.jogador-da-vez
+{
+    margin-top: 10px;
+    border: 15px solid #0ad401;
+    color: #ffffff;
+    font-weight: bolder;
+    background-color: #000000;
+}
+
+.dados-jogador
+{
+    margin-top: 10px;
+    border: 3px solid #0ad401;
+    /*border: 1px dashed #000000;*/
+}
+
+.jogador1
+{
+    border-color: #FFFF00;
+}
+
+.jogador2
+{
+    border-color: #00FF00;
+}
+
+.jogador3
+{
+    border-color: #FF0000;
+}
+
+.jogador4
+{
+    border-color: #000000;
+}
+
+.jogador5
+{
+    border-color: #FFFFFF;
+}
+
+.jogador6
+{
+    border-color: #8B4726;
+}
+
+.jogador7
+{
+    border-color: #FFC1C1;
+}
+
+.jogador8
+{
+    border-color: #CD950C;
+}
+
+.jogador9
+{
+    border-color: #00008B;
+}
+
+.jogador10
+{
+    border-color: #FF00FF;
+}
+
+.jogador11
+{
+    border-color: #7ac0da;
+}
+
+.jogador12
+{
+    border-color: #696969;
 }

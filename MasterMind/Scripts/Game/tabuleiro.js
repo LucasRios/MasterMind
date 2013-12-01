@@ -6,6 +6,8 @@ var posicaoPecas = [];
 
 $(function () {
     AtualizarTabuleiro();
+    AtualizarPartida(true);
+
     //$('.celula-ativa').bind({
     //    click: function () {
     //        trilhas += '\n' + $(this).attr("id");
@@ -14,10 +16,18 @@ $(function () {
     //});
 });
 
+function AtualizarPartida(inicial) {
+    setTimeout(AtualizarPartida, 10000, false);
+    if(!inicial)
+        window.location.reload();
+}
+
 function AtualizarTabuleiro() {
     cria_tabuleiro(5, 3);
+    $.ajaxSetup({ cache: false });
     $.get("ObterStatusTabuleiro", { Id_Sala: $("#hddId_Sala").val() })
     .success(function (response) {
+        posicaoPecas = [];
         posicaoPecas = response.statusTabuleiro;
         var acabou = false;
         for (i = 0; i < posicaoPecas.length; i++) {
@@ -53,22 +63,7 @@ function GameContinue() {
 
 function peca(idCorPeca) {
     var pathPecas = "../Images/svg/";
-    var cor = '';
-    switch (idCorPeca) {
-        case 1:
-            cor = 'amarelo';
-            break;
-        case 2:
-            cor = 'vermelho';
-            break;
-        case 3:
-            cor = 'verde';
-            break;
-        default:
-            cor = 'verde';
-            break;
-    }
-    return pathPecas + cor + '.svg';
+    return pathPecas + idCorPeca + '.svg';
 }
 
 function cria_tabuleiro(casas, largura_fileira) {

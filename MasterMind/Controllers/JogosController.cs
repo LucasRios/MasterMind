@@ -169,7 +169,7 @@ namespace MasterMind.Controllers
             list = jogos.ObterTodos().Where(x => x.Sala.Id_Sala == model.Sala.Id_Sala);
             model.SequenciaEntradaUsuarioSala = list.Count() + 1;
 
-            if (list.Count() >= 8)
+            if (list.Count() >= 12)
             {
                 ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
                 ViewBag.ListaTemas = TemasDTO.Lista();

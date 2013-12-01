@@ -5,10 +5,16 @@
     Layout = "~/Views/Shared/_LayoutTabuleiro.cshtml";
     Perguntas pergunta = ViewBag.PerguntaInicial;
     IList<Jogos> partida = ViewBag.Partida;
-    //Jogos jogador = ViewBag.Jogador;
+    Jogos jogador = ViewBag.Jogador;
     Salas sala = ViewBag.Sala;
     Usuario eu = ViewBag.Eu;
-    
+    Jogos jogadaDaVez = ViewBag.JogadaDaVez;
+    String classeJogadaDaVez = String.Empty;
+    String classeAlternativa = "alternativa-off";
+    String classeAlternativaCerta1 = "";
+    String classeAlternativaCerta2 = "";
+    String classeAlternativaCerta3 = "";
+    String classeJogadorN = "";
 }
 
 <script src="~/Scripts/Game/game.js"></script>
@@ -39,21 +45,40 @@
         <div class="alternativas">
             @*Respotas*@
             @*Resposta 1*@
-            <div class="editor-label alternativa-off" >
-                <label>A - </label>@Html.RadioButton("MinhaResposta", pergunta.Resposta1.Id_resp, false)
+@{
+    if (jogador.Usuario.Id_user != jogadaDaVez.Usuario.Id_user)
+    {
+        classeAlternativa = "";
+        if (pergunta.Resposta1.OpcaoCerta)
+        {
+            classeAlternativaCerta1 = "alternativa-certa";
+        }
+        else if (pergunta.Resposta2.OpcaoCerta)
+        {
+            classeAlternativaCerta2 = "alternativa-certa";
+        }
+        else if (pergunta.Resposta3.OpcaoCerta)
+        {
+            classeAlternativaCerta3 = "alternativa-certa";
+        }
+    }
+}
+
+            <div class="editor-label @classeAlternativa @classeAlternativaCerta1" >
+                <label>A - </label>@if(jogador.Usuario.Id_user == jogadaDaVez.Usuario.Id_user){ @Html.RadioButton("MinhaResposta", pergunta.Resposta1.Id_resp, false)}
                 <label>@pergunta.Resposta1.Resp_txt</label>
             </div>
 
             @*Resposta 2*@
-            <div class="editor-label alternativa-off" >
-                <label>B - </label>@Html.RadioButton("MinhaResposta", pergunta.Resposta2.Id_resp, false)
+            <div class="editor-label @classeAlternativa @classeAlternativaCerta2" >
+                <label>B - </label>@if(jogador.Usuario.Id_user == jogadaDaVez.Usuario.Id_user){ @Html.RadioButton("MinhaResposta", pergunta.Resposta2.Id_resp, false) }
                 <label>@pergunta.Resposta2.Resp_txt</label>
             </div>
 
 
             @*Resposta 3*@
-            <div class="editor-label alternativa-off">
-                <label>C - </label>@Html.RadioButton("MinhaResposta", pergunta.Resposta3.Id_resp, false)
+            <div class="editor-label @classeAlternativa @classeAlternativaCerta3">
+                <label>C - </label>@if(jogador.Usuario.Id_user == jogadaDaVez.Usuario.Id_user){ @Html.RadioButton("MinhaResposta", pergunta.Resposta3.Id_resp, false) }
                 <label>@pergunta.Resposta3.Resp_txt</label>
             </div>
         </div>
@@ -62,6 +87,7 @@
 
     <div style="clear:both;"></div>
 
+@if(jogador.Usuario.Id_user == jogadaDaVez.Usuario.Id_user){ 
     <div id="divCartas" title="Responder" onclick="Responder()">
         <img src="@Url.Content("~/Images/cartas2.png")"/>
     </div>
@@ -73,6 +99,7 @@
     <div id="divCerto" title="Resposta Correta">
         <img src="@Url.Content("~/Images/certo.jpg")"/>
     </div>
+}
 
     <div id="divErrado" title="Resposta Errada">
         <img src="@Url.Content("~/Images/errado.jpg")"/>
@@ -106,12 +133,22 @@
 <div id="divParticipantes">
     <h3>Participantes</h3>
     <ul>
-        @foreach(Jogos jogo in partida)
+    @{
+        foreach(Jogos jogo in partida)
         {
+            classeJogadorN = "jogador" + (partida.IndexOf(jogo) + 1).ToString();
+            if (jogo == jogadaDaVez)
+            {
+                classeJogadaDaVez = "jogador-da-vez";
+            }
+            else
+            {
+                classeJogadaDaVez = "dados-jogador";
+            }
             <li>
-                <div class="dados-jogador">
+                <div class="@classeJogadaDaVez @classeJogadorN">
                     @*<span> <img src="@Url.Content(jogo.Usuario.Personagem.Imagem)" width="50" height="50"/> @jogo.Usuario.Nome (@jogo.Usuario.Cidade/@jogo.Usuario.Estado-@jogo.Usuario.Pais)</span>*@
-                    <span>@jogo.Usuario.Nome (@jogo.Usuario.Cidade/@jogo.Usuario.Estado-@jogo.Usuario.Pais)</span>
+                    <span class="nome-jogador">@jogo.Usuario.Nome</span><span> (@jogo.Usuario.Cidade/@jogo.Usuario.Estado-@jogo.Usuario.Pais)</span>
                     <br />
                     <div class="tema-jogador">
                         <span>&nbsp;&nbsp;Tema: @jogo.Tema.Desc_tema</span>
@@ -124,5 +161,6 @@
                 </div>
             </li>
         }
+    }
     </ul>
 </div>

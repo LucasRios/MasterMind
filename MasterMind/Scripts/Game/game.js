@@ -10,6 +10,7 @@
 });
 
 function Responder() {
+    $.ajaxSetup({ cache: false });
     $.post("Responder", { IdResposta: $(".alternativas :radio:checked").val(), IdSala: $("#hddId_Sala").val() })
     .success(function (response) {
         if (response.opcaoCerta) {
