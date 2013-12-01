@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Principal.Master" Inherits="System.Web.Mvc.ViewPage<Infraestrutura.Repositorios.Entidades.Manage>" %>
 
 <asp:Content ID="manageContent" ContentPlaceHolderID="PrincipalMiddle" runat="server">
-    <section id="loginForm">
+
         <hgroup class="title">
             <h1>Gerenciar Conta</h1>
         </hgroup>
@@ -12,5 +12,5 @@
 
             <% Html.RenderPartial("_ChangePasswordPartial"); %>
         </form>
-    </section>
+
 </asp:Content>

@@ -5,7 +5,6 @@
 
 
 <html lang="pt-br">
-
 <head id="Head1" runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,heigth=device-heigth" />
@@ -21,13 +20,28 @@
 </head>
 
 <body class="pbody">
+    <style>
+        div.out {
+            float: left;
+            text-align: left;            
+        }
+
+        div.in {
+            float:right;
+            text-align: right;
+        }
+    </style>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+
     <header>
         <div class="content-wrapper">
             <div class="float-left">
-          <a href="<%: Url.Action("List", "Salas") %>">
-                <asp:Image ID="Image3" runat="server" class="logoMM" ImageUrl="~/Images/logo.png" />
-                <asp:Image ID="Image4" runat="server" class="tituloMM" ImageUrl="~/Images/letras.png" />
-            </a>
+                <a href="<%: Url.Action("List", "Salas") %>">
+                    <asp:Image ID="Image3" runat="server" class="logoMM" ImageUrl="~/Images/logo.png" />
+                    <asp:Image ID="Image4" runat="server" class="tituloMM" ImageUrl="~/Images/letras.png" />
+                </a>
             </div>
             <div class="float-right">
             </div>
@@ -37,25 +51,84 @@
         <div id="divEsquerda" style="width: 200px; height: 1000px; margin-left: 5px; float: left;">
             <% Html.RenderAction("partialPerfil", "Usuario"); %>
             <div>
-                <ul>
-                    <li><%: Html.ActionLink("Salas", "List", "Salas")%> </li>
-                    <li><%: Html.ActionLink("Criar Salas", "Create","Salas")%> </li>
-                    <li><%: Html.ActionLink("Ranking", "Ranking", "Game")%></li>
-                    <li><%: Html.ActionLink("Escolher Personagem", "Personagem", "Account")%></li>
-                    <li><%: Html.ActionLink("Manutenção da Conta", "Manage", "Account")%></li>
-                    <li><% using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                           { %>
-                        <%: Html.AntiForgeryToken() %>
-                        <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                        <% } %></li>
-                </ul>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="editor-label enterleave">
+                                <div class="out">
+                                    <%: Html.ActionLink("Salas", "List", "Salas")%>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label enterleave">
+                                <div class="out">
+                                    <%: Html.ActionLink("Criar Salas", "Create","Salas")%>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label enterleave">
+                                <div class="out">
+                                    <%: Html.ActionLink("Ranking", "Ranking", "Game")%>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label enterleave">
+                                <div class="out">
+                                    <%: Html.ActionLink("Escolher Personagem", "Personagem_partial", "Account")%>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label enterleave">
+                                <div class="out">
+                                    <%: Html.ActionLink("Manutenção da Conta", "Manage", "Account")%>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label enterleave">
+                                <div class="out">
+                                    <% using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                       { %>
+                                    <%: Html.AntiForgeryToken() %>
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
-        <div id="divCentral" style="width: 850px; height: 1000px; float: left; margin-right: 5px; margin-left: 5px; border-bottom: 1px solid black; border-top:1px solid black;border-left:1px solid black; padding-left:10px;padding-top:10px;">
+        <script>
+            $("div.enterleave")
+             .mouseenter(function () {
+                 $(this).find("div").removeClass("out-");
+                 $(this).find("div").addClass("in-");
+             })
+             .mouseleave(function () {
+                 $(this).find("div").removeClass("in-");
+                 $(this).find("div").addClass("out-");
+             });
+        </script>
+        <div id="divCentral" style="width: 850px; height: 1000px; float: left; margin-right: 5px; margin-left: 5px; border-bottom: 1px solid black; border-top: 1px solid black; border-left: 1px solid black; padding-left: 10px; padding-top: 10px;">
             <asp:ContentPlaceHolder ID="PrincipalMiddle" runat="server">
             </asp:ContentPlaceHolder>
         </div>
-        <div id="divDireita" style="width: 140px; height: 1000px; float: right; margin-right: 10px; border-bottom: 1px solid black; border-top:1px solid black;border-left:1px solid black; padding-left:10px; ">
+        <div id="divDireita" style="width: 140px; height: 1000px; float: right; margin-right: 10px; border-bottom: 1px solid black; border-top: 1px solid black; border-left: 1px solid black; padding-left: 10px;">
             <% Html.RenderAction("Ranking_top", "Game"); %>
         </div>
     </div>

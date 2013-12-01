@@ -145,7 +145,7 @@
             </tr>
         </table>
 
-        <input type="submit" value="Submeter" />
+        <input type="submit" class="btn btn-info"  value="Submeter" />
     </fieldset>
 </form>
 <% } %>
