@@ -41,30 +41,62 @@ namespace MasterMind.Controllers
             IList<Jogos> partida = jogoRep.ObterPorIdSala(Id_Sala);
             ViewBag.Partida = partida;
 
+            /// Se não está definido a vez, será definido para o primeiro jogador que entrou na sala.
+            Boolean vez = false;
+            foreach (Jogos itemJogo in partida)
+            {
+                if(!vez)
+                    vez = itemJogo.MinhaVez;
+            }
+            if (!vez)
+            {
+                Jogos primeiraJogada = partida.Where(x => x.SequenciaEntradaUsuarioSala == 1).FirstOrDefault();
+                primeiraJogada.MinhaVez = true;
+                jogoRep.Salvar(primeiraJogada);
+            }
+            ViewBag.JogadaDaVez = partida.Where(x => x.MinhaVez == true).FirstOrDefault();
+
             ///
             /// SALA 
             ///
             GenericoRep<Salas> salasRep = new GenericoRep<Salas>();
             Salas sala = salasRep.ObterPorId(Id_Sala);
-            ViewBag.Sala = sala;
 
             ///
             /// Pergunta Inicial
             /// 
             PerguntasRep perguntasRep = new PerguntasRep();
-            IList<Perguntas> perguntas = perguntasRep.ObterPerguntas(partida[0].Tema.Id_tema);
-            Random indicePergunta = new Random();
-            ViewBag.PerguntaInicial = perguntas[indicePergunta.Next(0, perguntas.Count - 1)];
+            Perguntas perguntaInicial = new Perguntas();
+            if (sala.IdPerguntaAtual == 0)
+            {
+                Int32 temaInicial = partida.Where(x => x.MinhaVez).First().Tema.Id_tema;
+                IList<Perguntas> perguntas = perguntasRep.ObterPerguntas(temaInicial);
+                Random indicePergunta = new Random();
+                perguntaInicial = perguntas[indicePergunta.Next(0, perguntas.Count - 1)];
+
+                sala.IdPerguntaAtual = perguntaInicial.Id_Perg;
+                sala.DataPergunta = DateTime.Now;
+                salasRep.Salvar(sala);
+            }
+            else
+            {
+                perguntaInicial = perguntasRep.ObterPorId(sala.IdPerguntaAtual);
+            }
+            ViewBag.PerguntaInicial = perguntaInicial;
+            ViewBag.Sala = sala;
+
 
             ///
             /// Atualiza hora da pergunta atual do jogador
             /// 
             Jogos Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
             Jogador.PerguntaAtualFeitaEm = DateTime.Now;
+            if(Jogador.DataEntradaSala == null)
+                Jogador.DataEntradaSala = DateTime.Now;
             jogoRep.Salvar(Jogador);
 
 
-            //ViewBag.Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+            ViewBag.Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault();
 
             return View(@"~/Views/Game/Partida.cshtml");
         }
@@ -132,13 +164,38 @@ namespace MasterMind.Controllers
             return View(ranking);
         }
 
-        public JsonResult ObterPergunta(Int32 IdTema, Int32 IdNivel)
+        public JsonResult ProximaPergunta(Int32 Id_Sala)
         {
             JsonResult json = new JsonResult();
 
-            PerguntasRep repositorio = new PerguntasRep();
+            ///
+            /// Partida - GAMES
+            ///
+            JogosRep jogoRep = new JogosRep();
+            IList<Jogos> partida = jogoRep.ObterPorIdSala(Id_Sala);
+            ViewBag.Partida = partida;
 
-            var vm = new { perguntas = repositorio.ObterPerguntas(IdTema, IdNivel) };
+            ///
+            /// SALA 
+            ///
+            GenericoRep<Salas> salasRep = new GenericoRep<Salas>();
+            Salas sala = salasRep.ObterPorId(Id_Sala);
+
+            /// Pergunta
+            /// 
+            PerguntasRep perguntasRep = new PerguntasRep();
+            Perguntas proximaPergunta = new Perguntas();
+
+            Int32 temaDaVez = partida.Where(x => x.MinhaVez == true).First().Tema.Id_tema;
+            IList<Perguntas> perguntas = perguntasRep.ObterPerguntas(temaDaVez);
+            Random indicePergunta = new Random();
+            proximaPergunta = perguntas[indicePergunta.Next(0, perguntas.Count - 1)];
+
+            sala.IdPerguntaAtual = proximaPergunta.Id_Perg;
+            sala.DataPergunta = DateTime.Now;
+            salasRep.Salvar(sala);
+
+            var vm = new { pergunta = proximaPergunta };
 
             json.Data = vm;
             json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -149,6 +206,12 @@ namespace MasterMind.Controllers
         public JsonResult Responder(Int32 IdResposta, Int32 IdSala)
         {
             JsonResult json = new JsonResult();
+
+            SalasRep salaRep = new SalasRep();
+            Salas sala = salaRep.ObterPorId(IdSala);
+            sala.DataResposta = DateTime.Now;
+            sala.IdPerguntaAtual = 0;
+            salaRep.Salvar(sala);
 
             GenericoRep<Respostas> respostaRep = new GenericoRep<Respostas>();
             Respostas resposta = respostaRep.ObterPorId(IdResposta);
@@ -197,11 +260,25 @@ namespace MasterMind.Controllers
             Jogos jogador = JogoRep.ObterPorIdSala(IdSala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
 
             if (opcaoCerta)
+            {
                 jogador.Acertos = jogador.Acertos + 1;
-            else jogador.Erros = jogador.Erros + 1;
+            }
+            else
+            {
+                jogador.Erros = jogador.Erros + 1;
+                jogador.MinhaVez = false;
+
+                Jogos proximo = JogoRep.ObterPorIdSala(IdSala).Where(x => x.SequenciaEntradaUsuarioSala == jogador.SequenciaEntradaUsuarioSala + 1).FirstOrDefault();
+                if (proximo == null)
+                {
+                    /// Proxima rodada.
+                    proximo = JogoRep.ObterPorIdSala(IdSala).Where(x => x.SequenciaEntradaUsuarioSala == 1).FirstOrDefault();
+                }
+                proximo.MinhaVez = true;
+                JogoRep.Salvar(proximo);
+            }
 
             jogador.DataUltimaResposta = DateTime.Now;
-
             JogoRep.Salvar(jogador);
 
             Int32 respostaFinal = 21;

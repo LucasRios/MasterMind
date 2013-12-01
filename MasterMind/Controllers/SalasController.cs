@@ -55,7 +55,7 @@ namespace MasterMind.Controllers
                 else { i.Desc_perfil = "Privada"; }
             }
 
-            sala = sala.Where(u => u.qtde_usu < 8 ).ToList();
+            //sala = sala.Where(u => u.qtde_usu < 12 ).ToList();
 
             return View(sala);
         }

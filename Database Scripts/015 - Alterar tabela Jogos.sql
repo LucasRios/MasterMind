@@ -1,0 +1,1 @@
+ALTER TABLE Jogos ADD MinhaVez bit not null default 0;

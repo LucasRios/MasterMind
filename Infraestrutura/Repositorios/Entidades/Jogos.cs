@@ -30,5 +30,6 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual DateTime? PerguntaAtualFeitaEm { get; set; }
         public virtual Int32 Acertos { get; set; }
         public virtual Int32 Erros { get; set; }
+        public virtual Boolean MinhaVez { get; set; }
     }
 }

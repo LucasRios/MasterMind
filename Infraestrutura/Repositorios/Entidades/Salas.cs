@@ -33,5 +33,8 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual String Desc_perfil { get; set; }
         public virtual Nivel Niveis { get; set; }
 
+        public virtual Int32 IdPerguntaAtual { get; set; }
+        public virtual DateTime? DataPergunta { get; set; }
+        public virtual DateTime? DataResposta { get; set; }
     }
 }

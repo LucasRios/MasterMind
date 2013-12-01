@@ -27,6 +27,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Map(x=>x.PerguntaAtualFeitaEm);
             Map(x=>x.Acertos);
             Map(x => x.Erros);
+            Map(x => x.MinhaVez);
         }
     }
 }
