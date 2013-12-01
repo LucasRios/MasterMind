@@ -77,7 +77,7 @@ namespace MasterMind.Controllers
 
                 if (aux.Id_perfil == 2)
                 {
-                    return RedirectToAction("Principal", "Game");
+                    return RedirectToAction("List", "Salas");
                 }
                 else if (aux.Id_perfil == 1)
                 {
@@ -125,14 +125,14 @@ namespace MasterMind.Controllers
 
             Usuario usuario = new Usuario();
             GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
-            
+
+            usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
             if (usuario.Personagem != null)
             {
                 ViewBag.UserPerson = usuario.Personagem.Imagem;
             }
             else ViewBag.UserPerson = null;
 
-            usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.SelectedPerson = "";
             ViewBag.NameSelectedPerson = null;
             if (Id_person != null && Id_person > 0)
@@ -177,7 +177,7 @@ namespace MasterMind.Controllers
 
                 repositorio.Salvar(usuario);
 
-                return RedirectToAction("Principal", "Game");
+                return RedirectToAction("List", "Salas");
             }
 
             ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));
@@ -363,7 +363,7 @@ namespace MasterMind.Controllers
 
                     if (changePasswordSucceeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("List", "Salas");
                     }
                     else
                     {

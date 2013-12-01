@@ -22,6 +22,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Map(x => x.Estado );
             Map(x => x.Sexo);
             Map(x => x.Id_perfil);
+            Map(x => x.imagem);
             References(x => x.Personagem).Column("Id_person").Cascade.None().LazyLoad();
         }
     }

@@ -1,7 +1,7 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Principal.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 
-<asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="indexContent" ContentPlaceHolderID="PrincipalMiddle" runat="server">
     <h3>Master Mind - O jogo do Conhecimento</h3>
     <ol class="round">
         <li class="one">

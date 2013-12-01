@@ -33,11 +33,6 @@
                                 <input type="file" name="photo" id="photo">
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <input type="button" value="Limpar Foto" onclick="<%: Model.imagem = "" %>" />
-                            </td>
-                        </tr>
                     </table>
 
                 </td>

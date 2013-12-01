@@ -2,8 +2,11 @@
 @model Infraestrutura.Repositorios.Entidades.Jogos
 
 @{
+    String nomeUsuario = String.IsNullOrEmpty(Context.User.Identity.Name) ? "Não Autenticado" : Context.User.Identity.Name;
+}
+
+@{
     ViewBag.Title = "Sala de Espera";
-    Layout = "~/Views/Shared/_LayoutTabuleiro.cshtml";
     IList<Jogos> partida = ViewBag.Partida;
     Html.EnableClientValidation(true);
     Jogos jogador = ViewBag.jogador;
@@ -16,8 +19,34 @@
     <head>
         <title></title>
         <meta http-equiv="refresh" content="5" />
+        <link rel="shortcut icon" href="../favicon.ico">
+        <link href="../../Content/Site.css" rel="stylesheet" />
+        <link href="../../Styles/style1.css" rel="stylesheet" />
+        <link href="../../Styles/bootstrap-responsive.min.css" rel="stylesheet" />
+        <link href="../../Styles/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Styles/jogo.css" rel="stylesheet" />
+        <link href="~/Styles/tabuleiro.css" rel="stylesheet" />
     </head>
     <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <a href="@Url.Action("List", "Salas")">
+                        <div class="logoMM">
+                            <img src="@Url.Content("~/Images/logo.png")" />
+                        </div>
+                        <div class="tituloMM">
+                            <img src="@Url.Content("~/Images/letras.png")"/>
+                        </div>
+                    </a>
+                </div>
+                <div class="float-right">
+                    <div class="usuario-logado">
+                        @nomeUsuario
+                    </div>
+                </div>
+            </div>
+        </header>
 
         @Html.HiddenFor(model => model.Id_jogo, new { @name = "id_jogo" })
 
@@ -37,7 +66,7 @@
         }
 
             <br>
-            <input type="submit"  name="action:Sala_Espera" value="Modificar Status" />
+            <input type="submit" class="btn btn-info" name="action:Sala_Espera" value="Modificar Status" />
 
         </div>
 
@@ -57,7 +86,7 @@
                                         <h2>@jogo.Usuario.Nome </h2>
                                     </td>
                                     <td style="border: none">
-                                        <button type="submit" value="Info" name="action:Info">Info.</button>
+                                        <button type="submit" class="btn btn-info" value="Info" name="action:Info">Info.</button>
                                     </td>
                                 </tr>
                             </table>
@@ -71,10 +100,10 @@
         </div>
 
         <div id="divParcial">
-        @if (ViewBag.selecionado != null)
-        {
-            Html.RenderPartial("_AcessoPartial", new { Id_jogo = (int)ViewBag.selecionado });   
-        }
+            @if (ViewBag.selecionado != null)
+            {
+                Html.RenderPartial("_AcessoPartial", new { Id_jogo = (int)ViewBag.selecionado });
+            }
         </div>
     </body>
     

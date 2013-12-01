@@ -120,7 +120,7 @@ namespace MasterMind.Controllers
             {
                 ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
                 ViewBag.ListaTemas = TemasDTO.Lista();
-                return RedirectToAction("Partida", "Game", new { Id_Sala = list.ElementAt(0).Sala.Id_Sala });
+                return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = list.ElementAt(0).Sala.Id_Sala });
             }
             /*-------*/
 

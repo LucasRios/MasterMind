@@ -91,5 +91,17 @@ namespace MasterMind.Controllers.BackOffice
             return RedirectToAction("List");
         }
 
+        public ActionResult partialPerfil(Usuario user)
+        {
+
+            GenericoRep<Usuario> repositorio = new GenericoRep<Usuario>();
+            Usuario Usuario = repositorio.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+
+
+
+            return PartialView(Usuario);
+
+        }
+
     }
 }

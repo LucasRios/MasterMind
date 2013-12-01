@@ -293,8 +293,11 @@
     <Content Include="Styles\backoffice.css" />
     <Content Include="Styles\bootstrap-responsive.min.css" />
     <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Styles\demo.css" />
+    <Content Include="Styles\icons.css" />
     <Content Include="Styles\Logins.css" />
     <Content Include="Styles\jogo.css" />
+    <Content Include="Styles\style1.css" />
     <Content Include="Styles\tabuleiro.css" />
     <Content Include="Views\Account\Personagem.aspx" />
     <Content Include="Views\Game\Ranking.aspx" />
@@ -371,6 +374,8 @@
     <Content Include="Views\Jogos\Sala_Espera.cshtml" />
     <Content Include="Views\Jogos\_AcessoPartial.cshtml" />
     <Content Include="Views\Account\Login_3.cshtml" />
+    <Content Include="Views\Shared\Principal.Master" />
+    <Content Include="Views\Usuario\partialPerfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
