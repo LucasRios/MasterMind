@@ -280,6 +280,8 @@
     <Content Include="Images\tabuleiro.png" />
     <Content Include="Images\usu.png" />
     <Content Include="img\glyphicons-halflings.png" />
+    <Content Include="img\personagens\2.jpg" />
+    <Content Include="img\usuarios\22.jpg" />
     <Content Include="Scripts\BO\additional-methods.min-1.11.1.js" />
     <Content Include="Scripts\BO\bootstrap.min.js" />
     <Content Include="Scripts\BO\jquery-1.9.1.min.js" />

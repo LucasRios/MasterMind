@@ -22,7 +22,7 @@
 
         <div class="content-wrapper">
 
-            <a href="<%: Url.Action("List", "Salas") %>">
+            <a href="<%: Url.Action("Index", "Home") %>">
                 <asp:Image ID="Image3" runat="server" class="logoMM" ImageUrl="~/Images/logo.png" />
                 <asp:Image ID="Image4" runat="server" class="tituloMM" ImageUrl="~/Images/letras.png" />
             </a>

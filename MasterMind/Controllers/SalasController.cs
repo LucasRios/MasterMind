@@ -21,6 +21,8 @@ namespace MasterMind.Controllers
 
         public ActionResult List(Int32? Id_nivel, Int32? Id_perfil)
         {
+            servidor_cria_sala(); //servido cria salas se não houverem salas públicas
+
             GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
             IEnumerable<Salas> sala = new List<Salas>();
             
@@ -32,17 +34,22 @@ namespace MasterMind.Controllers
             ViewBag.ListaNivel = NivelDTO.ListaNivel();
             ViewBag.ListaTPSala = TipoSalaDTO.ListaTipoSala();
 
-            sala = repositorio.ObterTodos();
+            sala = repositorio.ObterTodos().Where(x => x.Fechada != 1);
 
             if (Id_nivel != null && Id_nivel > 0)
             {
                 sala = repositorio.ObterTodos().Where(x => x.Niveis.Id_Nivel == Id_nivel);
+                sala = sala.Where(x => x.Fechada != 1);
             }
-            else sala = repositorio.ObterTodos();
+            else
+            {
+                sala = repositorio.ObterTodos().Where(x => x.Fechada != 1);
+            }
 
             if (Id_perfil != null && Id_perfil > 0)
             {
                 sala = sala.Where(x => x.Perfil == Id_perfil);
+                sala = sala.Where(x => x.Fechada != 1);
             }   
 
             foreach (var i in sala)
@@ -58,6 +65,63 @@ namespace MasterMind.Controllers
             //sala = sala.Where(u => u.qtde_usu < 12 ).ToList();
 
             return View(sala);
+        }
+
+        private void servidor_cria_sala()
+        {
+            GenericoRep<Salas> repJogos = new GenericoRep<Salas>();
+            IEnumerable<Salas> lJogos = repJogos.ObterTodos().Where(x => x.Perfil == 1);
+                               lJogos = lJogos.Where(x => x.Fechada == 0);
+            IEnumerable<Salas> auxSalas = new List<Salas>();
+
+            GenericoRep<Nivel> repnivel = new GenericoRep<Nivel>();       
+
+            //verifica se tem salas de nível fácil
+            auxSalas = lJogos.Where(x => x.Niveis.Id_Nivel == 1);
+            if (auxSalas.Count() == 0)
+            {
+                Nivel nivel = repnivel.ObterPorId(1);
+                Salas sala_new = new Salas();
+
+                sala_new.Desc_perfil =  "Pública";
+                sala_new.Niveis = nivel;
+                sala_new.Perfil = 1;
+                sala_new.qtde_usu = 8;
+                sala_new.Sala = "Pública Fácil";
+                repJogos.Salvar(sala_new);
+
+            }
+            //verifica se tem salas de nível médio
+            auxSalas = lJogos.Where(x => x.Niveis.Id_Nivel == 1);
+            if (auxSalas.Count() == 0)
+            {
+                Nivel nivel = repnivel.ObterPorId(2);
+                Salas sala_new = new Salas();
+
+                sala_new.Desc_perfil =  "Pública";
+                sala_new.Niveis = nivel;
+                sala_new.Perfil = 1;
+                sala_new.qtde_usu = 8;
+                sala_new.Sala = "Pública Média";
+                repJogos.Salvar(sala_new);
+
+            }
+           //verifica se tem salas de nível difícil
+            auxSalas = lJogos.Where(x => x.Niveis.Id_Nivel == 1);
+            if (auxSalas.Count() == 0)
+            {
+                Nivel nivel = repnivel.ObterPorId(3);
+                Salas sala_new = new Salas();
+
+                sala_new.Desc_perfil =  "Pública";
+                sala_new.Niveis = nivel;
+                sala_new.Perfil = 1;
+                sala_new.qtde_usu = 8;
+                sala_new.Sala = "Pública Difícil";
+                repJogos.Salvar(sala_new);
+
+            }
+
         }
 
         [HttpGet]

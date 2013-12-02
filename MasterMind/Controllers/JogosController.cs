@@ -52,19 +52,24 @@ namespace MasterMind.Controllers
 
             if (partida.Count() >= 2) // se existem mais de dois jogadores na sala de espera
             {
-                partida = partida.Where(x => x.DataEntradaSala != null).OrderBy(x => x.DataEntradaSala);
+                IEnumerable<Jogos> prontos = partida.Where(x => x.DataEntradaSala != null).OrderBy(x => x.DataEntradaSala);
 
-                if (partida.Count() >= 1) // se pelo menos 1 deles selecionou "estou pronto"
-                {
-                    TempoRestante = 1 - DateTime.Now.Subtract(DateTime.Parse(partida.ElementAt(0).DataEntradaSala.ToString())).Minutes;
+                if (prontos.Count() >= 2) // se pelo menos 2 deles selecionou "estou pronto" e tem mais que um na sala
+                {                         //evita que o primeiro dê como pronto e o segundo só vá entrar na sala de espera 10min depois, aí ele estava sendo jogado direto para o tabuleiro
+                                          //mudei para que a contagem necessite de dois jogadores prontos, assim pelo menos 2 vão passar pela tela de espera.
+                    TempoRestante = 1 - DateTime.Now.Subtract(DateTime.Parse(prontos.ElementAt(1).DataEntradaSala.ToString())).Minutes;
                     ViewBag.TempoRestante = "Tempo restante para iniciar a partida " + TempoRestante.ToString() + " minutos";
                 }
                 else ViewBag.TempoRestante = "Não há um mínimo de jogadores confirmados para iniciar a partida";
-                
+
                 //Se 8 deles selecionaram "estou pronto" ou se o tempo acabou
-                if ((partida.Count() >= 8) || (TempoRestante <= 0)) return RedirectToAction("Partida", "Game", new { Id_Sala = Id_Sala });
+                if ((prontos.Count() >= 8) || (TempoRestante <= 0))
+                {
+                    servidor_cria_sala(Id_Sala);//o servidor verifica se a sala encheu, e se a mesma for pública ele cria uma nova
+                    return RedirectToAction("Partida", "Game", new { Id_Sala = Id_Sala });
+                }
             }
-            else  ViewBag.TempoRestante = "Não há jogadores suficientes para iniciar a partida";
+            else ViewBag.TempoRestante = "Não há jogadores suficientes para iniciar a partida";
 
             Response.AddHeader("Refresh", "5");
 
@@ -73,7 +78,7 @@ namespace MasterMind.Controllers
 
         [HttpPost]
         public ActionResult Sala_Espera(Jogos jogo)
-        {           
+        {
             JogosRep jogoRep = new JogosRep();
             Jogos modelo = jogoRep.ObterPorId(jogo.Id_jogo);
 
@@ -85,7 +90,7 @@ namespace MasterMind.Controllers
             else
             {
                 modelo.DataEntradaSala = null;
-                jogoRep.Salvar(modelo);            
+                jogoRep.Salvar(modelo);
             }
 
             return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = modelo.Sala.Id_Sala });
@@ -93,7 +98,7 @@ namespace MasterMind.Controllers
 
         [HttpGet]
         public ActionResult _AcessoPartial(Int32 Id_jogo)
-        {       
+        {
             GenericoRep<Jogos> repjogo = new GenericoRep<Jogos>();
             Jogos jogos = repjogo.ObterPorId(Id_jogo);
             Temas tema = jogos.Tema;
@@ -169,11 +174,14 @@ namespace MasterMind.Controllers
             list = jogos.ObterTodos().Where(x => x.Sala.Id_Sala == model.Sala.Id_Sala);
             model.SequenciaEntradaUsuarioSala = list.Count() + 1;
 
-            if (list.Count() >= 12)
+            if (list.Count() > 0)
             {
-                ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
-                ViewBag.ListaTemas = TemasDTO.Lista();
-                return View(model);
+                if (list.ElementAt(0).Sala.Fechada == 1)
+                {
+                    ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
+                    ViewBag.ListaTemas = TemasDTO.Lista();
+                    return View(model);
+                }
             }
 
             list = list.Where(x => x.Tema.Id_tema == model.Tema.Id_tema);
@@ -202,8 +210,6 @@ namespace MasterMind.Controllers
 
                     repositorio.Salvar(model);
 
-                    servidor_cria_sala(model);//o servidor verifica se a sala encheu, e se a mesma for pública ele cria uma nova
-
                     return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = model.Sala.Id_Sala });
                 }
 
@@ -217,29 +223,27 @@ namespace MasterMind.Controllers
             return View(model);
         }
 
-        private void servidor_cria_sala(Jogos model)
+        private void servidor_cria_sala(Int32 id_sala)
         {
-            if (model.Sala.Perfil == 1)
+            GenericoRep<Salas> repJogos = new GenericoRep<Salas>();
+            Salas lJogos = repJogos.ObterTodos().Where(x => x.Id_Sala == id_sala).ElementAt(0);
+
+            if (lJogos.Perfil == 1)
             {
-                GenericoRep<Jogos> repJogos = new GenericoRep<Jogos>();
-                IEnumerable<Jogos> lJogos = repJogos.ObterTodos().Where(x => x.Sala.Id_Sala == model.Sala.Id_Sala);
+                lJogos.Fechada = 1;
+                repJogos.Salvar(lJogos);
 
-                if (lJogos.Count() >= 8)
-                {
-                    Salas sala_new = new Salas();
+                Salas sala_new = new Salas();
 
-                    sala_new.Desc_perfil = model.Sala.Desc_perfil;
-                    sala_new.Id_Usuario = model.Sala.Id_Usuario;
-                    sala_new.Niveis = model.Sala.Niveis;
-                    sala_new.Perfil = model.Sala.Perfil;
-                    sala_new.qtde_usu = model.Sala.qtde_usu;
-                    sala_new.Sala = model.Sala.Sala;
-                    sala_new.Senha = model.Sala.Senha;
-                    sala_new.Usuario = model.Sala.Usuario;
-
-                    GenericoRep<Salas> repSalas = new GenericoRep<Salas>();
-                    repSalas.Salvar(sala_new);
-                }
+                sala_new.Desc_perfil = lJogos.Desc_perfil;
+                sala_new.Id_Usuario = lJogos.Id_Usuario;
+                sala_new.Niveis = lJogos.Niveis;
+                sala_new.Perfil = lJogos.Perfil;
+                sala_new.qtde_usu = lJogos.qtde_usu;
+                sala_new.Sala = lJogos.Sala;
+                sala_new.Senha = lJogos.Senha;
+                sala_new.Usuario = lJogos.Usuario;
+                repJogos.Salvar(sala_new);
 
             }
 

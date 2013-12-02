@@ -28,6 +28,7 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual String Senha { get; set; }
 
         public virtual Int32 Id_Usuario { get; set; }
+        public virtual Int32 Fechada { get; set; }
 
         public virtual Usuario Usuario { get; set; }
         public virtual String Desc_perfil { get; set; }

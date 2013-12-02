@@ -218,7 +218,7 @@ namespace MasterMind.Controllers
             Boolean opcaoCerta = resposta.OpcaoCerta;
 
             Boolean ganhou = atualiza_acerto_erro(opcaoCerta, IdSala);
-            atualiza_ranking(opcaoCerta);
+            atualiza_ranking(opcaoCerta, ganhou);
 
             var vm = new { opcaoCerta = opcaoCerta, ganhou = ganhou };
             json.Data = vm;

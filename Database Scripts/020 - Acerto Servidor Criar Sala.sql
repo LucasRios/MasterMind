@@ -1,0 +1,1 @@
+ALTER TABLE SALAS ADD Fechada INT;

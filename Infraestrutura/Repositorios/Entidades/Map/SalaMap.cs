@@ -19,6 +19,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Map(x => x.IdPerguntaAtual);
             Map(x => x.DataPergunta);
             Map(x => x.DataResposta);
+            Map(x => x.Fechada);
             References(x => x.Niveis).Column("Id_nivel").Cascade.None().LazyLoad();
         }
     }
