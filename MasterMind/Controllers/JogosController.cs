@@ -99,14 +99,26 @@ namespace MasterMind.Controllers
         [HttpGet]
         public ActionResult _AcessoPartial(Int32 Id_jogo)
         {
-            GenericoRep<Jogos> repjogo = new GenericoRep<Jogos>();
+            JogosRep repjogo = new JogosRep();
             Jogos jogos = repjogo.ObterPorId(Id_jogo);
+            ViewBag.Jogo_ = jogos;
             Temas tema = jogos.Tema;
             ViewBag.tema = tema;
 
+            IEnumerable<Jogos> partida = repjogo.ObterPorIdSala(jogos.Sala.Id_Sala);
+            ViewBag.Partida = partida;
+            Jogos jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+            ViewBag.jogador = jogador;
+
             GenericoRep<Ranking> repRanking = new GenericoRep<Ranking>();
-            Ranking ranking = repRanking.ObterTodos().Where(x => x.Id_User.Id_user == jogos.Usuario.Id_user).ElementAt(0);
-            ViewBag.rank = ranking;
+            IEnumerable<Ranking> lranking = repRanking.ObterTodos().Where(x => x.Id_User.Id_user == jogos.Usuario.Id_user);
+
+            if (lranking.Count() > 0)
+            {
+                Ranking ranking = lranking.ElementAt(0);
+                ViewBag.rank = ranking;
+            }
+            else ViewBag.rank = null;
 
             return View();
         }

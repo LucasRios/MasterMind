@@ -44,18 +44,18 @@
             <tr>
                 <td>
                     <%: Html.LabelFor(m => m.OldPassword) %>
-                    <%: Html.PasswordFor(m => m.OldPassword,new { tabindex=1}) %>
+                    <%: Html.PasswordFor(m => m.OldPassword,new { @class = "txtMedium", tabindex=1}) %>
                 </td>
                 <td>
                     <%: Html.LabelFor(m => m.Senha) %>
-                    <%: Html.PasswordFor(m => m.Senha,new { tabindex=2}) %>
+                    <%: Html.PasswordFor(m => m.Senha,new { @class = "txtMedium", tabindex=2}) %>
                 </td>
 
             </tr>
             <tr>
                 <td>
                     <%: Html.LabelFor(m => m.ConfirmPassword) %>
-                    <%: Html.PasswordFor(m => m.ConfirmPassword,new { tabindex=3}) %>
+                    <%: Html.PasswordFor(m => m.ConfirmPassword,new {@class = "txtMedium", tabindex=3}) %>
                 </td>
             </tr>
             <tr>
@@ -64,7 +64,7 @@
                         <%:  Html.LabelFor(model => model.Nome)%>
                     </div>
                     <div class="editor-field">
-                        <%:  Html.TextBoxFor(model => model.Nome, new { tabindex=4})%>
+                        <%:  Html.TextBoxFor(model => model.Nome, new {@class = "txtMedium", tabindex=4})%>
                         <%:  Html.ValidationMessageFor(model => model.Nome)%>
                     </div>
                 </td>
@@ -73,7 +73,7 @@
                         <%: Html.LabelFor(model => model.Sobrenome)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Sobrenome, new { tabindex=5})%>
+                        <%: Html.TextBoxFor(model => model.Sobrenome, new {@class = "txtMedium", tabindex=5})%>
                         <%: Html.ValidationMessageFor(model => model.Sobrenome)%>
                     </div>
 
@@ -86,7 +86,7 @@
                         <%:  Html.LabelFor(model => model.Email)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Email, new { tabindex=6, @readonly = "readonly" })%>
+                        <%: Html.TextBoxFor(model => model.Email, new {@class = "txtMedium", tabindex=6, @readonly = "readonly" })%>
                         <%: Html.ValidationMessageFor(model => model.Email)%>
                     </div>
 
@@ -106,7 +106,7 @@
                         <%: Html.LabelFor(model => model.Dt_nasc)%>
                     </div>
                     <div class="editor-field">
-                        <%:  Html.TextBoxFor(model => model.Dt_nasc, new { tabindex=8})%>
+                        <%:  Html.TextBoxFor(model => model.Dt_nasc, new {@class = "txtMedium", tabindex=8})%>
                         <%: Html.ValidationMessageFor(model => model.Dt_nasc)%>
                     </div>
                 </td>
@@ -115,7 +115,7 @@
                         <%:  Html.LabelFor(model => model.Cidade)%>
                     </div>
                     <div class="editor-field">
-                        <%:  Html.TextBoxFor(model => model.Cidade, new { tabindex=9})%>
+                        <%:  Html.TextBoxFor(model => model.Cidade, new { @class = "txtMedium", tabindex=9})%>
                         <%: Html.ValidationMessageFor(model => model.Cidade)%>
                     </div>
                 </td>
@@ -126,7 +126,7 @@
                         <%: Html.LabelFor(model => model.Estado)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Estado, new { tabindex=10})%>
+                        <%: Html.TextBoxFor(model => model.Estado, new {@class = "txtMedium", tabindex=10})%>
                         <%: Html.ValidationMessageFor(model => model.Estado)%>
                     </div>
                 </td>
@@ -135,7 +135,7 @@
                         <%:  Html.LabelFor(model => model.Pais)%>
                     </div>
                     <div class="editor-field">
-                        <%:  Html.TextBoxFor(model => model.Pais, new { tabindex=11})%>
+                        <%:  Html.TextBoxFor(model => model.Pais, new {@class = "txtMedium", tabindex=11})%>
                         <%:  Html.ValidationMessageFor(model => model.Pais)%>
                     </div>
 

@@ -26,6 +26,7 @@
         <link href="../../Styles/bootstrap.min.css" rel="stylesheet" />
         <link href="~/Styles/jogo.css" rel="stylesheet" />
         <link href="~/Styles/tabuleiro.css" rel="stylesheet" />
+
     </head>
     <body>
         <header>
@@ -79,14 +80,22 @@
                         <div class="dados-jogador" title="SelectPlayer">
                             <table style="border: none">
                                 <tr style="border: none">
-                                    <td style="border: none">
-                                        <img src="@Url.Content(jogo.Usuario.Personagem.Imagem)" width="50" height="50"/>
+                                    <td style="border: none;min-width:50px;padding-right:0px">
+
+                                        @if ((jogo.Usuario.Personagem != null) && (jogo.Usuario.Personagem.Imagem != null))
+                                        {
+                                            <img src="@Url.Content(jogo.Usuario.Personagem.Imagem)" width="50" height="50"/>
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/usu.png" width="50" height="50" />
+                                        }
+                                    </td>
+                                    <td style="border: none;min-width:145px;max-width:145px">
+                                        <h5>&nbsp;@jogo.Usuario.Nome </h5>
                                     </td>
                                     <td style="border: none">
-                                        <h2>@jogo.Usuario.Nome </h2>
-                                    </td>
-                                    <td style="border: none">
-                                        <button type="submit" class="btn btn-info" value="Info" name="action:Info">Info.</button>
+                                        <input class="btn btn-primary" type="button" value ="Info." onclick="window.location.href='@Url.Action("_AcessoPartial", "Jogos", new { Id_jogo = jogo.Id_jogo })    '"/>
                                     </td>
                                 </tr>
                             </table>
@@ -95,17 +104,10 @@
                 }
             </ul>
         </div>
-        <div>
-            <img src="~/Images/seta_dir.png" width="50" height="50" />
-        </div>
-
         <div id="divParcial">
-            @if (ViewBag.selecionado != null)
-            {
-                Html.RenderPartial("_AcessoPartial", new { Id_jogo = (int)ViewBag.selecionado });
-            }
         </div>
     </body>
-    
 }
+
+
 

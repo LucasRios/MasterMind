@@ -1,24 +1,44 @@
 ﻿@using Infraestrutura.Repositorios.Entidades;
 
+@{   
+    Html.EnableClientValidation(true); 
+}
 
-@using (Html.BeginForm("Sala_Espera", "Jogos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Sala_Espera", "Jogos"))
 {
     Html.AntiForgeryToken();
     Html.ValidationSummary();
 
-    if ((ViewBag.rank != null) && (ViewBag.tema != null))
+    if ((ViewBag.tema != null))
     {
-        Ranking jogador = ViewBag.rank;
+        Ranking jogador_ = ViewBag.rank;
+        Jogos jogo_ = ViewBag.Jogo_;
         Temas tema = ViewBag.tema;        
-    <fieldset>
+    <section class="featured">
         <h2>Jogador</h2>
         <ul>
             <li>
                 <div class="dados-jogador">
-                    <img src="@Url.Content(jogador.Id_User.Personagem.Imagem)" width="50" height="50"/>
-                    <h2>@jogador.Id_User.Nome</h2>
+                    @if(jogo_.Usuario.imagem != null){
+                    <img src="@Url.Content(jogo_.Usuario.imagem)" width="50" height="50"/>
+                    }
+                    else {
+                        <img src="~/Images/usu.png" width="50" height="50"/>
+                    }
+                    <h2>@jogo_.Usuario.Nome</h2>
+
+                    @if ((jogo_.Usuario.Personagem != null) && (jogo_.Usuario.Personagem.Imagem != null))
+                    {
+                    <img src="@Url.Content(jogo_.Usuario.Personagem.Imagem)" width="50" height="50"/>
+                        <h2>@jogo_.Usuario.Personagem.Desc_person</h2>
+                    }
+                    else {
+                        <img src="~/Images/usu.png" width="50" height="50"/>
+                    }
+
+                    
                     <br />
-                    (@jogador.Id_User.Cidade/@jogador.Id_User.Estado-@jogador.Id_User.Pais)
+                    (@jogo_.Usuario.Cidade/@jogo_.Usuario.Estado-@jogo_.Usuario.Pais)
                     <br />
                     <div class="tema-jogador">
                         <span>&nbsp;&nbsp;Tema: @tema.Desc_tema</span>
@@ -28,7 +48,7 @@
                 </div>
             </li>
         </ul>
-    </fieldset>  
+    </section>  
     }
 
 }

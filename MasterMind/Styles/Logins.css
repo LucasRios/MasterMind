@@ -47,12 +47,6 @@ tr.pager td {
     text-align:center;
 }
 
-fieldset
-{
-    background-color: #c1bdbd;
-    padding: 5px 5px 5px 5px !important;
-}
-
 .display-label, .editor-label
 {
     font-weight: bold;
@@ -60,7 +54,8 @@ fieldset
 
 .txtMedium
 {
-    width: 200px;
+    width: 350px;
+    min-height:30px;
 }
 
 .txtLarge
@@ -113,6 +108,12 @@ fieldset
 }
 
 #login_3 {
+    margin: 0px 0px 0px 0px;
+    background-image:url(../../Images/Login_2.jpg);
+    background-size: auto;
+}
+
+#login_1 {
     margin: 0px 0px 0px 0px;
     background-image:url(../../Images/Login_2.jpg);
     background-size: auto;
@@ -174,9 +175,6 @@ footer {
         margin: 0;
     }
 
-    #loginForm input {
-        width: 250px;
-    }
 
     #loginForm input[type="checkbox"],
     #loginForm input[type="submit"],

@@ -16,6 +16,12 @@
     height:100%;
 }
 
+.txtMedium
+{
+    width: 350px;
+    min-height:30px;
+}
+
 body {
 
     color: #696969;

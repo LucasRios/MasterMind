@@ -9,8 +9,8 @@
     { 
     @Html.AntiForgeryToken() 
     @Html.ValidationSummary(true) 
-          Styles.Render("~/Content/css") ;
-          Scripts.Render("~/bundles/modernizr");  
+        Styles.Render("~/Content/css");
+        Scripts.Render("~/bundles/modernizr"); 
     <html>
     <head>
         <meta name="viewport" content="width=device-width" />
@@ -21,6 +21,7 @@
         <link href="~/Styles/Logins.css" rel="stylesheet" />
         <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
         <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+
 
         <header>
             <div id="header_login_2"></div>
@@ -41,7 +42,7 @@
                         <td></td>
                         <td id="td_left">
                             @Html.LabelFor(m => m.email)
-                            @Html.TextBoxFor(m => m.email, new { @class = "txtMedium" })
+                            @Html.TextBoxFor(m => m.email, new { @class="txtMedium" })
                             @Html.ValidationMessageFor(m => m.email)
                         </td>
 
@@ -52,7 +53,7 @@
                         <td id="td_left">
                             <div style="margin-left: 10%">
                                 @Html.LabelFor(m => m.Senha)
-                                @Html.PasswordFor(m => m.Senha, new { @class = "txtMedium" })
+                                @Html.PasswordFor(m => m.Senha, new { @class="txtMedium" })
                                 @Html.ValidationMessageFor(m => m.Senha)
                             </div>
 

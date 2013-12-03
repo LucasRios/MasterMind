@@ -386,11 +386,11 @@
     <Content Include="Views\Game\Partida.cshtml" />
     <Content Include="Views\Shared\_LayoutTabuleiro.cshtml" />
     <Content Include="Views\Account\Login_2.cshtml" />
-    <Content Include="Views\Jogos\Sala_Espera.cshtml" />
-    <Content Include="Views\Jogos\_AcessoPartial.cshtml" />
     <Content Include="Views\Account\Login_3.cshtml" />
     <Content Include="Views\Shared\Principal.Master" />
     <Content Include="Views\Usuario\partialPerfil.cshtml" />
+    <Content Include="Views\Jogos\Sala_Espera.cshtml" />
+    <Content Include="Views\Jogos\_AcessoPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
