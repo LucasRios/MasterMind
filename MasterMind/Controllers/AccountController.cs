@@ -146,8 +146,6 @@ namespace MasterMind.Controllers
                 usuario.auxId_person = (int)Id_person;
             }
 
-
-
             ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));            
             
             return View(usuario);
@@ -158,12 +156,11 @@ namespace MasterMind.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Personagem(Usuario model)
         {
+            Usuario usuario = new Usuario();
+            GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
 
             if (model.Personagem.Id_person != 0)
             {
-                Usuario usuario = new Usuario();
-                GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
-
                 if (model.auxId_person != 0)
                 {
                     GenericoRep<Personagens> repPerson = new GenericoRep<Personagens>();
@@ -183,7 +180,10 @@ namespace MasterMind.Controllers
             ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.SelectedPerson = model.Personagem.Imagem;
             ViewBag.NameSelectedPerson = model.Personagem.Desc_person;
-            ViewBag.UserPerson = model.Personagem.Imagem;
+
+            usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.UserPerson = usuario.Personagem.Imagem;
+
             return View(model);
         }
 
@@ -192,16 +192,14 @@ namespace MasterMind.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Personagem_partial(Usuario model)
         {
-            if (model.Personagem.Id_person != 0)
+            Usuario usuario = new Usuario();
+            GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
+            if (model.auxId_person != 0)
             {
-                Usuario usuario = new Usuario();
-                GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
 
-                if (model.auxId_person != 0)
-                {
                     GenericoRep<Personagens> repPerson = new GenericoRep<Personagens>();
                     model.Personagem = repPerson.ObterPorId(model.auxId_person);
-                }
+                
 
                 usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
                 usuario.Personagem = model.Personagem;
@@ -216,7 +214,8 @@ namespace MasterMind.Controllers
             ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.SelectedPerson = model.Personagem.Imagem;
             ViewBag.NameSelectedPerson = model.Personagem.Desc_person;
-            ViewBag.UserPerson = model.Personagem.Imagem;
+            usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.UserPerson = usuario.Personagem.Imagem;
             return View(model);
         }
 
@@ -229,11 +228,6 @@ namespace MasterMind.Controllers
             GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
 
             usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
-            if (usuario.Personagem != null)
-            {
-                ViewBag.UserPerson = usuario.Personagem.Imagem;
-            }
-            else ViewBag.UserPerson = null;
 
             ViewBag.SelectedPerson = "";
             ViewBag.NameSelectedPerson = null;
@@ -244,18 +238,25 @@ namespace MasterMind.Controllers
                 ViewBag.SelectedPerson = personagem.Imagem;
                 ViewBag.NameSelectedPerson = personagem.Desc_person;
                 ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));
-                usuario.Personagem = personagem;
+                //usuario.Personagem = personagem;
                 usuario.auxId_person = (int)Id_person;
             }
-
-
 
             ViewBag.ListaPerson = ListaPerson(WebSecurity.GetUserId(User.Identity.Name));
 
             return View(usuario);
         }
 
+      
+        public ActionResult Personagem_partial_atual()
+        {
+            Usuario usuario = new Usuario();
+            GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
 
+            usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
+
+            return View(usuario);
+        }
         //
         // GET: /Account/Register
 

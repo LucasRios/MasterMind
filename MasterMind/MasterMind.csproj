@@ -315,6 +315,7 @@
     <Content Include="Styles\tabuleiro.css" />
     <Content Include="Views\Account\Personagem_partial.aspx" />
     <Content Include="Views\Account\Personagem.aspx" />
+    <Content Include="Views\Account\Personagem_partial_atual.aspx" />
     <Content Include="Views\Game\Ranking.aspx" />
     <Content Include="Views\Game\Ranking_top.aspx" />
     <Content Include="Views\Game\Partida.aspx" />

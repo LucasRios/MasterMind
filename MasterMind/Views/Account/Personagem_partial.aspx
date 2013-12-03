@@ -10,11 +10,11 @@
 
     <html>
     <head>
-            <link rel="shortcut icon" href="../favicon.ico">
-    <link href="../../Content/Site.css" rel="stylesheet" />
-    <link href="../../Styles/style1.css" rel="stylesheet" />
-    <link href="../../Styles/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link href="../../Styles/bootstrap.min.css" rel="stylesheet" />
+        <link rel="shortcut icon" href="../favicon.ico">
+        <link href="../../Content/Site.css" rel="stylesheet" />
+        <link href="../../Styles/style1.css" rel="stylesheet" />
+        <link href="../../Styles/bootstrap-responsive.min.css" rel="stylesheet" />
+        <link href="../../Styles/bootstrap.min.css" rel="stylesheet" />
     </head>
     <body id="body_perso">
         <div style="align-content: center">
@@ -34,13 +34,7 @@
                             <tr>
                                 <td>
                                     <h6>Personagem Atual</h6>
-                                    <% if (ViewBag.UserPerson != null)
-                                       { %>
-
-                                    <img src="<%: ViewBag.UserPerson %>" height="100" width="100" />
-                                    <br />
-                                    <h6><%: @Html.ValueFor(model => model.Personagem.Desc_person) %></h6>
-                                    <%} %>
+                                    <div><% @Html.RenderAction("Personagem_partial_atual", "Account"); %></div>
                                 </td>
                                 <td style="vertical-align: central">
                                     <img src="../../Images/seta_dir.png" height="50" width="50" />
@@ -60,11 +54,13 @@
                                 </td>
                             </tr>
                         </table>
+                        <h3>Nível: <%: @Html.ValueFor(model => model.Personagem.Nivel) %></h3>
                     </td>
                 </tr>
                 <tr style="text-align: center">
                     <td style="text-align: center">
-                        <%:  @Html.DropDownListFor(u => u.Personagem.Id_person, new SelectList(ViewBag.ListaPerson, "Id_person", "Desc_person"), new { @class = "dropdownlist", onchange= "document.location.href = '/Account/Personagem_partial?Id_Person=' + this.options[this.selectedIndex].value;" })%>
+                        <%:  @Html.DropDownListFor(u => u.Personagem.Id_person, new SelectList(ViewBag.ListaPerson, "Id_person", "Desc_person"), new { @class = "dropdownlist", onchange= "window.location.href = '/Account/Personagem_partial?Id_Person=' + this.options[this.selectedIndex].value;" })%>
+
                         <%: Html.HiddenFor(u => u.Personagem.Desc_person)%>
                         <%:  @Html.ValidationMessageFor(u => u.Personagem.Id_person)%>
                     </td>

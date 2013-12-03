@@ -240,10 +240,11 @@ namespace MasterMind.Controllers
             GenericoRep<Salas> repJogos = new GenericoRep<Salas>();
             Salas lJogos = repJogos.ObterTodos().Where(x => x.Id_Sala == id_sala).ElementAt(0);
 
+            lJogos.Fechada = 1;
+            repJogos.Salvar(lJogos);
+
             if (lJogos.Perfil == 1)
             {
-                lJogos.Fechada = 1;
-                repJogos.Salvar(lJogos);
 
                 Salas sala_new = new Salas();
 

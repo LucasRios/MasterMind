@@ -45,6 +45,26 @@ function AtualizarTabuleiro() {
     });
 }
 
+function AtualizarTabuleiro_resp_certa() {
+    cria_tabuleiro(5, 3);
+    $.ajaxSetup({ cache: false });
+    $.get("ObterStatusTabuleiro", { Id_Sala: $("#hddId_Sala").val() })
+    .success(function (response) {
+        posicaoPecas = [];
+        posicaoPecas = response.statusTabuleiro;
+        var acabou = false;
+        for (i = 0; i < posicaoPecas.length; i++) {
+            coloca_peca(posicaoPecas[i].Linha, posicaoPecas[i].Coluna, peca(posicaoPecas[i].CorPeca), 0)
+            if (posicaoPecas[i].Linha == 6 && posicaoPecas[i].Coluna == 6) {
+                acabou = true;
+            }
+        }
+        if (acabou) {
+            GameOver();
+        }
+    });
+}
+
 function GameOver() {
     $("#divTextoPergunta").css('display', 'none');
     $("#divAlternativas").css('display', 'none');
