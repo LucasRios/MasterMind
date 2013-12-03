@@ -4,7 +4,7 @@
     Html.EnableClientValidation(true); 
 }
 
-@using (Html.BeginForm("Sala_Espera", "Jogos"))
+@using (Html.BeginForm())
 {
     Html.AntiForgeryToken();
     Html.ValidationSummary();
@@ -13,42 +13,141 @@
     {
         Ranking jogador_ = ViewBag.rank;
         Jogos jogo_ = ViewBag.Jogo_;
-        Temas tema = ViewBag.tema;        
+        Temas tema = ViewBag.tema;  
+         
     <section class="featured">
-        <h2>Jogador</h2>
-        <ul>
-            <li>
-                <div class="dados-jogador">
-                    @if(jogo_.Usuario.imagem != null){
-                    <img src="@Url.Content(jogo_.Usuario.imagem)" width="50" height="50"/>
-                    }
-                    else {
-                        <img src="~/Images/usu.png" width="50" height="50"/>
-                    }
-                    <h2>@jogo_.Usuario.Nome</h2>
 
-                    @if ((jogo_.Usuario.Personagem != null) && (jogo_.Usuario.Personagem.Imagem != null))
-                    {
-                    <img src="@Url.Content(jogo_.Usuario.Personagem.Imagem)" width="50" height="50"/>
-                        <h2>@jogo_.Usuario.Personagem.Desc_person</h2>
-                    }
-                    else {
-                        <img src="~/Images/usu.png" width="50" height="50"/>
-                    }
+        <style type="text/css">
+            table.rank {
+                border: solid;
+                border-spacing: 10px;
+                text-align: center;
+            }
 
-                    
-                    <br />
-                    (@jogo_.Usuario.Cidade/@jogo_.Usuario.Estado-@jogo_.Usuario.Pais)
-                    <br />
-                    <div class="tema-jogador">
-                        <span>&nbsp;&nbsp;Tema: @tema.Desc_tema</span>
-                    </div>
-                    <div style="clear: both;"></div>
-                    <div style="clear: both;"></div>
-                </div>
-            </li>
-        </ul>
-    </section>  
+            tr.rank {
+                border: solid;
+                font-weight: bold;
+            }
+
+            td.rank {
+                text-align: center;
+                padding: 4px 15px 2px 4px;
+                font-weight: bold;
+            }
+        </style>
+
+        <div style="border-top: solid;">
+            <h2>Jogador</h2>
+            <table style="width: 50%; border: none">
+                <tr style="border-bottom: solid">
+                    <td style="min-width: 155px; vertical-align: top; border: none">
+                        @if (jogo_.Usuario.imagem != null)
+                        {
+                            <img src="@Url.Content(jogo_.Usuario.imagem)" width="150" height="150"/>
+                        }
+                        else
+                        {
+                            <img src="~/Images/usu.png" width="150" height="150" />
+                        }
+                        <h2>@jogo_.Usuario.Nome</h2>
+                    </td>
+
+                    <td style="min-width: 155px; vertical-align: top; border: none">
+                        @if ((jogo_.Usuario.Personagem != null) && (jogo_.Usuario.Personagem.Imagem != null))
+                        {
+                            <img src="@Url.Content(jogo_.Usuario.Personagem.Imagem)" width="150" height="150"/>
+                            <h2>@jogo_.Usuario.Personagem.Desc_person</h2>
+                            <h2>Nível @jogo_.Usuario.Personagem.Nivel</h2>
+                        }
+                        else
+                        {
+                            <img src="~/Images/usu.png" width="150" height="150" />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td style="border: none">
+                        <table style="border: none">
+                            <tr>
+                                <td style="max-width: 80px; border: none">
+                                    <h6>Cidade: </h6>
+                                </td>
+                                <td style="border: none; vertical-align: top">
+                                    @jogo_.Usuario.Cidade
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: none">
+                        <table style="border: none">
+                            <tr>
+                                <td style="max-width: 80px; border: none">
+                                    <h6>Estado: </h6>
+                                </td>
+                                <td style="border: none; vertical-align: top">
+                                    @jogo_.Usuario.Estado
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: none">
+                        <table style="border: none">
+                            <tr>
+                                <td style="max-width: 80px; border: none">
+                                    <h6>País: </h6>
+                                </td>
+                                <td style="border: none; vertical-align: top">
+                                    @jogo_.Usuario.Pais
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: none">
+                        <table style="border: none">
+                            <tr style="border: none">
+                                <td style="max-width: 80px; border: none">
+                                    <h6>Tema: </h6>
+                                </td>
+                                <td style="border: none; vertical-align: top">
+                                    @tema.Desc_tema
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <table class="rank">
+                <tr class="rank">
+                    <td class="rank">Partidas Vencidas</td>
+                    <td class="rank">Resp. Certas</td>
+                    <td class="rank">Resp. Erradas</td>
+                    <td class="rank">Respondidas</td>
+                </tr>
+                @if (jogador_ != null)
+                {
+                    <tr class="rank">
+                        <td class="rank">@jogador_.qtde_partidas_ganhas</td>
+                        <td class="rank">@jogador_.qtde_certas</td>
+                        <td class="rank">@jogador_.qtde_erradas</td>
+                        <td class="rank">@jogador_.qtde_respostas</td>
+                    </tr>
+                }
+            </table>
+
+
+        </div>
+    </section>     
     }
 
 }

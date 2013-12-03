@@ -37,17 +37,18 @@ namespace MasterMind.Controllers
         }
 
         [HttpGet]
-        public ActionResult Sala_Espera(Int32 Id_Sala, Int32? id_selecionado)
+        public ActionResult Sala_Espera(Int32 Id_Sala, Int32 selecionado)
         {
-            int TempoRestante = 100;
+            int TempoRestante = 100;             
 
             JogosRep jogoRep = new JogosRep();
+            Jogos jogador_selecionado = jogoRep.ObterPorId(Id_Sala);
             IEnumerable<Jogos> partida = jogoRep.ObterPorIdSala(Id_Sala);
             ViewBag.Partida = partida;
             Jogos jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
             ViewBag.jogador = jogador;
 
-            if ((id_selecionado != 0) && (id_selecionado != null)) ViewBag.selecionado = id_selecionado; //Verifica se o usuário clicou no div para ver detalhes de um jogador
+            if ((selecionado != 0)) ViewBag.selecionado = selecionado; //Verifica se o usuário clicou no div para ver detalhes de um jogador
             else ViewBag.selecionado = null;
 
             if (partida.Count() >= 2) // se existem mais de dois jogadores na sala de espera
@@ -93,7 +94,7 @@ namespace MasterMind.Controllers
                 jogoRep.Salvar(modelo);
             }
 
-            return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = modelo.Sala.Id_Sala });
+            return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = modelo.Sala.Id_Sala,selecionado=0 });
         }
 
         [HttpGet]
@@ -120,7 +121,7 @@ namespace MasterMind.Controllers
             }
             else ViewBag.rank = null;
 
-            return View();
+            return PartialView();
         }
 
         [HttpGet]
@@ -135,9 +136,8 @@ namespace MasterMind.Controllers
 
             if (list.Count() > 0)
             {
-                ModelState.AddModelError("", "Esta sala já está completa! Por favor escolha outra sala!");
                 ViewBag.ListaTemas = TemasDTO.Lista();
-                return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = list.ElementAt(0).Sala.Id_Sala });
+                return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = list.ElementAt(0).Sala.Id_Sala, selecionado=0 });
             }
             /*-------*/
 
@@ -222,7 +222,7 @@ namespace MasterMind.Controllers
 
                     repositorio.Salvar(model);
 
-                    return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = model.Sala.Id_Sala });
+                    return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = model.Sala.Id_Sala , selecionado=0});
                 }
 
                 ViewBag.ListaTemas = TemasDTO.Lista();
