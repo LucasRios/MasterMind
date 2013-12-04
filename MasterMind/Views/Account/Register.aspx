@@ -51,7 +51,7 @@
                         <%:  Html.LabelFor(model => model.Email)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Email, new { tabindex=4 })%>
+                        <%: Html.TextBoxFor(model => model.Email, new { tabindex=4, @type = "email" })%>
                         <%: Html.ValidationMessageFor(model => model.Email)%>
                     </div>
 
@@ -74,7 +74,7 @@
                         <%: Html.LabelFor(model => model.Dt_nasc)%>
                     </div>
                     <div class="editor-field">
-                        <%:  Html.TextBoxFor(model => model.Dt_nasc, new { tabindex=6})%>
+                        <%:  Html.TextBoxFor(model => model.Dt_nasc, new { tabindex=6, @type = "date"})%>
                         <%: Html.ValidationMessageFor(model => model.Dt_nasc)%>
                     </div>
                 </td>
