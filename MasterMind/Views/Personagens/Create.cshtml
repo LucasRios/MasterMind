@@ -41,7 +41,8 @@
             @Html.ValidationMessageFor(model => model.Tema.Id_tema)
         </div>
 
-       <div class="editor-field">
+       <div class="editor-label">
+            @Html.LabelFor(model => model.Nivel)
             @Html.TextBoxFor(model => model.Nivel, new { @class = "txtMedium" })
             @Html.ValidationMessageFor(model => model.Nivel)
         </div>
