@@ -40,7 +40,7 @@
                 <td>
                     <div class="editor-label">
                         <%:  Html.Label("Sexo")%>
-                        <%:  Html.DropDownListFor(u => u.Sexo, new SelectList(ViewBag.ListaSexo, "Sigla", "Sexo"), new { @class = "dropdownlist", tabindex=6 })%>
+                        <%:  Html.DropDownListFor(u => u.Sexo, new SelectList(ViewBag.ListaSexo, "Sigla", "Sexo"), new { @class = "dropdownlist", tabindex=3 })%>
                         <%:  Html.ValidationMessageFor(model => model.Sexo)%>
                     </div>
                 </td>
@@ -51,7 +51,7 @@
                         <%:  Html.LabelFor(model => model.Email)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Email, new { tabindex=3 })%>
+                        <%: Html.TextBoxFor(model => model.Email, new { tabindex=4 })%>
                         <%: Html.ValidationMessageFor(model => model.Email)%>
                     </div>
 
@@ -62,7 +62,7 @@
                         <%:  Html.LabelFor(model => model.Senha)%>
                     </div>
                     <div class="editor-field">
-                        <%:  Html.PasswordFor(model => model.Senha, new { tabindex=4})%>
+                        <%:  Html.PasswordFor(model => model.Senha, new { tabindex=5})%>
                         <%:  Html.ValidationMessageFor(model => model.Senha)%>
                     </div>
                 </td>
@@ -74,7 +74,7 @@
                         <%: Html.LabelFor(model => model.Dt_nasc)%>
                     </div>
                     <div class="editor-field">
-                        <%:  Html.TextBoxFor(model => model.Dt_nasc, new { tabindex=5})%>
+                        <%:  Html.TextBoxFor(model => model.Dt_nasc, new { tabindex=6})%>
                         <%: Html.ValidationMessageFor(model => model.Dt_nasc)%>
                     </div>
                 </td>
@@ -83,7 +83,7 @@
                         <%: Html.LabelFor(model => model.Estado)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Estado, new { tabindex=8})%>
+                        <%: Html.TextBoxFor(model => model.Estado, new { tabindex=7})%>
                         <%: Html.ValidationMessageFor(model => model.Estado)%>
                     </div>
                 </td>
@@ -94,7 +94,7 @@
                         <%:  Html.LabelFor(model => model.Cidade)%>
                     </div>
                     <div class="editor-field">
-                        <%:  Html.TextBoxFor(model => model.Cidade, new { tabindex=7})%>
+                        <%:  Html.TextBoxFor(model => model.Cidade, new { tabindex=8})%>
                         <%: Html.ValidationMessageFor(model => model.Cidade)%>
                     </div>
 
