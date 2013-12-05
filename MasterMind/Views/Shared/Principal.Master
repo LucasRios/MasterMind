@@ -21,9 +21,32 @@
 
 <body class="pbody">
     <style>
+
+        table.menu {
+            border-collapse: separate;
+            border-spacing: 10px;
+            *border-collapse: expression('separate', cellSpacing = '10px');
+        }
+
         div.out {
             float: left;
-            text-align: left;            
+            text-align: left; 
+        }
+        a, a:hover{
+            text-decoration: none !important;
+        }
+        a{
+            color: white !important; 
+        }
+        a:hover{
+            color: #9760b3 !important;
+        }
+        td.menu_lateral{
+            background-color : #9760b3;
+            border-radius: 5px;  
+            margin: 12px 12px 12px 12px;
+            padding: 12px 12px 12px 12px;   
+            text-decoration-color: white;  
         }
 
         div.in {
@@ -51,10 +74,10 @@
         <div id="divEsquerda" style="width: 200px; height: 1000px; margin-left: 5px; float: left;">
          <%  Boolean nomeUsuario = String.IsNullOrEmpty(Context.User.Identity.Name) ? false : true; %>
             <% if (nomeUsuario) Html.RenderAction("partialPerfil", "Usuario"); %>
-            <div>
-                <table>
+            <div style="width: inherit">
+                <table class="menu">
                     <tr>
-                        <td>
+                        <td class="menu_lateral">
                             <div class="editor-label enterleave">
                                 <div class="out">
                                     <%: Html.ActionLink("Salas", "List", "Salas")%>
@@ -63,7 +86,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="menu_lateral">
                             <div class="editor-label enterleave">
                                 <div class="out">
                                     <%: Html.ActionLink("Criar Salas", "Create","Salas")%>
@@ -72,7 +95,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="menu_lateral">
                             <div class="editor-label enterleave">
                                 <div class="out">
                                     <%: Html.ActionLink("Ranking", "Ranking", "Game")%>
@@ -81,7 +104,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="menu_lateral">
                             <div class="editor-label enterleave">
                                 <div class="out">
                                     <%: Html.ActionLink("Escolher Personagem", "Personagem_partial", "Account")%>
@@ -90,7 +113,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="menu_lateral">
                             <div class="editor-label enterleave">
                                 <div class="out">
                                     <%: Html.ActionLink("Manutenção da Conta", "Manage", "Account")%>
@@ -99,7 +122,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="menu_lateral">
                             <div class="editor-label enterleave">
                                 <div class="out">
                                     <% using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
