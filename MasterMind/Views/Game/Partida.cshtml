@@ -25,6 +25,11 @@
 </div>
 
 <div id="divPergunta">
+    <div id="divtempo">
+        <h3>@ViewBag.TempoRestante</h3>
+        <br />
+    </div>
+
     <div id="divPersonagem">
         @if ((jogador.Usuario.Personagem != null) && (jogador.Usuario.Personagem.Imagem != null))
         {

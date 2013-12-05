@@ -89,12 +89,33 @@ namespace MasterMind.Controllers
             ///
             /// Atualiza hora da pergunta atual do jogador
             /// 
+            int TempoRestante = 0;
             Jogos Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
-            Jogador.PerguntaAtualFeitaEm = DateTime.Now;
-            if(Jogador.DataEntradaSala == null)
-                Jogador.DataEntradaSala = DateTime.Now;
-            jogoRep.Salvar(Jogador);
+            if (jogoRep.ObterPorIdSala(Id_Sala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().MinhaVez)
+            {
+                if (Jogador.PerguntaAtualFeitaEm == null)
+                    Jogador.PerguntaAtualFeitaEm = DateTime.Now;
+                if (Jogador.DataEntradaSala == null)
+                    Jogador.DataEntradaSala = DateTime.Now;
 
+                TempoRestante = 30 - DateTime.Now.Subtract(DateTime.Parse(Jogador.PerguntaAtualFeitaEm.ToString())).Seconds;
+                ViewBag.TempoRestante = "Tempo restante " + TempoRestante.ToString() + " segundos";
+
+                if (TempoRestante <= 0)
+                {
+                    TempoRestante = 30;
+                    Responder(-1, Id_Sala);
+                    return Partida(Id_Sala);
+                }
+
+            }
+            else
+            {
+                Jogador.PerguntaAtualFeitaEm = null;
+                ViewBag.TempoRestante = "O jogador tem 30 seg. para responder.";
+            }
+
+            jogoRep.Salvar(Jogador);
 
             ViewBag.Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault();
 
@@ -213,9 +234,14 @@ namespace MasterMind.Controllers
             sala.IdPerguntaAtual = 0;
             salaRep.Salvar(sala);
 
-            GenericoRep<Respostas> respostaRep = new GenericoRep<Respostas>();
-            Respostas resposta = respostaRep.ObterPorId(IdResposta);
-            Boolean opcaoCerta = resposta.OpcaoCerta;
+            Boolean opcaoCerta = false;
+            if (IdResposta != -1) // o parâmetro vem -1 quando o usuário deixa estourar o tempo para responder
+            {
+                GenericoRep<Respostas> respostaRep = new GenericoRep<Respostas>();
+                Respostas resposta = respostaRep.ObterPorId(IdResposta);
+                opcaoCerta = resposta.OpcaoCerta;
+            }
+            else opcaoCerta = false; 
 
             Boolean ganhou = atualiza_acerto_erro(opcaoCerta, IdSala);
             atualiza_ranking(opcaoCerta, ganhou);

@@ -17,7 +17,7 @@ $(function () {
 });
 
 function AtualizarPartida(inicial) {
-    setTimeout(AtualizarPartida, 10000, false);
+    setTimeout(AtualizarPartida, 5000, false);
     if(!inicial)
         window.location.reload();
 }
