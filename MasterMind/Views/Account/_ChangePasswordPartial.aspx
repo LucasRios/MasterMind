@@ -23,7 +23,7 @@
                     <% }
                        else
                        {%>
-                    <img src="../../Images/usu.png" />
+                    <img src="~/Images/usu.png" />
                     <% }%>
                 </td>
                 <td>

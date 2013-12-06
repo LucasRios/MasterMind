@@ -61,10 +61,10 @@ namespace MasterMind.Controllers.BackOffice
                 }
 
                 string arquivo = System.IO.Path.Combine(
-                                           Server.MapPath("~/img/personagens"), personagem.Id_person + "." + fileExt);
+                                           Server.MapPath("../../img/personagens"), personagem.Id_person + "." + fileExt);
 
                 imagem.SaveAs(arquivo);
-                personagem.Imagem = "../../img/personagens/" + personagem.Id_person + "." + fileExt;
+                personagem.Imagem = "../img/personagens/" + personagem.Id_person + "." + fileExt;
             }
 
 
@@ -140,10 +140,10 @@ namespace MasterMind.Controllers.BackOffice
                 }
 
                 string arquivo = System.IO.Path.Combine(
-                                           Server.MapPath("~/img/personagens"), personagem.Id_person + "." + fileExt);
+                                           Server.MapPath("../../img/personagens"), personagem.Id_person + "." + fileExt);
 
                 imagem.SaveAs(arquivo);
-                personagem.Imagem = "../../img/personagens/" + personagem.Id_person + "." + fileExt;
+                personagem.Imagem = "../img/personagens/" + personagem.Id_person + "." + fileExt;
             }
 
             repositorio.Salvar(personagem);

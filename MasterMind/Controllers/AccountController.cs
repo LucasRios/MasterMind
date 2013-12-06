@@ -403,10 +403,10 @@ namespace MasterMind.Controllers
                         }
 
                         string arquivo = System.IO.Path.Combine(
-                                                   Server.MapPath("~/img/usuarios"), model.Id_user + "." + fileExt);
+                                                   Server.MapPath("../img/usuarios"), model.Id_user + "." + fileExt);
 
                         imagem.SaveAs(arquivo);
-                        model.imagem = "../../img/usuarios/" + model.Id_user + "." + fileExt;
+                        model.imagem = "../img/usuarios/" + model.Id_user + "." + fileExt;
                     }
 
                     try

@@ -16,7 +16,7 @@
         <% }
            else
            {%>
-        <img src="../../Images/usu.png" height="100" width="100" />
+        <img src="~/Images/usu.png" height="100" width="100" />
         <%} %>
     </div>
 </body>

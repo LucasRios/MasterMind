@@ -11,10 +11,10 @@
     <html>
     <head>
         <link rel="shortcut icon" href="../favicon.ico">
-        <link href="../../Content/Site.css" rel="stylesheet" />
-        <link href="../../Styles/style1.css" rel="stylesheet" />
-        <link href="../../Styles/bootstrap-responsive.min.css" rel="stylesheet" />
-        <link href="../../Styles/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/Site.css" rel="stylesheet" />
+        <link href="~/Styles/style1.css" rel="stylesheet" />
+        <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
+        <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
     </head>
     <body id="body_perso" style="text-align: center; align-content: center;">
         <div style="align-content: center">
@@ -42,7 +42,7 @@
                                     <% }
                                        else
                                        {%>
-                                    <img src="../../Images/usu.png" height="100" width="100" />
+                                    <img src="~/Images/usu.png" height="100" width="100" />
                                     <%} %>
                                 </td>
                             </tr>

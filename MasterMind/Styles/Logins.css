@@ -109,13 +109,13 @@ tr.pager td {
 
 #login_3 {
     margin: 0px 0px 0px 0px;
-    background-image:url(../../Images/Login_2.jpg);
+    background-image:url(~/Images/Login_2.jpg);
     background-size: auto;
 }
 
 #login_1 {
     margin: 0px 0px 0px 0px;
-    background-image:url(../../Images/Login_2.jpg);
+    background-image:url(~/Images/Login_2.jpg);
     background-size: auto;
 }
 
@@ -134,7 +134,7 @@ footer {
 #login_2
 {
     margin: 0px 0px 0px 0px;
-    background-image:url(../../Images/Login_2.jpg);
+    background-image:url(~/Images/Login_2.jpg);
     background-size: auto;
 }
 
