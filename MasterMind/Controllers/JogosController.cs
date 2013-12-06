@@ -22,6 +22,34 @@ namespace MasterMind.Controllers
         }
 
         [HttpGet]
+        public ActionResult Passagem_Nivel()
+        {
+            GenericoRep<Ranking> rankingRep = new GenericoRep<Ranking>();
+            Ranking ranking = rankingRep.ObterTodos().Where(x => x.Id_User.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+
+            GenericoRep<Usuario> UsuRep = new GenericoRep<Usuario>();
+            Usuario usuario = UsuRep.ObterTodos().Where(x => x.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+
+            if (usuario.Personagem.Nivel < (int)(ranking.qtde_partidas_ganhas / 2))
+            {
+                GenericoRep<Personagens> PerRep = new GenericoRep<Personagens>();
+                IEnumerable<Personagens> lPersonagem = PerRep.ObterTodos().Where(x => x.Tema.Id_tema == usuario.Personagem.Tema.Id_tema);
+                Personagens Personagem = lPersonagem.Where(x => x.Nivel == (int)(ranking.qtde_partidas_ganhas / 2)).ElementAt(0);
+                usuario.Personagem = Personagem;
+
+                UsuRep.Salvar(usuario);
+                usuario = UsuRep.ObterTodos().Where(x => x.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+                return View(usuario);
+            }
+            else
+            {
+                return RedirectToAction("List", "Salas");
+            }
+
+        }
+
+
+        [HttpGet]
         public ActionResult Delete(Int32 Id)
         {
             GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();

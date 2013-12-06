@@ -319,6 +319,7 @@
     <Content Include="Views\Game\Partida.aspx" />
     <Content Include="Views\Game\Principal.aspx" />
     <Content Include="Views\Jogos\Acesso.aspx" />
+    <Content Include="Views\Jogos\Passagem_Nivel.aspx" />
     <Content Include="Views\Salas\List.aspx" />
     <Content Include="Views\Salas\Create.aspx" />
     <Content Include="Web.config">

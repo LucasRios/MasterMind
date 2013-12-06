@@ -31,6 +31,25 @@ namespace MasterMind.Controllers
             return View(@"~/Views/Game/Partida.aspx");
         }
 
+        public void Partida_finalizada(int id_jogo)
+        {
+            JogosRep genJogo = new JogosRep();
+            Jogos jogo = genJogo.ObterPorId(id_jogo);
+            if (jogo.finalizado == null) jogo.finalizado = 0;
+
+            if (genJogo.ObterPorIdSala(jogo.Sala.Id_Sala).Where(x => x.Acertos == 21).Count() > 0)
+            {
+                if ((jogo.finalizado == 0) && (genJogo.ObterPorIdSala(jogo.Sala.Id_Sala).Where(x => x.Acertos == 21).FirstOrDefault().Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)))
+                {
+                    atualiza_ranking(true, true);
+                }
+                
+                jogo.finalizado = 1 + jogo.finalizado;
+                genJogo.Salvar(jogo);
+            }
+            
+        }
+
         [HttpGet]
         public ActionResult Partida(Int32 Id_Sala)
         {
@@ -60,7 +79,7 @@ namespace MasterMind.Controllers
             /// Define os temas dos jogo
             /// 
             if ( string.IsNullOrEmpty(partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().TrilhaTemas))
-                Trilha_temas(partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().Id_jogo, 21);
+                partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().TrilhaTemas = Trilha_temas(partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().Id_jogo, 21);
             ///
             /// SALA 
             ///
@@ -69,11 +88,19 @@ namespace MasterMind.Controllers
 
             ///
             /// Tema Atual da sala
-            /// 
-            Int32 tema_atual = recupera_tema(partida.Where(x => x.MinhaVez).First().Id_jogo, partida.Where(x => x.MinhaVez).First().TrilhaTemas);
-            GenericoRep<Temas> gentemas = new GenericoRep<Temas>();
-            ViewBag.TemaAtual = gentemas.ObterPorId(tema_atual).Desc_tema;
-            
+            ///
+            Int32 tema_atual = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().Tema.Id_tema;
+            if (!string.IsNullOrEmpty(partida.Where(x => x.MinhaVez).First().TrilhaTemas.ToString()))
+            {
+                tema_atual = recupera_tema(partida.Where(x => x.MinhaVez).First().Id_jogo, partida.Where(x => x.MinhaVez).First().TrilhaTemas);
+                GenericoRep<Temas> gentemas = new GenericoRep<Temas>();
+                ViewBag.TemaAtual = gentemas.ObterPorId(tema_atual).Desc_tema;
+
+            }
+            else
+            {
+                ViewBag.TemaAtual = "";  
+            }
             ///
             /// Pergunta Inicial
             /// 
@@ -101,32 +128,16 @@ namespace MasterMind.Controllers
             /// Atualiza hora da pergunta atual do jogador
             /// 
             int TempoRestante = 0;
-            Jogos Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
-            if (jogoRep.ObterPorIdSala(Id_Sala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().MinhaVez)
+            TempoRestante = 30 - DateTime.Now.Subtract(DateTime.Parse(sala.DataPergunta.ToString())).Seconds;
+            ViewBag.TempoRestante = "Tempo restante " + TempoRestante.ToString() + " segundos";
+
+            if (TempoRestante <= 0)
             {
-                if (Jogador.PerguntaAtualFeitaEm == null)
-                    Jogador.PerguntaAtualFeitaEm = DateTime.Now;
-                if (Jogador.DataEntradaSala == null)
-                    Jogador.DataEntradaSala = DateTime.Now;
-
-                TempoRestante = 30 - DateTime.Now.Subtract(DateTime.Parse(Jogador.PerguntaAtualFeitaEm.ToString())).Seconds;
-                ViewBag.TempoRestante = "Tempo restante " + TempoRestante.ToString() + " segundos";
-
-                if (TempoRestante <= 0)
-                {
-                    TempoRestante = 30;
-                    Responder(-1, Id_Sala);
-                    return Partida(Id_Sala);
-                }
-
+                TempoRestante = 30;
+                Responder(-1, Id_Sala);
+                return Partida(Id_Sala);
             }
-            else
-            {
-                Jogador.PerguntaAtualFeitaEm = null;
-                ViewBag.TempoRestante = "O jogador tem 30 seg. para responder.";
-            }
-
-            jogoRep.Salvar(Jogador);
+           
 
             ViewBag.Jogador = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault();
 
@@ -255,7 +266,10 @@ namespace MasterMind.Controllers
             else opcaoCerta = false; 
 
             Boolean ganhou = atualiza_acerto_erro(opcaoCerta, IdSala);
-            atualiza_ranking(opcaoCerta, ganhou);
+            atualiza_ranking(opcaoCerta, false);
+
+            JogosRep genjogo = new JogosRep();
+            Partida_finalizada(genjogo.ObterPorIdSala(IdSala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().Id_jogo); 
 
             if (opcaoCerta) avanca_tema(IdSala);
 
@@ -272,7 +286,9 @@ namespace MasterMind.Controllers
             Jogos jogador = genJogos.ObterPorId(id_Jogo);
 
             List<String> arrayTemas = trilha_temas.Split(';').ToList<String>();
-            Int32 prox_tema = Convert.ToInt32(arrayTemas.FirstOrDefault());
+            Int32 prox_tema = 0;
+            if (arrayTemas.Count() != 0)
+                prox_tema =Convert.ToInt32(arrayTemas.FirstOrDefault());
 
             return prox_tema;
         }
@@ -300,18 +316,19 @@ namespace MasterMind.Controllers
         }
 
 
-        private void Trilha_temas(Int32 Id_Jogo, int temas_restantes)
+        private string Trilha_temas(Int32 Id_Jogo, int temas_restantes)
         { 
             GenericoRep<Jogos> genJogos = new GenericoRep<Jogos>();
             Jogos jogador = genJogos.ObterPorId(Id_Jogo);
 
             if ((temas_restantes >= 18) || (temas_restantes == 1)) //quatro primeiras casas, mesmo tema / última casa, mesmo tema
             {
-                if (jogador.TrilhaTemas == null) jogador.TrilhaTemas = jogador.Tema.Id_tema.ToString();
+                if (string.IsNullOrEmpty(jogador.TrilhaTemas)) jogador.TrilhaTemas = jogador.Tema.Id_tema.ToString();
                 else jogador.TrilhaTemas = jogador.TrilhaTemas.ToString().Trim() + ";" + jogador.Tema.Id_tema;
                 genJogos.Salvar(jogador);
                 Trilha_temas(jogador.Id_jogo, temas_restantes - 1);
-                return;
+                jogador = genJogos.ObterPorId(Id_Jogo);
+                return jogador.TrilhaTemas;
             }
             else if (temas_restantes != 0)// casas ao redor do tabuleiro
             { 
@@ -328,9 +345,11 @@ namespace MasterMind.Controllers
                 jogador.TrilhaTemas = jogador.TrilhaTemas.ToString().Trim() + ";" + id_prox_tema;
                 genJogos.Salvar(jogador);
                 Trilha_temas(jogador.Id_jogo, temas_restantes - 1);
-                return;          
+                jogador = genJogos.ObterPorId(Id_Jogo);
+                return jogador.TrilhaTemas;          
             }
-            return; // temas restante == 0 ... começa a voltar a recursividade
+            jogador = genJogos.ObterPorId(Id_Jogo);
+            return jogador.TrilhaTemas; // temas restante == 0 ... começa a voltar a recursividade
         }
 
         private void atualiza_ranking(Boolean opcaoCerta, Boolean partidaGanha = false)
@@ -350,12 +369,18 @@ namespace MasterMind.Controllers
                 ranking.Id_User = usu;
             }
 
-            if (opcaoCerta) ranking.qtde_certas = (ranking.qtde_certas + 1);
-            else ranking.qtde_erradas = (ranking.qtde_erradas + 1);
+            if (partidaGanha)
+            { ranking.qtde_partidas_ganhas = ranking.qtde_partidas_ganhas + 1; }
+            else
+            {
 
-            ranking.qtde_respostas = ranking.qtde_respostas + 1;
+                if (opcaoCerta) ranking.qtde_certas = (ranking.qtde_certas + 1);
+                else ranking.qtde_erradas = (ranking.qtde_erradas + 1);
 
-            if (partidaGanha) ranking.qtde_partidas_ganhas = ranking.qtde_partidas_ganhas + 1;
+                ranking.qtde_respostas = ranking.qtde_respostas + 1;
+            }
+
+             
 
             rankingRep.Salvar(ranking);
 
@@ -390,25 +415,6 @@ namespace MasterMind.Controllers
             Int32 respostaFinal = 21;
             return jogador.Acertos == respostaFinal;
         }
-        private void atualiza_nivel_personagem()
-        {
-            GenericoRep<Ranking> rankingRep = new GenericoRep<Ranking>();
-            Ranking ranking = rankingRep.ObterTodos().Where(x => x.Id_User.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
 
-            GenericoRep<Usuario> UsuRep = new GenericoRep<Usuario>();
-            Usuario usuario = UsuRep.ObterTodos().Where(x => x.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
-
-            if (usuario.Personagem.Nivel < (int)(ranking.qtde_partidas_ganhas / 2))
-            {
-                GenericoRep<Personagens> PerRep = new GenericoRep<Personagens>();
-                IEnumerable<Personagens> lPersonagem = PerRep.ObterTodos().Where(x => x.Tema.Id_tema == usuario.Personagem.Tema.Id_tema);
-                Personagens Personagem = lPersonagem.Where(x => x.Nivel == (int)(ranking.qtde_partidas_ganhas / 2)).ElementAt(0);
-                usuario.Personagem = Personagem;
-
-                UsuRep.Salvar(usuario);
-            }
-
-              
-        }
     }
 }

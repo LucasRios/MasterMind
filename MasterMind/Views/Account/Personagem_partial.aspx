@@ -59,7 +59,7 @@
                 </tr>
                 <tr style="text-align: center">
                     <td style="text-align: center">
-                        <%:  @Html.DropDownListFor(u => u.Personagem.Id_person, new SelectList(ViewBag.ListaPerson, "Id_person", "Desc_person"), new { @class = "dropdownlist", onchange= "window.location.href = '/Account/Personagem_partial?Id_Person=' + this.options[this.selectedIndex].value;" })%>
+                        <%:  @Html.DropDownListFor(u => u.Personagem.Id_person, new SelectList(ViewBag.ListaPerson, "Id_person", "Desc_person"), new { @class = "dropdownlist", onchange= "window.location.href = '/MasterMind/Account/Personagem_partial?Id_Person=' + this.options[this.selectedIndex].value;" })%>                        
 
                         <%: Html.HiddenFor(u => u.Personagem.Desc_person)%>
                         <%:  @Html.ValidationMessageFor(u => u.Personagem.Id_person)%>

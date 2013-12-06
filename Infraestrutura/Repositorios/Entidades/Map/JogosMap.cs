@@ -29,6 +29,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Map(x => x.Erros);
             Map(x => x.MinhaVez);
             Map(x => x.TrilhaTemas);
+            Map(x => x.finalizado);
         }
     }
 }

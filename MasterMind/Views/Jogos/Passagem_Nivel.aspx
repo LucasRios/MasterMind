@@ -18,7 +18,7 @@
     </head>
     <body id="body_perso" style="text-align: center; align-content: center;">
         <div style="align-content: center">
-            <h1>Escolha seu personagem favorito</h1>
+            <h1>Parabéns! Com esta vitória seu personagem evoluiu!!</h1>
         </div>
         <div style="align-content: center; text-align: center">
             <table style="text-align: center; align-content: center; min-width: 100%">
@@ -34,11 +34,11 @@
                             <tr style="text-align: center; align-content: center;">
                                 <td style="vertical-align: top; text-align: center; align-content: center;padding-left:20px">
                                     <h6>Novo Personagem</h6>
-                                    <% if (!string.IsNullOrEmpty(ViewBag.SelectedPerson))%>
+                                    <% if (!string.IsNullOrEmpty(Html.ValueFor(model => model.Personagem.Imagem).ToString()))%>
                                     <% {%>
-                                    <img src="<%: ViewBag.SelectedPerson %>" height="100" width="100" />
+                                    <img src="<%: @Html.ValueFor(model => model.Personagem.Imagem) %>" height="100" width="100" />
                                     <br />
-                                    <h6><%: ViewBag.NameSelectedPerson %> </h6>
+                                    <h6><%: @Html.ValueFor(model => model.Personagem.Desc_person) %> </h6>
                                     <% }
                                        else
                                        {%>
@@ -47,19 +47,13 @@
                                 </td>
                             </tr>
                         </table>
-                    </td>
-                </tr>
-                <tr style="text-align: center; align-content: center;">
-                    <td style="text-align: center; align-content: center;">
-                        <%:  @Html.DropDownListFor(u => u.Personagem.Id_person, new SelectList(ViewBag.ListaPerson, "Id_person", "Desc_person"), new { @class = "dropdownlist", onchange= "document.location.href = '/MasterMind/Account/Personagem?Id_Person=' + this.options[this.selectedIndex].value;" })%>
-                        <%: Html.HiddenFor(u => u.Personagem.Desc_person)%>
-                        <%:  @Html.ValidationMessageFor(u => u.Personagem.Id_person)%>
+                        <h3>Nível: <%: @Html.ValueFor(model => model.Personagem.Nivel) %></h3>
                     </td>
                 </tr>
                 <tr style="text-align: center; align-content: center;">
                     <td colspan="2" style="text-align: center">
                         <div>
-                            <input type="submit" class="btn btn-info" value="Salvar" />
+                            <input type="button" class="btn btn-info" value="Continuar" onclick="window.location.href='<%: @Url.Action("List", "Salas")%>'" />
                         </div>
                     </td>
                 </tr>

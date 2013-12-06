@@ -40,7 +40,7 @@
     <section class="social" id="socialLoginForm">
     <h2>Master Mind - O jogo do Conhecimento</h2>
         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <img src="~/Images/logo.png" />
+        <img src="../Images/logo.png" />
     </section>
 </asp:Content>
 
