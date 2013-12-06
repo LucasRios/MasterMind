@@ -31,5 +31,6 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual Int32 Acertos { get; set; }
         public virtual Int32 Erros { get; set; }
         public virtual Boolean MinhaVez { get; set; }
+        public virtual String TrilhaTemas { get; set; }
     }
 }

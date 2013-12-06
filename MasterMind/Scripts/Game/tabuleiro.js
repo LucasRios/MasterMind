@@ -70,6 +70,7 @@ function GameOver() {
     $("#divAlternativas").css('display', 'none');
     $("#divCartas").css('display', 'none');
     $("#divSeta").css('display', 'none');
+    $("#divtempo").css('display', 'none');
 
     $("#divGame-Over").css('display', 'block');
 }

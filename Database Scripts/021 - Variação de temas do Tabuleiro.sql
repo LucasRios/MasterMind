@@ -1,0 +1,1 @@
+Alter Table jogos add [TrilhaTemas] [varchar](50) NULL;

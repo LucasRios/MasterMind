@@ -39,7 +39,7 @@ namespace MasterMind.Controllers
             ///
             JogosRep jogoRep = new JogosRep();
             IList<Jogos> partida = jogoRep.ObterPorIdSala(Id_Sala);
-            ViewBag.Partida = partida;
+            ViewBag.Partida = partida;            
 
             /// Se não está definido a vez, será definido para o primeiro jogador que entrou na sala.
             Boolean vez = false;
@@ -57,20 +57,31 @@ namespace MasterMind.Controllers
             ViewBag.JogadaDaVez = partida.Where(x => x.MinhaVez == true).FirstOrDefault();
 
             ///
+            /// Define os temas dos jogo
+            /// 
+            if ( string.IsNullOrEmpty(partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().TrilhaTemas))
+                Trilha_temas(partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().Id_jogo, 21);
+            ///
             /// SALA 
             ///
             GenericoRep<Salas> salasRep = new GenericoRep<Salas>();
             Salas sala = salasRep.ObterPorId(Id_Sala);
 
             ///
+            /// Tema Atual da sala
+            /// 
+            Int32 tema_atual = recupera_tema(partida.Where(x => x.MinhaVez).First().Id_jogo, partida.Where(x => x.MinhaVez).First().TrilhaTemas);
+            GenericoRep<Temas> gentemas = new GenericoRep<Temas>();
+            ViewBag.TemaAtual = gentemas.ObterPorId(tema_atual).Desc_tema;
+            
+            ///
             /// Pergunta Inicial
             /// 
             PerguntasRep perguntasRep = new PerguntasRep();
             Perguntas perguntaInicial = new Perguntas();
             if (sala.IdPerguntaAtual == 0)
-            {
-                Int32 temaInicial = partida.Where(x => x.MinhaVez).First().Tema.Id_tema;
-                IList<Perguntas> perguntas = perguntasRep.ObterPerguntas(temaInicial);
+            {                
+                IList<Perguntas> perguntas = perguntasRep.ObterPerguntas(tema_atual);
                 Random indicePergunta = new Random();
                 perguntaInicial = perguntas[indicePergunta.Next(0, perguntas.Count - 1)];
 
@@ -246,11 +257,80 @@ namespace MasterMind.Controllers
             Boolean ganhou = atualiza_acerto_erro(opcaoCerta, IdSala);
             atualiza_ranking(opcaoCerta, ganhou);
 
+            if (opcaoCerta) avanca_tema(IdSala);
+
             var vm = new { opcaoCerta = opcaoCerta, ganhou = ganhou };
             json.Data = vm;
             json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
             return json;
+        }
+
+        private Int32 recupera_tema(int id_Jogo, string trilha_temas)
+        {
+            GenericoRep<Jogos> genJogos = new GenericoRep<Jogos>();
+            Jogos jogador = genJogos.ObterPorId(id_Jogo);
+
+            List<String> arrayTemas = trilha_temas.Split(';').ToList<String>();
+            Int32 prox_tema = Convert.ToInt32(arrayTemas.FirstOrDefault());
+
+            return prox_tema;
+        }
+
+        private void avanca_tema(int id_Sala)
+        {
+            JogosRep genJogos = new JogosRep();
+            Jogos jogador = genJogos.ObterPorIdSala(id_Sala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault();
+
+            List<String> arrayTemas = jogador.TrilhaTemas.Split(';').ToList<String>();
+            Int32 prox_tema = Convert.ToInt32(arrayTemas.FirstOrDefault());
+
+            arrayTemas.RemoveAt(0);
+            
+            string trilha_temas = "";
+            foreach (var x in arrayTemas)
+            {
+                trilha_temas = trilha_temas+ x.ToString()+";";
+            }
+            if (trilha_temas.Count() > 0) trilha_temas = trilha_temas.Remove(trilha_temas.Count() - 1);
+
+            jogador.TrilhaTemas = trilha_temas;
+            genJogos.Salvar(jogador);
+            
+        }
+
+
+        private void Trilha_temas(Int32 Id_Jogo, int temas_restantes)
+        { 
+            GenericoRep<Jogos> genJogos = new GenericoRep<Jogos>();
+            Jogos jogador = genJogos.ObterPorId(Id_Jogo);
+
+            if ((temas_restantes >= 18) || (temas_restantes == 1)) //quatro primeiras casas, mesmo tema / última casa, mesmo tema
+            {
+                if (jogador.TrilhaTemas == null) jogador.TrilhaTemas = jogador.Tema.Id_tema.ToString();
+                else jogador.TrilhaTemas = jogador.TrilhaTemas.ToString().Trim() + ";" + jogador.Tema.Id_tema;
+                genJogos.Salvar(jogador);
+                Trilha_temas(jogador.Id_jogo, temas_restantes - 1);
+                return;
+            }
+            else if (temas_restantes != 0)// casas ao redor do tabuleiro
+            { 
+                Random indiceTema = new Random();
+                GenericoRep<Temas> genTemas = new GenericoRep<Temas>();
+                IEnumerable<Temas> lTemas = genTemas.ObterTodos();
+
+                int id_prox_tema = jogador.Tema.Id_tema;
+                while ((id_prox_tema == jogador.Tema.Id_tema) || (lTemas.Where(x => x.Id_tema == id_prox_tema).Count() == 0))
+                {
+                   id_prox_tema = indiceTema.Next(1,lTemas.Count() - 1); 
+                }
+
+                jogador.TrilhaTemas = jogador.TrilhaTemas.ToString().Trim() + ";" + id_prox_tema;
+                genJogos.Salvar(jogador);
+                Trilha_temas(jogador.Id_jogo, temas_restantes - 1);
+                return;          
+            }
+            return; // temas restante == 0 ... começa a voltar a recursividade
         }
 
         private void atualiza_ranking(Boolean opcaoCerta, Boolean partidaGanha = false)
