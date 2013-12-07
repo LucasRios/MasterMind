@@ -7,13 +7,24 @@
 <html lang="pt-br">
 <head id="Head1" runat="server">
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,heigth=device-heigth" />
+    
 
     <link rel="shortcut icon" href="../favicon.ico">
-    <link href="~/Content/Site.css" rel="stylesheet" />
-    <link href="~/Styles/style1.css" rel="stylesheet" />
-    <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	
+     <script src="../../Scripts/js/modernizr.custom.63321.js"></script>
+    <script src="../../Scripts/BO/jquery.validate.min-1.11.1.js"></script>
+    <script src="../../Scripts/BO/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../../Scripts/BO/additional-methods.min-1.11.1.js"></script>
+    <script src="../../Scripts/BO/bootstrap.min.js"></script>
+   
+    
+    <link href="../../Styles/style1.css" rel="stylesheet" />
+    <%--<link href="../../Styles/backoffice.css" reFl="stylesheet" />--%>
+    <link href="../../Styles/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="../../Styles/bootstrap.min.css" rel="stylesheet" />
+    
 
     <%: Styles.Render("~/Content/css") %>
     <%: Scripts.Render("~/bundles/modernizr") %>
@@ -21,7 +32,6 @@
 
 <body class="pbody">
     <style>
-
         table.menu {
             border-collapse: separate;
             border-spacing: 10px;
@@ -44,8 +54,8 @@
         td.menu_lateral{
             background-color : #9760b3;
             border-radius: 5px;  
-            margin: 12px 12px 12px 12px;
-            padding: 12px 12px 12px 12px;   
+            margin: 5px;
+            padding: 4px;   
             text-decoration-color: white;  
         }
 
@@ -53,6 +63,8 @@
             float:right;
             text-align: right;            
         }
+   
+        
     </style>
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -70,8 +82,8 @@
             </div>
         </div>
     </header>
-    <div style="width: 100%; border: 1px solid black; float: left;">
-        <div id="divEsquerda" style="width: 200px; height: 1000px; margin-left: 5px; float: left;">
+    <div style="width: 100%; float: left; padding-top:30px;">
+              <div id="divEsquerda" class="leftContainer" style=" margin-left: 5px; float: left;">
          <%  Boolean nomeUsuario = String.IsNullOrEmpty(Context.User.Identity.Name) ? false : true; %>
             <% if (nomeUsuario) Html.RenderAction("partialPerfil", "Usuario"); %>
             <div style="width: inherit">
@@ -137,11 +149,11 @@
                 </table>
             </div>
         </div>
-        <div id="divCentral" style="width: 850px; height: 1000px; float: left; margin-right: 5px; margin-left: 5px; border-bottom: 1px solid black; border-top: 1px solid black; border-left: 1px solid black; padding-left: 10px; padding-top: 10px;">
+        <div id="divCentral" class="middleContainer" >
             <asp:ContentPlaceHolder ID="PrincipalMiddle" runat="server">
             </asp:ContentPlaceHolder>
         </div>
-        <div id="divDireita" style="width: 140px; height: 1000px; float: right; margin-right: 10px; border-bottom: 1px solid black; border-top: 1px solid black;   padding-left: 10px;">
+        <div id="divDireita" class="rightContainer">
             <% Html.RenderAction("Ranking_top", "Game"); %>
         </div>
     </div>

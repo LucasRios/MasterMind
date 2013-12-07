@@ -24,14 +24,12 @@
 </style>
 
 <fieldset>
-    <table class="space">
-        <tr class="main">
-            <td colspan="2">Ranking</td>
-        </tr>
-        <tr>
-            <td>Pos.</td>
-            <td>Usuário</td>
-        </tr>
+  
+    <div id="divRank">
+       <div style="text-align:center">
+          <h2>TOP 3</h2>
+       </div>
+        
 
         <% 
        int i = 0;
@@ -45,30 +43,23 @@
            if (i <= limite)
            {
         %>
-        <tr>
-            <td>
-                <%:  @Html.DisplayFor(modelItem => i)%>
-            </td>
-            <td>
+     <div>
+                <img src="../../Images/orderedList<%:  @Html.DisplayFor(modelItem => i)%>.png" style="margin-right:5px; " />
+           
                 <%:  @Html.DisplayFor(modelItem => item.Id_User.Nome)%>
-            </td>
-        </tr>
+          </div>
         <% }
                 else
                 { %>
-        <tr>
-            <td colspan="2">
-                Sua posição
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <%:  @Html.DisplayFor(modelItem => item.Id_Ranking)%>
-            </td>
-        </tr>
+       <div>Sua Posição</div>
+       <div>
+           <%:  @Html.DisplayFor(modelItem => item.Id_Ranking)%>
+       </div>
         <%}
             } %>
-    </table>
+    
+
+    </div>
 </fieldset>
 
 <% } %>

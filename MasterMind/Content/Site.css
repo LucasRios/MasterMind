@@ -29,10 +29,118 @@ body {
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
-    background: url("../Images/fundo.jpg");
+    /*background: url("../Images/fundo.jpg");*/
+    background: #7ac0da  url(../images/fundos/whitey.png);
     max-width: 100%;
     height:100%;
+
+
 }
+
+.leftContainer {
+    width: 200px;
+    background: #c1b0b0;
+    /*#1c7c92;*/
+    min-height: 550px;
+    margin: 0px 0px 0px -370px;
+    -webkit-box-shadow: 0px 0px 5px 2px #9760b3;
+    -webkit-border-radius: 5px;
+    /*-webkit-text-fill-color: #6d76b3;*/
+   
+    padding:10px;
+    position: absolute;
+}
+    .leftContainer p {
+      -webkit-text-fill-color: white;
+    }
+.middleContainer {
+    width: 750px;
+    background: #c8c8c8;
+    /*#1c7c92;*/
+    min-height: 550px;
+    margin: 0px 0px 0px -360px;
+    -webkit-box-shadow: 0px 0px 5px 2px #9760b3;
+    -webkit-border-radius: 5px;
+    /*-webkit-text-fill-color: #6d76b3;*/
+    left: 50%;
+    padding:10px;
+    position: absolute;
+}
+
+.rightContainer {
+    width: 180px;
+background: #c1b0b0;
+    /*#1c7c92;*/
+    min-height: 550px;
+    
+    -webkit-box-shadow: 0px 0px 6px 2px #9760b3;
+    -webkit-border-radius: 5px;
+    /*-webkit-text-fill-color: #6d76b3;*/
+    float:right;
+    padding:10px;
+    margin-right:5px;
+}
+#divLista tr {
+     width: 770px;
+    margin-left: 10px;
+    
+    border-bottom: 2px solid #333;
+   -webkit-border-radius: 5px;
+
+}
+#divLista tr:hover {
+     width: 770px;
+    margin-left: 10px;
+    background: #8cc6e0;
+    border-bottom: 2px solid #333;
+   -webkit-border-radius: 5px;
+
+}
+
+#divRank {
+    width:95%;
+    
+    margin-left:3%;
+    padding:2%;
+  
+border-radius: 5px;
+box-shadow: 0px 0px 2px 3px #9760b3;
+
+background-color:#c8c8c8;
+
+background-clip: padding-box;
+}
+#divRank div {
+   margin-bottom:3px;
+}
+
+#tbCreate td {
+     width: 770px;
+    margin-left: 10px;
+   text-align:left;
+   -webkit-border-radius: 5px;
+
+}
+.txtMedium
+{
+    width: 200px;
+    height:50px;
+}
+.bordasTR {
+    -webkit-border-radius: 5px;
+    width: 770px;
+    margin-left: 10px;
+}
+
+.headTR {
+    
+    width: 770px;
+    margin-left: 10px;
+    background: #1c7c92;
+    border: 2px solid #333;
+   -webkit-border-radius: 5px;
+}
+
 
 a {
     color: #333;
