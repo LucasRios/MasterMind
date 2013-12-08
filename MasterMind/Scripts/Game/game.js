@@ -15,7 +15,7 @@ function Responder() {
     .success(function (response) {
         if (response.opcaoCerta) {
             $("#divCerto").css('display', 'inline');
-            $("#divErrado").css('display', 'none');            
+            $("#divErrado").css('display', 'none');
             AtualizarTabuleiro_resp_certa();
             $("#divCartas").css('display', 'none');
             $("#divSeta").css('display', 'none');

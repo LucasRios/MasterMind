@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using WebMatrix.WebData;
 using System.Linq;
 using System.Web;
+using System.Threading;
 
 namespace MasterMind.Controllers
 {
@@ -290,6 +291,7 @@ namespace MasterMind.Controllers
             else opcaoCerta = false; 
 
             Boolean ganhou = atualiza_acerto_erro(opcaoCerta, IdSala);
+
             atualiza_ranking(opcaoCerta, false);
 
             JogosRep genjogo = new JogosRep();
@@ -411,45 +413,77 @@ namespace MasterMind.Controllers
         }           
         private Boolean atualiza_acerto_erro(Boolean opcaoCerta, Int32 IdSala)
         {
-            JogosRep JogoRep = new JogosRep();
-            Jogos jogador = JogoRep.ObterPorIdSala(IdSala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
+            JogosRep jogosRep = new JogosRep();
+            Jogos meuJogo = jogosRep.ObterPorIdSala(IdSala).Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).ElementAt(0);
 
+            Int32 respostaFinal = 21;
+            Boolean ganhou = false;
+
+            IList<Jogos> pecasEmCima = new List<Jogos>();
+            TrilhasTabuleiroRep trilhaRep = new TrilhasTabuleiroRep();
+            Int32 layoutTabuleiro = 1;
+ 
             if (opcaoCerta)
             {
-                jogador.Acertos = jogador.Acertos + 1;
-                jogador.DataUltimoAcerto = DateTime.Now;
+                meuJogo.Acertos = meuJogo.Acertos + 1;
+                DateTime? dataUltimoAcertoAnterior = meuJogo.DataUltimoAcerto;
+                meuJogo.DataUltimoAcerto = DateTime.Now;
+                Thread.Sleep(1000);
+ 
+                ganhou = meuJogo.Acertos == respostaFinal;
+                if (opcaoCerta && !ganhou)
+                {
+                    pecasEmCima = jogosRep.ObterPorIdSala(IdSala)
+                        .Where(x =>
+                                x.Usuario.Id_user != meuJogo.Usuario.Id_user
+                            && x.PosLinhaAtual == meuJogo.PosLinhaAtual
+                            && x.PosColunaAtual == meuJogo.PosColunaAtual
+                            && x.DataUltimoAcerto > dataUltimoAcertoAnterior
+                            && x.Acertos < 20
+                        ).OrderBy(x => x.DataUltimoAcerto)
+                        .ToList();
 
-                
-                Int32 layoutTabuleiro = 1;
-                Int32 idTrilha = (int)jogador.SequenciaEntradaUsuarioSala;
+                    foreach (Jogos jogoPecaDeCima in pecasEmCima)
+                    {
+                        jogoPecaDeCima.Acertos++;
+                        jogoPecaDeCima.DataUltimoAcerto = DateTime.Now;
 
-                TrilhasTabuleiroRep trilhaRep = new TrilhasTabuleiroRep();
-                TrilhasTabuleiro trilha = trilhaRep.ObterTrilhas(layoutTabuleiro, idTrilha, jogador.Acertos+1).FirstOrDefault();
-                
-                jogador.PosLinhaAtual = trilha.Linha;
-                jogador.PosColunaAtual = trilha.Coluna;
+                        /// Alterar a posicao das peças que estão acima da atual.
+                        TrilhasTabuleiro trilhaPecaDeCima = trilhaRep.ObterTrilhas(layoutTabuleiro, (int)jogoPecaDeCima.SequenciaEntradaUsuarioSala, jogoPecaDeCima.Acertos + 1).FirstOrDefault();
+                        jogoPecaDeCima.PosLinhaAtual = trilhaPecaDeCima.Linha;
+                        jogoPecaDeCima.PosColunaAtual = trilhaPecaDeCima.Coluna;
 
+                        Thread.Sleep(1000);
+                        jogosRep.Salvar(jogoPecaDeCima);
+                    }
+                }
+
+                Int32 idTrilha = (int)meuJogo.SequenciaEntradaUsuarioSala;
+
+                TrilhasTabuleiro trilha = trilhaRep.ObterTrilhas(layoutTabuleiro, idTrilha, meuJogo.Acertos+1).FirstOrDefault();
+
+                meuJogo.PosLinhaAtual = trilha.Linha;
+                meuJogo.PosColunaAtual = trilha.Coluna;
             }
             else
             {
-                jogador.Erros = jogador.Erros + 1;
-                jogador.MinhaVez = false;
+                meuJogo.Erros = meuJogo.Erros + 1;
+                meuJogo.MinhaVez = false;
 
-                Jogos proximo = JogoRep.ObterPorIdSala(IdSala).Where(x => x.SequenciaEntradaUsuarioSala == jogador.SequenciaEntradaUsuarioSala + 1).FirstOrDefault();
+                Jogos proximo = jogosRep.ObterPorIdSala(IdSala).Where(x => x.SequenciaEntradaUsuarioSala == meuJogo.SequenciaEntradaUsuarioSala + 1).FirstOrDefault();
                 if (proximo == null)
                 {
                     /// Proxima rodada.
-                    proximo = JogoRep.ObterPorIdSala(IdSala).Where(x => x.SequenciaEntradaUsuarioSala == 1).FirstOrDefault();
+                    proximo = jogosRep.ObterPorIdSala(IdSala).Where(x => x.SequenciaEntradaUsuarioSala == 1).FirstOrDefault();
                 }
                 proximo.MinhaVez = true;
-                JogoRep.Salvar(proximo);
+                jogosRep.Salvar(proximo);
             }
 
-            jogador.DataUltimaResposta = DateTime.Now;
-            JogoRep.Salvar(jogador);
+            meuJogo.DataUltimaResposta = DateTime.Now;
+            jogosRep.Salvar(meuJogo);
 
-            Int32 respostaFinal = 21;
-            return jogador.Acertos == respostaFinal;
+            return ganhou;
         }
 
     }
