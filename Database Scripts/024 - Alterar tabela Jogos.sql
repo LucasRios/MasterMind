@@ -1,0 +1,1 @@
+ALTER TABLE Jogos ADD DataUltimoAcerto DateTime Null;
