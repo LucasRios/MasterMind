@@ -191,7 +191,6 @@ namespace MasterMind.Controllers
         public ActionResult Create()
         {
             ViewBag.ListaNiveis = NivelDTO.ListaNivel();
-
             return View();
         }
 
@@ -202,11 +201,14 @@ namespace MasterMind.Controllers
         public ActionResult Create(Salas model)
         {
             GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
+            GenericoRep<Nivel> nivelRep = new GenericoRep<Nivel>();
+
+            model.Niveis = nivelRep.ObterPorId(Convert.ToInt32(Request.Form["cd-dropdown"])); 
             model.Perfil = 2;
 
             model.Usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
             model.Id_Usuario = model.Usuario.Id_user;
-
+            
             if (ModelState.IsValid)
             {
                 GenericoRep<Salas> repositorio = new GenericoRep<Salas>();

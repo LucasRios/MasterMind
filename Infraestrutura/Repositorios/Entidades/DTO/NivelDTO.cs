@@ -21,11 +21,11 @@ namespace Infraestrutura.Repositorios.Entidades.DTO
             listaNivel = repositorio.ObterTodos().OrderBy(x => x.descricao);
 
             IList<NivelDTO> lista = new List<NivelDTO>();
-            lista.Insert(0, new NivelDTO
-            {
-                Id_Nivel = 0,
-                descricao = "Selecione um Nivel"
-            });
+            //lista.Insert(0, new NivelDTO
+            //{
+            //    Id_Nivel = 0,
+            //    descricao = "Selecione um Nivel"
+            //});
 
             foreach (Nivel nivel in listaNivel)
             {

@@ -8,6 +8,10 @@ namespace Infraestrutura.Repositorios.Entidades
 {
     public class Salas
     {
+        public Salas()
+        {
+            Niveis = new Nivel();
+        }
         [Display(Name = "Id_sala")]
         [Key]
         public virtual Int32 Id_Sala { get; set; }

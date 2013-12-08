@@ -54,13 +54,15 @@
                         <section class="main clearfix" style="float: left; ">
 
                             <div class="fleft" style=" float: left; margin-top:-10px; margin-left:-35px;  margin-right: 10px;  ">
-                                <select id="tpNivel" name="cd-dropdown" class="cd-select" ">
+                                <select id="Niveis.Id_Nivel" name="cd-dropdown" class="cd-select" ">
                                     <% foreach (var item in ViewBag.ListaNiveis)
                                        { %>
                                     <option
-                                        <% if (item.Id_Nivel == 0)
-                                           {%>
-                                        value="-1"
+                                        <% if (ViewBag.ListaNiveis.IndexOf(item) == 0)
+                                           
+                                           {
+                                               %>
+                                        value=<%:item.Id_Nivel%>
                                         selected
                                         <%}
                                            else
@@ -102,8 +104,8 @@
             <tr>
                 <td colspan="2" style="text-align: center">
                     <div>
-                        <input type="button" id="btnCriar" class="btn btn-info" value="Acessar" />
-                        <%--<input type="submit" class="btn btn-info" value="Acessar" />--%>
+                        <%--<input type="button" id="btnCriar" class="btn btn-info" value="Acessar" />--%>
+                        <input type="submit" class="btn btn-info" value="Acessar" />
                     </div>
                 </td>
             </tr>
@@ -117,7 +119,7 @@
 
             $(function () {
 
-                $('#tpNivel').dropdown({
+                $('#Niveis.Id_Nivel').dropdown({
                     stack: false,
                     gutter: 5
                 });

@@ -30,7 +30,7 @@
         <section class="main clearfix" style="float: left;">
             <h1>Procurar Salas</h1>
             <div class="fleft" style="width: 80px; float: left; margin-left: 10px; margin-right: 10px;">
-                <select id="tpNivel" name="cd-dropdown" class="cd-select">
+                <select id="Niveis.Id_Nivel" name="cd-dropdown" class="cd-select">
                     <% foreach (var item in ViewBag.ListaNivel)
                        { %>
                     <option
@@ -134,7 +134,7 @@
 
             $(function () {
 
-                $('#tpNivel').dropdown({
+                $('#Niveis.Id_Nivel').dropdown({
                     gutter: 5
                 });
 
