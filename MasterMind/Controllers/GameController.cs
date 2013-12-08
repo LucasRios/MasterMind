@@ -90,7 +90,9 @@ namespace MasterMind.Controllers
             /// Tema Atual da sala
             ///
             Int32 tema_atual = partida.Where(x => x.Usuario.Id_user == WebSecurity.GetUserId(User.Identity.Name)).FirstOrDefault().Tema.Id_tema;
-            if (!string.IsNullOrEmpty(partida.Where(x => x.MinhaVez).First().TrilhaTemas.ToString()))
+            var debug1 = partida.Where(x => x.MinhaVez).First();
+
+            if (!string.IsNullOrEmpty(partida.Where(x => x.MinhaVez).First().TrilhaTemas))
             {
                 tema_atual = recupera_tema(partida.Where(x => x.MinhaVez).First().Id_jogo, partida.Where(x => x.MinhaVez).First().TrilhaTemas);
                 GenericoRep<Temas> gentemas = new GenericoRep<Temas>();
@@ -157,14 +159,36 @@ namespace MasterMind.Controllers
 
             foreach (Jogos item in partida)
             {
-                TrilhasTabuleiro trilha = trilhasRep.ObterTrilhas(layoutTabuleiro, (int)item.SequenciaEntradaUsuarioSala, item.Acertos+1).FirstOrDefault();
+                TrilhasTabuleiro trilha = trilhasRep.ObterTrilhas(layoutTabuleiro, (int)item.SequenciaEntradaUsuarioSala, item.Acertos + 1).FirstOrDefault();
+                Int32 nivel = 0;
+                try
+                {
+                    IList<Jogos> mesmaCasa = partida.Where(x =>
+                            x.PosLinhaAtual == trilha.Linha
+                        && x.PosColunaAtual == trilha.Coluna
+                        //&& x.Usuario.Id_user != item.Usuario.Id_user
+                    ).OrderBy(x => x.DataUltimoAcerto).ToList();
+
+                    Int32 indiceMesmaCasa = 9 / mesmaCasa.Count;
+
+                    nivel = mesmaCasa.IndexOf(item) * indiceMesmaCasa;
+                }
+                catch
+                {
+                    nivel = 0;
+                }
+
+
                 StatusPartidaTabuleiroDTO status = new StatusPartidaTabuleiroDTO();
                 status.Id_user = item.Usuario.Id_user;
                 status.Linha = trilha.Linha;
                 status.Coluna = trilha.Coluna;
                 status.CorPeca = (int)item.SequenciaEntradaUsuarioSala;
+                status.Nivel = nivel;
                 statusPartida.Add(status);
             }
+
+            statusPartida = statusPartida.OrderBy(x => x.Linha).ThenBy(x => x.Coluna).ThenBy(x => x.Nivel).ToList();
 
             var vm = new { statusTabuleiro = statusPartida };
             return Json(vm, JsonRequestBehavior.AllowGet);
@@ -393,6 +417,18 @@ namespace MasterMind.Controllers
             if (opcaoCerta)
             {
                 jogador.Acertos = jogador.Acertos + 1;
+                jogador.DataUltimoAcerto = DateTime.Now;
+
+                
+                Int32 layoutTabuleiro = 1;
+                Int32 idTrilha = (int)jogador.SequenciaEntradaUsuarioSala;
+
+                TrilhasTabuleiroRep trilhaRep = new TrilhasTabuleiroRep();
+                TrilhasTabuleiro trilha = trilhaRep.ObterTrilhas(layoutTabuleiro, idTrilha, jogador.Acertos+1).FirstOrDefault();
+                
+                jogador.PosLinhaAtual = trilha.Linha;
+                jogador.PosColunaAtual = trilha.Coluna;
+
             }
             else
             {

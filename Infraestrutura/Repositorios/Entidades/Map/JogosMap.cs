@@ -24,6 +24,7 @@ namespace Infraestrutura.Repositorios.Entidades.Map
             Map(x=>x.PosColunaAtual);
             Map(x=>x.DataEntradaSala);
             Map(x=>x.DataUltimaResposta);
+            Map(x => x.DataUltimoAcerto);
             Map(x=>x.PerguntaAtualFeitaEm);
             Map(x=>x.Acertos);
             Map(x => x.Erros);

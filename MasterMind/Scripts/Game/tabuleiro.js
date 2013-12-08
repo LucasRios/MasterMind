@@ -31,7 +31,7 @@ function AtualizarTabuleiro() {
         posicaoPecas = response.statusTabuleiro;
         var acabou = false;
         for (i = 0; i < posicaoPecas.length; i++) {
-            coloca_peca(posicaoPecas[i].Linha, posicaoPecas[i].Coluna, peca(posicaoPecas[i].CorPeca), 0)
+            coloca_peca(posicaoPecas[i].Linha, posicaoPecas[i].Coluna, peca(posicaoPecas[i].CorPeca), posicaoPecas[i].Nivel)
             if (posicaoPecas[i].Linha == 6 && posicaoPecas[i].Coluna == 6) {
                 acabou = true;
             }

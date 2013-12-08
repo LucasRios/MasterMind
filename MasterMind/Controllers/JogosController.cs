@@ -248,6 +248,13 @@ namespace MasterMind.Controllers
                 {
                     GenericoRep<Jogos> repositorio = new GenericoRep<Jogos>();
 
+                    Int32 layoutTabuleiro = 1;
+                    TrilhasTabuleiroRep trilhaRep = new TrilhasTabuleiroRep();
+                    TrilhasTabuleiro trilha = trilhaRep.ObterTrilhas(layoutTabuleiro, (int)model.SequenciaEntradaUsuarioSala, 1).FirstOrDefault();
+                    model.PosLinhaInicial = trilha.Linha;
+                    model.PosColunaInicial = trilha.Coluna;
+                    model.PosLinhaAtual = trilha.Linha;
+                    model.PosColunaAtual = trilha.Coluna;
                     repositorio.Salvar(model);
 
                     return RedirectToAction("Sala_Espera", "Jogos", new { Id_Sala = model.Sala.Id_Sala , selecionado=0});

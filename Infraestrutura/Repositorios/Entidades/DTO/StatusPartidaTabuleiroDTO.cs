@@ -11,5 +11,6 @@ namespace Infraestrutura.Repositorios.Entidades.DTO
         public Int32 Linha { get; set; }
         public Int32 Coluna { get; set; }
         public Int32 CorPeca { get; set; }
+        public Int32 Nivel { get; set; }
     }
 }

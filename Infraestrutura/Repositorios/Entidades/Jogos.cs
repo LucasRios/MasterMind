@@ -27,6 +27,7 @@ namespace Infraestrutura.Repositorios.Entidades
         public virtual Int32? PosColunaAtual { get; set; }
         public virtual DateTime? DataEntradaSala { get; set; }
         public virtual DateTime? DataUltimaResposta { get; set; }
+        public virtual DateTime? DataUltimoAcerto { get; set; }
         public virtual DateTime? PerguntaAtualFeitaEm { get; set; }
         public virtual Int32 Acertos { get; set; }
         public virtual Int32 Erros { get; set; }
