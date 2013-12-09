@@ -18,7 +18,7 @@ namespace MasterMind.Controllers
         {
             return RedirectToAction("List");
         }
-
+           
         public ActionResult List(Int32? Id_nivel, Int32? Id_perfil)
         {
             servidor_cria_sala(); //servido cria salas se não houverem salas públicas
@@ -67,52 +67,7 @@ namespace MasterMind.Controllers
 
             return View(sala);
         }
-        [HttpPost]
-        public string ListarSalas(Int32? Id_nivel, Int32? Id_perfil)
-        {
-            GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
-            IEnumerable<Salas> sala = new List<Salas>();
-
-            GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
-            GenericoRep<Jogos> jogos = new GenericoRep<Jogos>();
-            GenericoRep<Perfil> perfil = new GenericoRep<Perfil>();
-            IEnumerable<Jogos> list = new List<Jogos>();
-
-            ViewBag.ListaNivel = NivelDTO.ListaNivel().OrderBy(p => p.Id_Nivel);
-            ViewBag.ListaTPSala = TipoSalaDTO.ListaTipoSala().OrderBy(p => p.Id_TPSala);
-
-            sala = repositorio.ObterTodos();
-
-            if (Id_nivel != null && Id_nivel > 0)
-            {
-                sala = repositorio.ObterTodos().Where(x => x.Niveis.Id_Nivel == Id_nivel);
-            }
-            else sala = repositorio.ObterTodos();
-
-            if (Id_perfil != null && Id_perfil > 0)
-            {
-                sala = sala.Where(x => x.Perfil == Id_perfil);
-            }
-
-            foreach (var i in sala)
-            {
-                list = jogos.ObterTodos().Where(x => x.Sala.Id_Sala == i.Id_Sala);
-                i.qtde_usu = list.Count();
-
-                if (i.Id_Usuario != 0) { i.Usuario = usu.ObterPorId(i.Id_Usuario); }
-                if (i.Perfil == 1) { i.Desc_perfil = "Pública"; }
-                else { i.Desc_perfil = "Privada"; }
-            }
-
-            //sala = sala.Where(u => u.qtde_usu < 12 ).ToList();
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-
-
-
-            return jss.Serialize(sala);
-        }
-
-
+       
 
         private void servidor_cria_sala()
         {
@@ -191,24 +146,22 @@ namespace MasterMind.Controllers
         public ActionResult Create()
         {
             ViewBag.ListaNiveis = NivelDTO.ListaNivel();
+
             return View();
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+      
         [HttpPost]
         [AllowAnonymous]
-        //[ValidateAntiForgeryToken]
+       [ValidateAntiForgeryToken]
         public ActionResult Create(Salas model)
         {
             GenericoRep<Usuario> usu = new GenericoRep<Usuario>();
-            GenericoRep<Nivel> nivelRep = new GenericoRep<Nivel>();
-
-            model.Niveis = nivelRep.ObterPorId(Convert.ToInt32(Request.Form["cd-dropdown"])); 
             model.Perfil = 2;
 
             model.Usuario = usu.ObterPorId(WebSecurity.GetUserId(User.Identity.Name));
             model.Id_Usuario = model.Usuario.Id_user;
-            
+
             if (ModelState.IsValid)
             {
                 GenericoRep<Salas> repositorio = new GenericoRep<Salas>();
@@ -217,7 +170,7 @@ namespace MasterMind.Controllers
 
                 return RedirectToAction("Acesso", "Jogos", new { Id = model.Id_Sala, senha = model.Senha });
             }
-            ViewBag.ListaNiveis = NivelDTO.ListaNivel();
+            ViewBag.ListaNiveis = NivelDTO.ListaNivel().OrderBy(p => p.Id_Nivel);
             ModelState.AddModelError("", "Campos inválidos");
             return View(model);
         }

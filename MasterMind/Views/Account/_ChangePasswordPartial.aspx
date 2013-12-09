@@ -19,11 +19,11 @@
                 <td>
                     <% if (!string.IsNullOrEmpty(Model.imagem))%>
                     <% {%>
-                    <img src="<%: Model.imagem %>" height="100" width="100" />
+                    <img src="<%: Model.imagem %>" class="imgPerfil"/>
                     <% }
                        else
                        {%>
-                    <img src="~/Images/usu.png" />
+                    <img src="~/Images/usu.png" class="imgPerfil" />
                     <% }%>
                 </td>
                 <td>
@@ -94,7 +94,9 @@
                 <td>
                     <div class="editor-label">
                         <%:  Html.Label("Sexo")%>
+                        <div class="divSelect" style="margin-left:15px; height:30px; width:194px;">
                         <%:  Html.DropDownListFor(u => u.Sexo, new SelectList(ViewBag.ListaSexo, "Sigla", "Sexo"), new { @class = "dropdownlist", tabindex=7 })%>
+                        </div>
                         <%:  Html.ValidationMessageFor(model => model.Sexo)%>
                     </div>
                 </td>

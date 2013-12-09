@@ -7,14 +7,14 @@
 
     
     
-    <div style="text-align: center">
+    <div style="text-align: center; margin:0px; width:180px;">
         @if (!string.IsNullOrEmpty(Html.DisplayFor(model => model.imagem).ToString()))
         {
-            <img src="@Html.DisplayFor(model => model.imagem).ToString()" height="100" width="100" />
+            <img src="@Html.DisplayFor(model => model.imagem).ToString()" class="imgPerfil" />
         }
         else
         {
-            <img src="~/Images/usu.png" height="100" width="100" />
+            <img src="~/Images/usu.png" class="imgPerfil" />
         }
     </div>
 

@@ -6,15 +6,17 @@
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary() %>
 
-    <style type="text/css">
+<%--    <style type="text/css">
         table.space {
-            border: solid;
+          
+
             border-spacing: 10px;
             text-align: center;
         }
 
         tr.main {
-            border: solid;
+          
+
             font-weight: bold;
         }
 
@@ -23,17 +25,17 @@
             padding: 4px 15px 2px 4px;
             font-weight: bold;
         }
-    </style>
+    </style>--%>
 
     <fieldset>
         <div class="editor-field">
             <h1>Ranking</h1>
         </div>
-        <div style="text-align: center">
-            <table class="space">
+        <div style="text-align: center" >
+            <table class="divRank">
                 <tr class="main">
                     <td>Posição</td>
-                    <td>Usuário</td>
+                    <td style="width:220px;">Usuário</td>
                     <td>Partidas Vencidas</td>
                     <td>Resp. Certas</td>
                     <td>Resp. Erradas</td>

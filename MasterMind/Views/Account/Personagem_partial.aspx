@@ -8,15 +8,13 @@
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary(true) %>
 
-    <html>
-    <head>
+ 
         <link rel="shortcut icon" href="../favicon.ico">
         <link href="~/Content/Site.css" rel="stylesheet" />
         <link href="~/Styles/style1.css" rel="stylesheet" />
         <link href="~/Styles/bootstrap-responsive.min.css" rel="stylesheet" />
         <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
-    </head>
-    <body id="body_perso">
+   
         <div style="align-content: center">
             <h1>Escolha seu personagem favorito</h1>
         </div>
@@ -43,13 +41,13 @@
                                     <h6>Novo Personagem</h6>
                                     <% if (!string.IsNullOrEmpty(ViewBag.SelectedPerson))%>
                                     <% {%>
-                                    <img src="<%: ViewBag.SelectedPerson %>" height="100" width="100" />
+                                    <img src="<%: ViewBag.SelectedPerson %>" class="imgPerfil" />
                                     <br />
                                     <h6><%: ViewBag.NameSelectedPerson %> </h6>
                                     <% }
                                        else
                                        {%>
-                                    <img src="../Images/usu.png" height="100" width="100" />
+                                    <img src="../Images/usu.png" class="imgPerfil" />
                                     <%} %>
                                 </td>
                             </tr>
@@ -59,8 +57,9 @@
                 </tr>
                 <tr style="text-align: center">
                     <td style="text-align: center">
+                         <div class="divSelect" style="margin-left:95px;" >
                         <%:  @Html.DropDownListFor(u => u.Personagem.Id_person, new SelectList(ViewBag.ListaPerson, "Id_person", "Desc_person"), new { @class = "dropdownlist", onchange= "window.location.href = '/MasterMind/Account/Personagem_partial?Id_Person=' + this.options[this.selectedIndex].value;" })%>                        
-
+                             </div>
                         <%: Html.HiddenFor(u => u.Personagem.Desc_person)%>
                         <%:  @Html.ValidationMessageFor(u => u.Personagem.Id_person)%>
                     </td>
@@ -74,8 +73,7 @@
                 </tr>
             </table>
         </div>
-    </body>
-    </html>
+  
     <% } %>
 </asp:Content>
 

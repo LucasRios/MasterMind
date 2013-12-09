@@ -18,7 +18,9 @@
                     <div class="editor-label"><%:  @Html.LabelFor(model => model.Tema.Desc_tema)%></div>
                 </td>
                 <td>
+                      <div class="divSelect" style="margin-left:20px;" >
                     <%:  @Html.DropDownListFor(u => u.Tema.Id_tema, new SelectList(ViewBag.ListaTemas, "Id_tema", "Desc_tema"), new { @class = "dropdownlist"})%>
+                    </div>
                     <%: Html.HiddenFor(u => u.Tema.Desc_tema)%>
                     <%:  @Html.ValidationMessageFor(u => u.Tema.Id_tema)%>
                 </td>

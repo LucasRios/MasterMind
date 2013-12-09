@@ -10,13 +10,13 @@
     <div>
         <% if (@Html.ValueFor(model => model.Personagem) != null)%>
         <% {%>
-        <img src="<%: @Html.ValueFor(model => model.Personagem.Imagem) %>" height="100" width="100" />
+        <img src="<%: @Html.ValueFor(model => model.Personagem.Imagem) %>" class="imgPerfil" />
         <br />
         <h6><%: @Html.ValueFor(model => model.Personagem.Desc_person)  %> </h6>
         <% }
            else
            {%>
-        <img src="~/Images/usu.png" height="100" width="100" />
+        <img src="~/Images/usu.png" class="imgPerfil" />
         <%} %>
     </div>
 </body>

@@ -244,6 +244,7 @@
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\MasterMind - Leandro.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Images\arrow_Down.jpg" />
     <Content Include="Images\cartas2.png" />
     <Content Include="Images\carta_.jpg" />
     <Content Include="Images\cartoon.jpg" />
